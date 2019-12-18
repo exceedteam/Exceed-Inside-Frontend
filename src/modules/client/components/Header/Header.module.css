@@ -1,0 +1,88 @@
+.header {
+  width: 100%;
+  height: 5%;
+  font-family: inherit;
+  border-radius: 0.2em;
+  background-color: var(--main-bg-color);
+  display: flex;
+  align-items: center;
+}
+
+.buttonRight {
+  margin-right: 2.5em;
+}
+
+.buttonLeft {
+  margin: 0 2.5em;
+}
+
+.marginMiddle {
+  margin: 0.3em;
+}
+
+.sizeDropdownItem {
+  text-align: center;
+  padding: 0.5em 1.5em;
+}
+
+.dropdownContent {
+  border-radius: 0.2em;
+  display: none;
+  position: absolute;
+  right: 2.5em;
+  top: 2.2em;
+  background-color: rgb(245, 245, 245);
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.button {
+  text-transform: uppercase;
+  background-color: rgb(245, 245, 245);
+  border: 0.1em solid rgb(245, 245, 245);
+  border-radius: 0.2em;
+  font-family: inherit;
+  color: rgba(1,1,1,0.8);
+  cursor: pointer;
+}
+
+.headerButton {
+  composes: marginMiddle;
+  /* composes: shadow_item from "../../../styles/common/index.css"; */
+  composes: button;
+  composes: sizeDropdownItem;
+}
+
+.headerLoginned {
+  composes: header;
+  /* composes: justify-betwen from "../../../styles/common/index.css"; */
+  /* composes: align-items_center from "../../../styles/common/index.css"; */
+}
+
+.headerNotLoginned {
+  composes: header;
+  /* composes: justify-end from "../../../styles/common/index.css"; */
+  /* composes: align-items_center from "../../../styles/common/index.css"; */
+}
+
+.buttonLoginnedLeft {
+  composes: button;
+  composes: buttonLeft;
+}
+
+.buttonLoginnedRight {
+  composes: button;
+  composes: buttonRight;
+  composes: dropdown;
+}
+
+.column {
+  /* composes: column from "../../../styles/common/index.css"; */
+}
+
+.buttonNotLoginned {
+  composes: button;
+  composes: buttonRight;
+}
