@@ -2,10 +2,8 @@
   Main login form
 */
 import React from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-
-const loginURL = "http://localhost:5000/api/login";
+import request from "../../../services/api/axios/index";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -14,7 +12,7 @@ export default class Login extends React.Component {
     this.state = {
       email: "",
       password: "",
-      errors: null
+      error: null
     };
   }
   // Writing data to the state and updating it when entering email and password in the input fields
@@ -29,31 +27,33 @@ export default class Login extends React.Component {
   // Sending email and password to the server
   submitUser = event => {
     event.preventDefault();
-    axios
-      .post(loginURL, {
-        ...this.state
+    request
+      .login({
+        inputData: {
+          email: this.state.email,
+          password: this.state.password
+        }
       })
-      // Saving the token in local storage and going to the main page
       .then(res => {
-        localStorage.setItem("token", res.data.token);
+        if (res.error) {
+          return this.setState({ error: res.error });
+        }
         this.props.handleLogin(true);
         this.props.history.push("/");
       })
-      // If the entered data is not correct, clear the input fields and display an error message
-      .catch(err => {
-        //TODO server not working message
-        const errors = err.response ? err.response.data : {};
-        this.setState({ email: "", password: "", errors: errors });
+      .catch(error => {
+        console.log("err", error);
       });
   };
 
   // Error message appears when entering incorrect data
   messsageError = () => {
-    if (this.state.errors) {
+    if (this.state.error) {
       return "Incorrect email or password";
     }
   };
 
+  // render data entry form for login
   render() {
     return (
       <form onSubmit={this.submitUser}>
@@ -63,7 +63,7 @@ export default class Login extends React.Component {
             id="email"
             value={this.state.email}
             onChange={this.updateForm}
-            className={`commonForm__input ${this.state.errors ? "error" : ""}`}
+            className={`commonForm__input ${this.state.error ? "error" : ""}`}
             placeholder="e-mail"
             autoComplete="off"
           />
@@ -74,7 +74,7 @@ export default class Login extends React.Component {
             type="password"
             value={this.state.password}
             onChange={this.updateForm}
-            className={`commonForm__input ${this.state.errors ? "error" : ""}`}
+            className={`commonForm__input ${this.state.error ? "error" : ""}`}
             placeholder="password"
           />
           <span>{this.messsageError()}</span>

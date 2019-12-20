@@ -1,28 +1,31 @@
+/*
+  display of a specific post
+*/
 import React from "react";
-import axios from "axios";
-import { createID } from "../../../../services";
+import request from "../../../../services/api/axios/index";
+import { PostPreview } from "../PostPreview";
 
-export default class Profile extends React.Component {
+export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
-      postData: {},
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
+      postData: {}
     };
   }
 
+  // search for a specific post in the DB
   componentDidMount() {
-    let token = localStorage.getItem("token");
-    axios
-      .get(`http://localhost:5000/api/post/${this.state.id}`, {
-        headers: { authorization: token }
+    request
+      .getPost({
+        id: this.state.id
       })
-      .then(response => {
-        this.setState({ postData: response.data, loaded: true });
+      .then(res => {
+        this.setState({ postData: res.post, loaded: res.loaded });
       })
-      .catch(err => {
-        console.log("err", err);
+      .catch(error => {
+        console.log("err", error);
       });
   }
 
@@ -31,22 +34,7 @@ export default class Profile extends React.Component {
       <div>
         {this.state.loaded && (
           <div>
-            <div>
-              <span>{this.state.postData.createdAt}</span>
-            </div>
-            <span>{this.state.postData.title}</span>
-            <div>
-              <span> {this.state.postData.text}</span>
-            </div>
-            <div>
-              {this.state.postData.images.map(img => (
-                <img key={createID()} src={img.src} alt="some value" />
-              ))}
-            </div>
-            <div>
-              <span>Комментариев: </span>
-              {this.state.postData.commentsCounter}
-            </div>
+            <PostPreview post={this.state.postData} />
           </div>
         )}
         {!this.state.loaded && <h1>Loading...</h1>}

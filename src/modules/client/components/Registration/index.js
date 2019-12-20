@@ -1,17 +1,17 @@
 import React from "react";
-import axios from "axios";
-import { createID } from "../../../../services";
+import { createID } from "../../../../services/helpers";
 import { Link } from "react-router-dom";
-
-const registrationURL = "http://localhost:5000/api/user";
+import request from "../../../../services/api/axios/index";
 
 export default class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      password2: "",
+      input: {
+        email: "",
+        password: "",
+        password2: ""
+      },
       errors: {
         email: null,
         password: null,
@@ -22,28 +22,28 @@ export default class Registration extends React.Component {
 
   // Writing data to the state and updating it when entering email, password and password2 in the input fields
   updateForm = event => {
-    const newState = {};
+    const newState = this.state.input;
     newState[event.target.id] = event.target.value;
     this.setState({
-      ...newState
+      input: {...newState}
     });
   };
 
   // Sending email, password, password2 to the server
   submitUser = event => {
     event.preventDefault();
-    axios
-      .post(registrationURL, {
-        ...this.state
+    request
+      .register({
+        inputData: this.state.input
       })
-      // Go to login page
       .then(res => {
+        if (res.errors) {
+          return this.setState({ errors: res.errors})
+        }
         this.props.history.push("/login");
       })
-      // If the entered data is not correct display an error message
       .catch(err => {
-        const errors = err.response.data;
-        this.setState({ errors });
+        console.log("err", err)
       });
   };
 
@@ -59,20 +59,22 @@ export default class Registration extends React.Component {
     }
   }
 
+  // render data entry form for registration
   render() {
+    const {email,password, password2} = this.state.input
     return (
       <form onSubmit={this.submitUser}>
         <h1>Create an account</h1>
         <label htmlFor="email">
-          <input id="email" value={this.state.email} onChange={this.updateForm} placeholder="e-mail" autocomplete="off" />
+          <input id="email" value={email} onChange={this.updateForm} placeholder="e-mail" autoComplete="off" />
           <span>{this.state.errors.email}</span>
         </label>
         <label htmlFor="password">
-          <input id="password" type="password" value={this.state.password} onChange={this.updateForm} placeholder="password" />
+          <input id="password" type="password" value={password} onChange={this.updateForm} placeholder="password" />
           <span>{this.state.errors.password}</span>
         </label>
         <label htmlFor="password2">
-          <input id="password2" type="password" value={this.state.password2} onChange={this.updateForm} placeholder="confirm password" />
+          <input id="password2" type="password" value={password2} onChange={this.updateForm} placeholder="confirm password" />
           <span>{this.state.errors.password2}</span>
         </label>
         <input type="submit" value="SIGN ME UP" />
