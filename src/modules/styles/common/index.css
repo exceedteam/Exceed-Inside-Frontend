@@ -105,13 +105,6 @@
   box-shadow: 0 0 0.3em rgba(0,0,0,0.3);
 }
 
-.editor {
-  background-color: white;
-  overflow: auto;
-  height: 50em;
-  width: 50em;
-}
-
 blockquote {
   padding: 10px 20px;
   margin: 0 0 20px;

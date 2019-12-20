@@ -27,7 +27,7 @@
 
 .dropdownContent {
   border-radius: 0.2em;
-  display: none;
+  /* display: none; */
   position: absolute;
   right: 2.5em;
   top: 2.2em;
@@ -44,7 +44,7 @@
   border: 0.1em solid rgb(245, 245, 245);
   border-radius: 0.2em;
   font-family: inherit;
-  color: rgba(1,1,1,0.8);
+  color: rgba(1, 1, 1, 0.8);
   cursor: pointer;
 }
 

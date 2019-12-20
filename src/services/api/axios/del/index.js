@@ -1,0 +1,3 @@
+/*
+  All delete requests
+*/

@@ -1,16 +1,14 @@
-/*
-  Component whith which the application Main page is rendered 
-*/
 import React from "react";
-import { createID, prettyDate } from "../../../../services/helpers";
 import request from "../../../../services/api/axios/index";
+import { createID, prettyDate } from "../../../../services/helpers";
 
-export default class Posts extends React.Component {
+export default class PostsOfUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
-      posts: [],
+      id: this.props.match.params.id,
+      postsOfUser: [],
       params: {
         page: 0,
         perPage: 30
@@ -18,14 +16,18 @@ export default class Posts extends React.Component {
     };
   }
 
-  // request to display all posts
+  // search for all user posts in the DB
   componentDidMount() {
     request
-      .getPosts({
-        params: this.state.params
+      .getPostsOfUser({
+        inputData: {
+          id: this.state.id,
+          params: this.state.params
+        }
       })
-      .then(posts => {
-        this.setState(posts);
+      .then(res => {
+        this.setState({postsOfUser: res.posts,
+         loaded: res.loaded});
       })
       .catch(error => {
         this.props.history.push("/login");
@@ -33,29 +35,16 @@ export default class Posts extends React.Component {
       });
   }
 
-  // transition to a specific post
+  // go to a specific post
   showFullPost(id) {
     this.props.history.push(`/post/${id}`);
   }
 
-  // go to post author
-  showUserProfile(id) {
-    this.props.history.push(`/user/${id}`);
-  }
-
-  // render list of posts
-  renderPosts = () => {
-    return this.state.posts.map(item => {
+  // render a list of user posts
+  renderPostsOfUser = () => {
+    return this.state.postsOfUser.map(item => {
       return (
         <div key={createID()}>
-          <div
-            onClick={() => {
-              this.showUserProfile(item.authorId);
-            }}
-          >
-            <img src={item.author.avatar} alt="" />
-            <span>{item.author.name}</span>
-          </div>
           <div
             onClick={() => {
               this.showFullPost(item.id);
@@ -86,7 +75,7 @@ export default class Posts extends React.Component {
   render() {
     return (
       <div>
-        {this.state.loaded && <div>{this.renderPosts()}</div>}
+        {this.state.loaded && <div>{this.renderPostsOfUser()}</div>}
         {!this.state.loaded && <h1>Loading...</h1>}
       </div>
     );

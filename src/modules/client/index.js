@@ -8,12 +8,12 @@ import Post from "./components/Post";
 import Posts from "./components/Main";
 import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
-import PostOfUser from "./components/PostOfUser";
+import PostsOfUser from "./components/PostsOfUser";
 import Events from "./components/Events";
 
 import { Switch, Route, Router, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { getIslogin } from "../../services";
+import { getIslogin } from "../../services/helpers";
 
 export default class Wrapper extends React.Component {
   constructor(props) {
@@ -38,11 +38,11 @@ export default class Wrapper extends React.Component {
 
           <WithToken>
             <Route exact path="/" component={props => <Posts {...props} handleLogin={this.handleLogin} />} />
-            <Route path="/post/:id" component={Post} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/createPost" component={CreatePost} />
-            <Route path="/postOfUser" component={PostOfUser} />
-            <Route path="/events" component={Events} />
+            <Route exact path="/post/:id" component={Post} />
+            <Route exact path="/user/:id" component={Profile} />
+            <Route exact path="/createPost" component={CreatePost} />
+            <Route exact path="/user/:id/posts" component={PostsOfUser} />
+            <Route exact path="/events" component={Events} />
           </WithToken>
         </Switch>
         <footer></footer>
@@ -51,6 +51,7 @@ export default class Wrapper extends React.Component {
   }
 }
 
+//if there is no token in local storage go to the login form
 const WithToken = ({ children, defaultComponent = <Redirect to="/login" /> }) => {
   if (getIslogin()) {
     return children;
