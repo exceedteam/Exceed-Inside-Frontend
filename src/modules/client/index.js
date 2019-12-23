@@ -10,6 +10,9 @@ import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
 import PostsOfUser from "./components/PostsOfUser";
 import Events from "./components/Events";
+import Event from "./components/Event";
+import CreateEvent from "./components/CreateEvent";
+import EventsOfUser from "./components/EventsOfUser"
 
 import { Switch, Route, Router, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -20,18 +23,18 @@ export default class Wrapper extends React.Component {
     super(props);
     this.customHistory = createBrowserHistory();
     this.state = {
-      isLogined: getIslogin()
+      isLogged: getIslogin()
     };
   }
 
-  handleLogin = (isLogined = false) => {
-    this.setState({ isLogined });
+  handleLogin = (isLogged = false) => {
+    this.setState({ isLogged });
   };
 
   render() {
     return (
       <Router history={this.customHistory}>
-        <Header history={this.customHistory} isLogined={this.state.isLogined} handleLogin={this.handleLogin} />
+        <Header history={this.customHistory} isLogged={this.state.isLogged} handleLogin={this.handleLogin} />
         <Switch>
           <Route path="/login" component={props => <Login {...props} handleLogin={this.handleLogin} />} />
           <Route path="/registration" component={Registration} />
@@ -43,6 +46,9 @@ export default class Wrapper extends React.Component {
             <Route exact path="/createPost" component={CreatePost} />
             <Route exact path="/user/:id/posts" component={PostsOfUser} />
             <Route exact path="/events" component={Events} />
+            <Route exact path="/event/:id" component={Event} />
+            <Route exact path="/event" component={CreateEvent} />
+            <Route exact path="/user/:id/events" component={EventsOfUser} />
           </WithToken>
         </Switch>
         <footer></footer>

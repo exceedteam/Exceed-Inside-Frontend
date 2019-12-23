@@ -1,6 +1,7 @@
 import React from "react";
 import request from "../../../../services/api/axios/index";
 import { createID, prettyDate } from "../../../../services/helpers";
+import { UserHeader } from "../UserHeader";
 
 export default class PostsOfUser extends React.Component {
   constructor(props) {
@@ -26,8 +27,7 @@ export default class PostsOfUser extends React.Component {
         }
       })
       .then(res => {
-        this.setState({postsOfUser: res.posts,
-         loaded: res.loaded});
+        this.setState({ postsOfUser: res.data, loaded: res.loaded });
       })
       .catch(error => {
         this.props.history.push("/login");
@@ -35,19 +35,22 @@ export default class PostsOfUser extends React.Component {
       });
   }
 
-  // go to a specific post
-  showFullPost(id) {
-    this.props.history.push(`/post/${id}`);
-  }
-
   // render a list of user posts
   renderPostsOfUser = () => {
-    return this.state.postsOfUser.map(item => {
+    const { postsOfUser, id } = this.state;
+    return postsOfUser.map(item => {
       return (
         <div key={createID()}>
+           <div>
+            <UserHeader
+              name={item.author.name}
+              avatar={item.author.avatar}
+              onClick={() => this.props.history.push(`/user/${id}`)}
+            />
+          </div>
           <div
             onClick={() => {
-              this.showFullPost(item.id);
+              this.props.history.push(`/post/${item.id}`);
             }}
           >
             <div>
@@ -59,7 +62,7 @@ export default class PostsOfUser extends React.Component {
             </div>
             <div>
               {item.images.map(img => (
-                <img key={createID()} src={img.src} alt="some value" />
+                <img key={createID()} src={img.src} alt="" />
               ))}
             </div>
             <div>
@@ -73,10 +76,11 @@ export default class PostsOfUser extends React.Component {
   };
 
   render() {
+    const { loaded } = this.state;
     return (
       <div>
-        {this.state.loaded && <div>{this.renderPostsOfUser()}</div>}
-        {!this.state.loaded && <h1>Loading...</h1>}
+        {loaded && <div>{this.renderPostsOfUser()}</div>}
+        {!loaded && <h1>Loading...</h1>}
       </div>
     );
   }

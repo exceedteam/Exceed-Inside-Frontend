@@ -10,8 +10,7 @@ const register = data => {
       })
       // Go to login page
       .then(res => {
-        if(res) console.log(res)
-        return true;
+        if(res) return true;
       })
       // If the entered data is not correct display an error message
       .catch(err => {

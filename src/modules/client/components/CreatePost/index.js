@@ -2,7 +2,6 @@ import React from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { createID } from "../../../../services/helpers";
-import jwtDecode from "jwt-decode";
 import request from "../../../../services/api/axios/index";
 
 // Component for creating a new post
@@ -10,11 +9,7 @@ export default class Createpost extends React.Component {
   constructor(props) {
     super(props);
 
-    this.token = localStorage.getItem("token");
-    const decoded = jwtDecode(this.token);
-
     this.state = {
-      authorId: decoded.id,
       preview: true,
       text: `# Intro\nGo ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like cmd-b or ctrl-b.\n## Lists\nUnordered lists can be started using the toolbar or by typing *  , -  , or +  . Ordered lists can be started by typing 1. .\n\n#### Unordered\n* Lists are a piece of cake\n* They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!`,
       images: []
@@ -53,7 +48,7 @@ export default class Createpost extends React.Component {
       <form>
         <div className="editor">
           <SimpleMDE
-          //TODO refactor this
+            //TODO refactor this
             className={""}
             value={this.state.text}
             onChange={this.handleChange}
@@ -68,13 +63,12 @@ export default class Createpost extends React.Component {
                 "ordered-list",
                 "|",
                 "link",
-                  // Change the standard button for downloading images. added ability to download buttons from local storage (previously there were only links to images)
+                // Change the standard button for downloading images. added ability to download buttons from local storage (previously there were only links to images)
                 {
                   name: "image",
                   className: "md-upload-img fa fa-picture-o",
                   title: "Insert img",
                   action: function(editor) {
-                    console.log("editor", editor);
                     let input = document.createElement("input");
                     input.type = "file";
                     input.onchange = e => {
@@ -116,10 +110,15 @@ export default class Createpost extends React.Component {
                       const fromIdtoImage = new RegExp(imageId);
                       const fromImagetoId = /!\[\]\(.+?\)/;
                       withImage = withImage.replace(fromIdtoImage, imageBase64);
-                      withoutImage = withoutImage.replace(fromImagetoId, imageId);
+                      withoutImage = withoutImage.replace(
+                        fromImagetoId,
+                        imageId
+                      );
                     });
 
-                    editor.isPreviewActive() ? editor.value(withoutImage) : editor.value(withImage);
+                    editor.isPreviewActive()
+                      ? editor.value(withoutImage)
+                      : editor.value(withImage);
                     editor.togglePreview(editor);
                   }
                 },

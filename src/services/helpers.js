@@ -5,10 +5,10 @@ export const createID = (payload = '') => {
 
 // check for token in local storage
 export const getIslogin = () => {
-  let isLogined = false;
-  let token = localStorage.getItem('token');
-  if (token) isLogined = true;
-  return isLogined
+  let isLogged = false;
+  const token = localStorage.getItem('token');
+  if (token) isLogged = true;
+  return isLogged
 }
 
 // converts the date to a more pleasant look

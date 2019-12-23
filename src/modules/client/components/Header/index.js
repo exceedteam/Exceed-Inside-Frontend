@@ -15,18 +15,30 @@ export default class Header extends React.Component {
 
   // getting user id from token
   getId = () => {
-    let token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     let decodedToken = jwtDecode(token);
     return decodedToken.id;
   };
 
   // Render of one of two kinds of header
   render() {
-    const { isLogined } = this.props;
-    if (isLogined) {
-      return <Loginned history={this.props.history} logout={this.logout} id={this.getId()} />;
+    const { isLogged } = this.props;
+    if (isLogged) {
+      return (
+        <Loginned
+          history={this.props.history}
+          logout={this.logout}
+          id={this.getId()}
+        />
+      );
     } else {
-      return <NotLoginned login={this.login} registration={this.registration} history={this.props.history} />;
+      return (
+        <NotLoginned
+          login={this.login}
+          registration={this.registration}
+          history={this.props.history}
+        />
+      );
     }
   }
 }
@@ -34,14 +46,46 @@ export default class Header extends React.Component {
 const Loginned = ({ logout, history, id }) => {
   return (
     <div className={styles.headerLoginned}>
-      <input type="button" className={styles.buttonLoginnedLeft} onClick={() => history.push("/")} value="Main page" />
+      <input
+        type="button"
+        className={styles.buttonLoginnedLeft}
+        onClick={() => history.push("/")}
+        value="Main page"
+      />
       <div className={styles.buttonLoginnedRight}>
         <input type="button" className={styles.button} value="user" />
         <div className={styles.dropdownContent}>
           <div className={styles.column}>
-            <input type="button" className={styles.headerButton} onClick={logout} value="Logout" />
-            <input type="button" className={styles.headerButton} onClick={() => history.push(`/user/${id}`)} value="Profile" />
-            <input type="button" className={styles.headerButton} onClick={() => history.push("/createPost")} value="New post" />
+            <input
+              type="button"
+              className={styles.headerButton}
+              onClick={logout}
+              value="Logout"
+            />
+            <input
+              type="button"
+              className={styles.headerButton}
+              onClick={() => history.push(`/user/${id}`)}
+              value="Profile"
+            />
+            <input
+              type="button"
+              className={styles.headerButton}
+              onClick={() => history.push("/createPost")}
+              value="New post"
+            />
+            <input
+              type="button"
+              className={styles.headerButton}
+              onClick={() => history.push("/events")}
+              value="All events"
+            />
+            <input
+              type="button"
+              className={styles.headerButton}
+              onClick={() => history.push("/event")}
+              value="new event"
+            />
           </div>
         </div>
       </div>
@@ -53,8 +97,18 @@ const Loginned = ({ logout, history, id }) => {
 const NotLoginned = ({ history }) => {
   return (
     <div className={styles.headerNotLoginned}>
-      <input type="button" className={styles.buttonNotLoginned} onClick={() => history.push("/login")} value="Sign in" />
-      <input type="button" className={styles.buttonNotLoginned} onClick={() => history.push("/registration")} value="Registration" />
+      <input
+        type="button"
+        className={styles.buttonNotLoginned}
+        onClick={() => history.push("/login")}
+        value="Sign in"
+      />
+      <input
+        type="button"
+        className={styles.buttonNotLoginned}
+        onClick={() => history.push("/registration")}
+        value="Registration"
+      />
     </div>
   );
 };
