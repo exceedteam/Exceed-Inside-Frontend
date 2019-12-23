@@ -1,12 +1,10 @@
 import React from "react";
 import { prettyDate } from "../../../../services/helpers";
 import SimpleMDE from "react-simplemde-editor";
-
+import { UserHeader} from "../UserHeader"
 
 // common function for rendering one height with simpleMDE
-const PostPreview = ({ post }) => {
-  console.log("post", post);
-
+const PostPreview = ({ post, history }) => {
   const getIntance = editor => {
     // You can now store and manipulate the simplemde instance.
     let { images, text } = post;
@@ -28,10 +26,14 @@ const PostPreview = ({ post }) => {
   return (
     <div>
       <div>
-        <span>{post.author.name}</span>
-        <span>{prettyDate(post.createdAt)}</span>
+        <UserHeader
+          name={post.author.name}
+          avatar={post.author.avatar}
+          date={prettyDate(post.createdAt)}
+          onClick={() => history.push(`/user/${post.authorId}`)}
+        />
       </div>
-      <span>{post.title}</span>
+      <span>Title: {post.title}</span>
       <SimpleMDE
         getMdeInstance={getIntance}
         className={""}
@@ -41,7 +43,7 @@ const PostPreview = ({ post }) => {
         }}
       />
       <div>
-        <span>Комментариев: </span>
+        <span>Comments: </span>
         {post.commentsCounter}
       </div>
     </div>

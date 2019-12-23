@@ -32,45 +32,54 @@ export default class Profile extends React.Component {
 
   // render personal user data
   render() {
+    const { avatar, firstName, lastName, email, age, position, team, aboutInfo } = this.state.profileData;
+    const { loaded, id } = this.state;
     return (
       <div>
-        {this.state.loaded && (
+        {loaded && (
           <div>
             <div>
-              <img src={this.state.profileData.avatar} alt="" />
+              <img src={avatar} alt="" />
             </div>
             <div>
               <span>First Name: </span>
-              {this.state.profileData.firstName}
+              {firstName}
             </div>
             <div>
               <span>Last Name: </span>
-              {this.state.profileData.lastName}
+              {lastName}
             </div>
             <div>
               <span>email: </span>
-              {this.state.profileData.email}
+              {email}
             </div>
             <div>
               <span>Age: </span>
-              {this.state.profileData.age}
+              {age}
             </div>
             <div>
               <span>position: </span>
-              {this.state.profileData.position}
+              {position}
             </div>
             <div>
               <span>Team: </span>
-              {this.state.profileData.team}
+              {team}
             </div>
             <div>
               <span>About info: </span>
-              {this.state.profileData.aboutInfo}
+              {aboutInfo}
             </div>
-            <input type="button" onClick={() => {this.showPostsOfUser(this.state.id)}} value="all posts of user" />
+            <input
+              type="button"
+              onClick={() => {
+                this.showPostsOfUser(id);
+              }}
+              value="all posts of user"
+            />
+            <input type="button" onClick={() => { this.props.history.push(`/user/${id}/events`); }} value="all events of user" />
           </div>
         )}
-        {!this.state.loaded && <h1>Loading...</h1>}
+        {!loaded && <h1>Loading...</h1>}
       </div>
     );
   }

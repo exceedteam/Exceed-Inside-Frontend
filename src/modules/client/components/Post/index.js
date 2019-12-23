@@ -22,7 +22,10 @@ export default class Post extends React.Component {
         id: this.state.id
       })
       .then(res => {
-        this.setState({ postData: res.post, loaded: res.loaded });
+        this.setState({
+          postData: res.data,
+          loaded: res.loaded
+        });
       })
       .catch(error => {
         console.log("err", error);
@@ -30,14 +33,15 @@ export default class Post extends React.Component {
   }
 
   render() {
+    const { loaded, postData } = this.state;
     return (
       <div>
-        {this.state.loaded && (
+        {loaded && (
           <div>
-            <PostPreview post={this.state.postData} />
+            <PostPreview post={postData} history={this.props.history} />
           </div>
         )}
-        {!this.state.loaded && <h1>Loading...</h1>}
+        {!loaded && <h1>Loading...</h1>}
       </div>
     );
   }

@@ -4,13 +4,14 @@
 import React from "react";
 import { createID, prettyDate } from "../../../../services/helpers";
 import request from "../../../../services/api/axios/index";
+import { UserHeader } from "../UserHeader";
 
 export default class Posts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
-      posts: [],
+      data: [],
       params: {
         page: 0,
         perPage: 30
@@ -24,8 +25,8 @@ export default class Posts extends React.Component {
       .getPosts({
         params: this.state.params
       })
-      .then(posts => {
-        this.setState(posts);
+      .then(data => {
+        this.setState(data);
       })
       .catch(error => {
         this.props.history.push("/login");
@@ -33,34 +34,20 @@ export default class Posts extends React.Component {
       });
   }
 
-  // transition to a specific post
-  showFullPost(id) {
-    this.props.history.push(`/post/${id}`);
-  }
-
-  // go to post author
-  showUserProfile(id) {
-    this.props.history.push(`/user/${id}`);
-  }
-
   // render list of posts
   renderPosts = () => {
-    return this.state.posts.map(item => {
+    const { data } = this.state;
+    return data.map(item => {
       return (
         <div key={createID()}>
-          <div
-            onClick={() => {
-              this.showUserProfile(item.authorId);
-            }}
-          >
-            <img src={item.author.avatar} alt="" />
-            <span>{item.author.name}</span>
+          <div>
+            <UserHeader
+              name={item.author.name}
+              avatar={item.author.avatar}
+              onClick={() => this.props.history.push(`/user/${item.authorId}`)}
+            />
           </div>
-          <div
-            onClick={() => {
-              this.showFullPost(item.id);
-            }}
-          >
+          <div onClick={() => this.props.history.push(`/post/${item.id}`)}>
             <div>
               <span>{prettyDate(item.createdAt)}</span>
             </div>
@@ -70,11 +57,11 @@ export default class Posts extends React.Component {
             </div>
             <div>
               {item.images.map(img => (
-                <img key={createID()} src={img.src} alt="some value" />
+                <img key={createID()} src={img.src} alt="" />
               ))}
             </div>
             <div>
-              <span>Комментариев: </span>
+              <span>Comments: </span>
               {item.commentsCounter}
             </div>
           </div>
@@ -84,10 +71,11 @@ export default class Posts extends React.Component {
   };
 
   render() {
+    const { loaded } = this.state;
     return (
       <div>
-        {this.state.loaded && <div>{this.renderPosts()}</div>}
-        {!this.state.loaded && <h1>Loading...</h1>}
+        {loaded && <div>{this.renderPosts()}</div>}
+        {!loaded && <h1>Loading...</h1>}
       </div>
     );
   }
