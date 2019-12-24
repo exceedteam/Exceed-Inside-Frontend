@@ -45,7 +45,7 @@ export default class Event extends React.Component {
         <div>
           lists of subscribed users:
           {subscribedUsers.map(user => (
-            <div key={createID()}>{user.id}</div>
+            <div key={createID()}>{user}</div>
           ))}
         </div>
       </div>
