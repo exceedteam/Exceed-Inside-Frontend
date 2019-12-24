@@ -1,6 +1,6 @@
 import React from "react";
 import request from "../../../../services/api/axios/index";
-import { prettyDate } from "../../../../services/helpers";
+import { createID } from "../../../../services/helpers";
 import { UserHeader } from "../UserHeader";
 
 export default class Event extends React.Component {
@@ -19,6 +19,7 @@ export default class Event extends React.Component {
         id: this.state.id
       })
       .then(res => {
+        console.log(res)
         this.setState({ event: res.data, loaded: res.loaded });
       })
       .catch(error => {
@@ -27,8 +28,9 @@ export default class Event extends React.Component {
   }
 
   renderEvent = () => {
+    console.log("subscribedUsers", this.state.event.subscribedUsers)
     const { avatar, name } = this.state.event.author;
-    const { date, title, authorId } = this.state.event;
+    const { title, authorId, text, subscribedUsers } = this.state.event;
     return (
       <div>
         <div>
@@ -38,8 +40,14 @@ export default class Event extends React.Component {
             onClick={() => this.props.history.push(`/user/${authorId}`)}
           />
         </div>
-        <div>{title}</div>
-        <div>{prettyDate(date)}</div>
+        <div>title: {title}</div>
+        <div>text: {text}</div>
+        <div>
+          lists of subscribed users:
+          {subscribedUsers.map(user => (
+            <div key={createID()}>{user}</div>
+          ))}
+        </div>
       </div>
     );
   };

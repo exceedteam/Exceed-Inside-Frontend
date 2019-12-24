@@ -51,11 +51,13 @@ export default class Events extends React.Component {
               <span>CreatedAt: </span>
               {prettyDate(item.createdAt)}
             </div>
-            <div>
-              <span>Date: </span>
-              {prettyDate(item.date)}
-            </div>
+            {/* TODO add display data events */}
             <div>{item.title}</div>
+            <div>{item.text}</div>
+            <div>
+              <span>subscribed Users: </span>
+              {item.subscribedUsers.length}
+            </div>
           </div>
         </div>
       );
