@@ -148,6 +148,16 @@ const getEvent = event => {
   return findById(event, "event");
 };
 
+// const getEvent = event => {
+//   findById(event, "event").then(res => {
+//     return res.data.subscribedUsers.map(async user => {
+//       const users = await getAuthorById(user.id)
+//     } )
+//     // return res.
+//   });
+// };
+
+
 export {
   getPosts,
   getPost,
