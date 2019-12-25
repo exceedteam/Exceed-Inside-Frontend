@@ -1,13 +1,14 @@
-var React = require("react");
+import React from "react";
+import moment from "moment";
 
 const UserHeader = ({ avatar, name, date, onClick }) => {
   return (
-    <div onClick={onClick}>
-      <img src={avatar} alt="" />
+    <div >
+      <img src={avatar} alt="" onClick={onClick}/>
       <div>
-        <div>{name}</div>
+        <div onClick={onClick}>{name}</div>
       </div>
-      <span>{date}</span>
+      {date && <span>{moment(date).format("ddd L HH:mm")}</span>}
     </div>
   );
 };

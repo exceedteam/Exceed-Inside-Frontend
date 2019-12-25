@@ -2,6 +2,7 @@
   All create requests
 */
 import axios from "axios";
+import { getAuthorById } from "../get/index";
 const url = process.env.REACT_APP_API_URL;
 
 // create post
@@ -36,4 +37,37 @@ const createEvent = data => {
     });
 };
 
-export { createPost, createEvent };
+const createComment = comment => {
+  const token = localStorage.getItem("token");
+  return (
+    axios
+      .post(
+        `${url}/post/${comment.data.postId}/comment`,
+        {
+          text: comment.data.comment,
+          mentionedUser: comment.data.mentionedUser
+        },
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then(response => {
+        return response.data.map(async data => {
+          const author = await getAuthorById(data.authorId);
+          return {
+            ...data,
+            author
+          };
+        });
+      })
+      .then(posts => {
+        return Promise.all(posts);
+      })
+      // return all data
+      .then(data => {
+        return data;
+      })
+  );
+};
+
+export { createPost, createEvent, createComment };

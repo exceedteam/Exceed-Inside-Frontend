@@ -8,7 +8,7 @@ const url = process.env.REACT_APP_API_URL;
 const getAuthorById = async authorId => {
   const token = localStorage.getItem("token");
   const getAuthorId = await axios.get(`${url}/user/${authorId}`, {
-    headers: { authorization: token }
+    headers: { authorization: token },
   });
   const { firstName, lastName, avatar } = getAuthorId.data;
   return {
@@ -24,7 +24,10 @@ const findAll = (config, page) => {
     axios
       .get(`${url}/${page}`, {
         headers: { authorization: token },
-        params: config.params
+        params: {
+          page: 0,
+          perPage: 10
+        }
       })
       // find author of post/event
       .then(response => {
@@ -118,6 +121,11 @@ const getPostsOfUser = data => {
   return findItemsByAuthorId(data, "posts");
 };
 
+// get comments of post
+const getComment = post => {
+  return findAll(post.data.id, `post/${post.data.id}/comments`);
+};
+
 // get specific user profile
 const getUserProfile = config => {
   const token = localStorage.getItem("token");
@@ -157,13 +165,14 @@ const getEvent = event => {
 //   });
 // };
 
-
 export {
+  getAuthorById,
   getPosts,
   getPost,
   getUserProfile,
   getPostsOfUser,
   getAllEvents,
   getEvent,
-  getEventsOfUser
+  getEventsOfUser,
+  getComment,
 };

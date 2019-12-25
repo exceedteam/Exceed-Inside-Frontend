@@ -29,7 +29,7 @@ const PostPreview = ({ post, history }) => {
         <UserHeader
           name={post.author.name}
           avatar={post.author.avatar}
-          date={prettyDate(post.createdAt)}
+          date={post.createdAt}
           onClick={() => history.push(`/user/${post.authorId}`)}
         />
       </div>
