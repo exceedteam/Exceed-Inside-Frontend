@@ -44,13 +44,11 @@ export default class Posts extends React.Component {
             <UserHeader
               name={item.author.name}
               avatar={item.author.avatar}
+              date={item.createdAt}
               onClick={() => this.props.history.push(`/user/${item.authorId}`)}
             />
           </div>
           <div onClick={() => this.props.history.push(`/post/${item.id}`)}>
-            <div>
-              <span>{prettyDate(item.createdAt)}</span>
-            </div>
             <span>{item.title}</span>
             <div>
               <span> {item.text}</span>

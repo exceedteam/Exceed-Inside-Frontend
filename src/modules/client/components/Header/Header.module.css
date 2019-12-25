@@ -55,24 +55,24 @@
   composes: sizeDropdownItem;
 }
 
-.headerLoginned {
+.headerLogged {
   composes: header;
   /* composes: justify-betwen from "../../../styles/common/index.css"; */
   /* composes: align-items_center from "../../../styles/common/index.css"; */
 }
 
-.headerNotLoginned {
+.headerNotLogged {
   composes: header;
   /* composes: justify-end from "../../../styles/common/index.css"; */
   /* composes: align-items_center from "../../../styles/common/index.css"; */
 }
 
-.buttonLoginnedLeft {
+.buttonLoggedLeft {
   composes: button;
   composes: buttonLeft;
 }
 
-.buttonLoginnedRight {
+.buttonLoggedRight {
   composes: button;
   composes: buttonRight;
   composes: dropdown;
@@ -82,7 +82,7 @@
   /* composes: column from "../../../styles/common/index.css"; */
 }
 
-.buttonNotLoginned {
+.buttonNotLogged {
   composes: button;
   composes: buttonRight;
 }

@@ -25,7 +25,7 @@ export default class Header extends React.Component {
     const { isLogged } = this.props;
     if (isLogged) {
       return (
-        <Loginned
+        <Logged
           history={this.props.history}
           logout={this.logout}
           id={this.getId()}
@@ -33,7 +33,7 @@ export default class Header extends React.Component {
       );
     } else {
       return (
-        <NotLoginned
+        <NotLogged
           login={this.login}
           registration={this.registration}
           history={this.props.history}
@@ -42,17 +42,17 @@ export default class Header extends React.Component {
     }
   }
 }
-// If the User loginned in
-const Loginned = ({ logout, history, id }) => {
+// If the User logged in
+const Logged = ({ logout, history, id }) => {
   return (
-    <div className={styles.headerLoginned}>
+    <div className={styles.headerLogged}>
       <input
         type="button"
-        className={styles.buttonLoginnedLeft}
+        className={styles.buttonLoggedLeft}
         onClick={() => history.push("/")}
         value="Main page"
       />
-      <div className={styles.buttonLoginnedRight}>
+      <div className={styles.buttonLoggedRight}>
         <input type="button" className={styles.button} value="user" />
         <div className={styles.dropdownContent}>
           <div className={styles.column}>
@@ -93,19 +93,19 @@ const Loginned = ({ logout, history, id }) => {
   );
 };
 
-// If the User not loginned
-const NotLoginned = ({ history }) => {
+// If the User not logged
+const NotLogged = ({ history }) => {
   return (
-    <div className={styles.headerNotLoginned}>
+    <div className={styles.headerNotLogged}>
       <input
         type="button"
-        className={styles.buttonNotLoginned}
+        className={styles.buttonNotLogged}
         onClick={() => history.push("/login")}
         value="Sign in"
       />
       <input
         type="button"
-        className={styles.buttonNotLoginned}
+        className={styles.buttonNotLogged}
         onClick={() => history.push("/registration")}
         value="Registration"
       />
