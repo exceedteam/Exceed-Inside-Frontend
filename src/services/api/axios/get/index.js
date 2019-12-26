@@ -2,6 +2,7 @@
   All get requests
 */
 import axios from "axios";
+import { promises } from "dns";
 const url = process.env.REACT_APP_API_URL;
 
 // search for post authors (returns post name and avatar)
@@ -39,8 +40,8 @@ const findAll = (config, page) => {
           };
         });
       })
-      .then(posts => {
-        return Promise.all(posts);
+      .then(promises => {
+        return Promise.all(promises);
       })
       // return all data
       .then(data => {
@@ -55,6 +56,27 @@ const findAll = (config, page) => {
   );
 };
 
+// search all users and return firstName, lastName and id
+const getAllNameOfUsers = users => {
+  const token = localStorage.getItem("token");
+  return axios
+    .get(`${url}/users`, {
+      headers: { authorization: token },
+      params: {
+        page: 0,
+        perPage: 10
+      }
+    })
+    .then(response => {
+      return response.data.map(item => {
+        const { firstName, lastName } = item;
+        return { display: firstName + " " + lastName, id: item.id };
+      });
+      // return response;
+    });
+};
+
+// search elemets by id
 const findItemsByAuthorId = (config, page) => {
   const token = localStorage.getItem("token");
   return (
@@ -86,6 +108,7 @@ const findItemsByAuthorId = (config, page) => {
   );
 };
 
+// search element by id
 const findById = (config, page) => {
   const token = localStorage.getItem("token");
   return (
@@ -156,15 +179,6 @@ const getEvent = event => {
   return findById(event, "event");
 };
 
-// const getEvent = event => {
-//   findById(event, "event").then(res => {
-//     return res.data.subscribedUsers.map(async user => {
-//       const users = await getAuthorById(user.id)
-//     } )
-//     // return res.
-//   });
-// };
-
 export {
   getAuthorById,
   getPosts,
@@ -175,4 +189,5 @@ export {
   getEvent,
   getEventsOfUser,
   getComment,
+  getAllNameOfUsers
 };

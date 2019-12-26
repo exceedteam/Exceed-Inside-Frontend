@@ -19,7 +19,6 @@ export default class Event extends React.Component {
         id: this.state.id
       })
       .then(res => {
-        console.log(res)
         this.setState({ event: res.data, loaded: res.loaded });
       })
       .catch(error => {
@@ -28,7 +27,6 @@ export default class Event extends React.Component {
   }
 
   renderEvent = () => {
-    console.log("subscribedUsers", this.state.event.subscribedUsers)
     const { avatar, name } = this.state.event.author;
     const { title, authorId, text, subscribedUsers } = this.state.event;
     return (

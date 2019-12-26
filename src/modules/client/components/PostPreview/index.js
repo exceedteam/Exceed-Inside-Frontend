@@ -1,5 +1,4 @@
 import React from "react";
-import { prettyDate } from "../../../../services/helpers";
 import SimpleMDE from "react-simplemde-editor";
 import { UserHeader} from "../UserHeader"
 
@@ -18,7 +17,6 @@ const PostPreview = ({ post, history }) => {
     });
 
     editor.value(text);
-
     editor.togglePreview(editor);
   };
 
@@ -41,6 +39,7 @@ const PostPreview = ({ post, history }) => {
           toolbar: false,
           status: false
         }}
+        onClick={() => history.push(`/post/${post.id}`)}
       />
       <div>
         <span>Comments: </span>

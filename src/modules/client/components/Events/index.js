@@ -1,5 +1,6 @@
 import React from "react";
-import { createID, prettyDate } from "../../../../services/helpers";
+import { createID } from "../../../../services/helpers";
+import moment from "moment";
 import request from "../../../../services/api/axios/index";
 import { UserHeader } from "../UserHeader";
 
@@ -30,6 +31,7 @@ export default class Events extends React.Component {
       });
   }
 
+  // display all events on the calendar
   renderEvents = () => {
     const { data } = this.state;
     return data.map(item => {
@@ -49,7 +51,7 @@ export default class Events extends React.Component {
           >
             <div>
               <span>CreatedAt: </span>
-              {prettyDate(item.createdAt)}
+              {moment(item.createdAt).format("L")}
             </div>
             {/* TODO add display data events */}
             <div>{item.title}</div>

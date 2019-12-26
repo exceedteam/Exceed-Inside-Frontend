@@ -4,8 +4,8 @@
 import React from "react";
 import request from "../../../../services/api/axios/index";
 import { PostPreview } from "../PostPreview";
-import { createID } from "../../../../services/helpers";
-import { UserHeader } from "../UserHeader";
+import DisplayComments from "../DisplayComments/index";
+import { MentionsInput, Mention } from "react-mentions";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -16,17 +16,14 @@ export default class Post extends React.Component {
       id: this.props.match.params.id,
       postData: {},
       comments: [],
-      params: {
-        page: 0,
-        perPage: 10
-      },
       commentText: "",
-      mentionedUser: ""
+      mentionedUser: "",
+      userList: []
     };
   }
 
-  // search for a specific post in the DB
   componentDidMount() {
+    // search for a specific post in the DB
     request
       .getPost({
         id: this.state.id
@@ -45,18 +42,32 @@ export default class Post extends React.Component {
     request
       .getComment({
         data: {
-          id: this.state.id,
-          params: this.state.params
+          id: this.state.id
         }
       })
       .then(res => {
         this.setState({
           comments: res.data,
-          loadedComments: true,
+          loadedComments: true
         });
       })
       .catch(err => {
         console.log("error receiving comments", err);
+      });
+
+    // get name and id of all users
+    request
+      .getAllNameOfUsers({
+        params: {
+          page: 0,
+          perPage: 100
+        }
+      })
+      .then(data => {
+        this.setState({ userList: data });
+      })
+      .catch(e => {
+        console.log("error", e);
       });
   }
 
@@ -71,7 +82,7 @@ export default class Post extends React.Component {
   submit = event => {
     event.preventDefault();
     const { id, commentText, mentionedUser } = this.state;
-    this.setState({ loadedComments: false });
+    this.setState({ loadedComments: false, commentText: "" });
     request
       .createComment({
         data: {
@@ -81,17 +92,19 @@ export default class Post extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ comments: res, loadedComments: true, commentText: "" });
+        this.setState({ comments: res, loadedComments: true});
       });
   };
 
   render() {
     const {
       loaded,
-      loadedComments,
       postData,
+      commentText,
       comments,
-      commentText
+      id,
+      userList,
+      loadedComments
     } = this.state;
     return (
       <div>
@@ -102,36 +115,28 @@ export default class Post extends React.Component {
               <PostPreview post={postData} history={this.props.history} />
             </div>
             {/* render comments of post */}
-            {loadedComments && (
-              <ul>
-                {comments.map(comment => (
-                  <li key={createID()}>
-                    {/* header with data about comment author */}
-                    <UserHeader
-                      name={comment.author.name}
-                      avatar={comment.author.avatar}
-                      date={comment.createdAt}
-                      onClick={() =>
-                        this.props.history.push(`/user/${comment.authorId}`)
-                      }
-                    />
-                    {/* comment text */}
-                    {comment.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {!loadedComments && <h1>Loading comments...</h1>}
+            <DisplayComments
+              id={id}
+              comments={comments}
+              loadedComments={loadedComments}
+            />
             {/* form for creating the new comment */}
             <form onSubmit={this.submit}>
-              <label htmlFor="commentText">
-                <input
-                  id="commentText"
-                  value={commentText}
-                  placeholder="Write a comment"
-                  onChange={this.updateForm}
+              <MentionsInput
+                value={commentText}
+                onChange={event =>
+                  this.setState({ commentText: event.target.value })
+                }
+              >
+                <Mention
+                  trigger="@"
+                  data={userList}
+                  displayTransform={(id, display) => {
+                    console.log(display);
+                    return "@" + display;
+                  }}
                 />
-              </label>
+              </MentionsInput>
               <input type="submit" value="submit comment" />
             </form>
           </div>

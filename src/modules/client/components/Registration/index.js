@@ -55,7 +55,7 @@ export default class Registration extends React.Component {
       for (let key in errors) {
         arrOfErr.push({ err: errors[key] });
       }
-      return arrOfErr.map(item => <li key={createID("name")}>{item.err}</li>);
+      return arrOfErr.map(item => <li key={createID()}>{item.err}</li>);
     }
   }
 

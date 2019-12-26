@@ -22,6 +22,7 @@ const createPost = data => {
     });
 };
 
+// create the new event
 const createEvent = data => {
   const token = localStorage.getItem("token");
   return axios
@@ -37,6 +38,7 @@ const createEvent = data => {
     });
 };
 
+// create the new comment of post
 const createComment = comment => {
   const token = localStorage.getItem("token");
   return (
@@ -60,8 +62,8 @@ const createComment = comment => {
           };
         });
       })
-      .then(posts => {
-        return Promise.all(posts);
+      .then(comments => {
+        return Promise.all(comments);
       })
       // return all data
       .then(data => {
