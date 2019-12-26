@@ -1,7 +1,7 @@
 import React from "react";
 import request from "../../../../services/api/axios/index";
-import { createID, prettyDate } from "../../../../services/helpers";
-import { UserHeader } from "../UserHeader";
+import { createID } from "../../../../services/helpers";
+import { PostPreview } from "../PostPreview";
 
 export default class PostsOfUser extends React.Component {
   constructor(props) {
@@ -35,51 +35,21 @@ export default class PostsOfUser extends React.Component {
       });
   }
 
-  // render a list of user posts
-  renderPostsOfUser = () => {
-    const { postsOfUser, id } = this.state;
-    return postsOfUser.map(item => {
-      return (
-        <div key={createID()}>
-           <div>
-            <UserHeader
-              name={item.author.name}
-              avatar={item.author.avatar}
-              onClick={() => this.props.history.push(`/user/${id}`)}
-            />
-          </div>
-          <div
-            onClick={() => {
-              this.props.history.push(`/post/${item.id}`);
-            }}
-          >
-            <div>
-              <span>{prettyDate(item.createdAt)}</span>
-            </div>
-            <span>{item.title}</span>
-            <div>
-              <span> {item.text}</span>
-            </div>
-            <div>
-              {item.images.map(img => (
-                <img key={createID()} src={img.src} alt="" />
-              ))}
-            </div>
-            <div>
-              <span>Комментариев: </span>
-              {item.commentsCounter}
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
-
   render() {
-    const { loaded } = this.state;
+    const { loaded, postsOfUser } = this.state;
     return (
       <div>
-        {loaded && <div>{this.renderPostsOfUser()}</div>}
+        {loaded && (
+          <div>
+            {postsOfUser.map(item => {
+              return (
+                <div key={createID()}>
+                  <PostPreview post={item} history={this.props.history} />
+                </div>
+              );
+            })}
+          </div>
+        )}
         {!loaded && <h1>Loading...</h1>}
       </div>
     );

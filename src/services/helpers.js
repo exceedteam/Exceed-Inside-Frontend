@@ -10,9 +10,3 @@ export const getIslogin = () => {
   if (token) isLogged = true;
   return isLogged
 }
-
-// converts the date to a more pleasant look
-export const prettyDate = item => {
-  let isDate = item.replace(/[T]|[0-9Z.:]{8}$/gi, " ");
-  return isDate;
-};

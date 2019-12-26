@@ -2,9 +2,9 @@
   Component whith which the application Main page is rendered 
 */
 import React from "react";
-import { createID, prettyDate } from "../../../../services/helpers";
+import { createID } from "../../../../services/helpers";
 import request from "../../../../services/api/axios/index";
-import { UserHeader } from "../UserHeader";
+import { PostPreview } from "../PostPreview";
 
 export default class Posts extends React.Component {
   constructor(props) {
@@ -34,45 +34,21 @@ export default class Posts extends React.Component {
       });
   }
 
-  // render list of posts
-  renderPosts = () => {
-    const { data } = this.state;
-    return data.map(item => {
-      return (
-        <div key={createID()}>
-          <div>
-            <UserHeader
-              name={item.author.name}
-              avatar={item.author.avatar}
-              date={item.createdAt}
-              onClick={() => this.props.history.push(`/user/${item.authorId}`)}
-            />
-          </div>
-          <div onClick={() => this.props.history.push(`/post/${item.id}`)}>
-            <span>{item.title}</span>
-            <div>
-              <span> {item.text}</span>
-            </div>
-            <div>
-              {item.images.map(img => (
-                <img key={createID()} src={img.src} alt="" />
-              ))}
-            </div>
-            <div>
-              <span>Comments: </span>
-              {item.commentsCounter}
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
-
   render() {
-    const { loaded } = this.state;
+    const { loaded, data } = this.state;
     return (
       <div>
-        {loaded && <div>{this.renderPosts()}</div>}
+        {loaded && (
+          <div>
+            {data.map(item => {
+              return (
+                <div key={createID()}>
+                  <PostPreview post={item} history={this.props.history} />
+                </div>
+              );
+            })}
+          </div>
+        )}
         {!loaded && <h1>Loading...</h1>}
       </div>
     );

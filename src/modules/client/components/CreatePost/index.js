@@ -16,6 +16,7 @@ export default class Createpost extends React.Component {
     };
   }
 
+  // state update
   handleChange = value => {
     this.setState({ text: value });
   };

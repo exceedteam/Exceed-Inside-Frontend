@@ -1,6 +1,7 @@
 import React from "react";
 import request from "../../../../services/api/axios/index";
-import { prettyDate, createID } from "../../../../services/helpers";
+import { createID } from "../../../../services/helpers";
+import moment from "moment";
 
 export default class EventsOfUser extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class EventsOfUser extends React.Component {
             }}
           >
             <div>
-              <span>{prettyDate(item.createdAt)}</span>
+              <span>{moment(item.createdAt).format("ddd L HH:mm")}</span>
             </div>
             <span>{item.title}</span>
           </div>
