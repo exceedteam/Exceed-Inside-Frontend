@@ -26,7 +26,7 @@ const createPost = data => {
 const createEvent = data => {
   const token = localStorage.getItem("token");
   return axios
-    .post(`${url}/event`, data, {
+    .post(`${url}/event`, data  , {
       headers: { authorization: token }
     })
     .then(res => {

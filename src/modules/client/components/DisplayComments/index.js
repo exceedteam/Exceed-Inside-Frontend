@@ -31,8 +31,9 @@ export default class DisplayComments extends React.Component {
                   name={comment.author.name}
                   avatar={comment.author.avatar}
                   date={comment.createdAt}
-                  onClick={() =>
+                  onClick={() =>{
                     this.props.history.push(`/user/${comment.authorId}`)
+                  }
                   }
                 />
                 {/* comment text with metioned users*/}
@@ -40,7 +41,6 @@ export default class DisplayComments extends React.Component {
                   <Mention
                     trigger="@"
                     displayTransform={(id, display) => {
-                      console.log(display);
                       return "@" + display;
                     }}
                   />

@@ -92,7 +92,7 @@ export default class Post extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ comments: res, loadedComments: true});
+        this.setState({ comments: res, loadedComments: true });
       });
   };
 
@@ -119,6 +119,7 @@ export default class Post extends React.Component {
               id={id}
               comments={comments}
               loadedComments={loadedComments}
+              history={this.props.history}
             />
             {/* form for creating the new comment */}
             <form onSubmit={this.submit}>
@@ -132,7 +133,6 @@ export default class Post extends React.Component {
                   trigger="@"
                   data={userList}
                   displayTransform={(id, display) => {
-                    console.log(display);
                     return "@" + display;
                   }}
                 />

@@ -1,76 +1,99 @@
 import React from "react";
-import { createID } from "../../../../services/helpers";
-import moment from "moment";
+import MyCalendar from "../Calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import request from "../../../../services/api/axios/index";
-import { UserHeader } from "../UserHeader";
+import jwtDecode from "jwt-decode";
 
-export default class Events extends React.Component {
+const decoded = jwtDecode(localStorage.getItem("token")).id;
+
+export default class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
-      data: [],
-      params: {
-        page: 0,
-        perPage: 10
-      }
+      eventsOfUser: [],
+      allEvents: [],
+      newEvent: {
+        selectedDays: []
+      },
+      list: []
     };
   }
 
+  // get all events and events of user
   componentDidMount() {
     request
       .getAllEvents({
         params: this.state.params
       })
-      .then(data => {
-        this.setState(data);
+      .then(res => {
+        this.setState({ allEvents: res.data, list: res.data, loaded: true });
       })
       .catch(error => {
         this.props.history.push("/login");
         console.log("err", error);
       });
+
+    request
+      .getEventsOfUser({
+        inputData: {
+          id: decoded,
+          params: this.state.params
+        }
+      })
+      .then(res => {
+        this.setState({ eventsOfUser: res.data, loaded: true });
+      })
+      .catch(error => {
+        console.log("err", error);
+      });
   }
 
-  // display all events on the calendar
-  renderEvents = () => {
-    const { data } = this.state;
-    return data.map(item => {
-      return (
-        <div key={createID()}>
-          <div>
-            <UserHeader
-              name={item.author.name}
-              avatar={item.author.avatar}
-              onClick={() => this.props.history.push(`/user/${item.authorId}`)}
-            />
-          </div>
-          <div
-            onClick={() => {
-              this.props.history.push(`/event/${item.id}`);
-            }}
-          >
-            <div>
-              <span>CreatedAt: </span>
-              {moment(item.createdAt).format("L")}
-            </div>
-            {/* TODO add display data events */}
-            <div>{item.title}</div>
-            <div>{item.text}</div>
-            <div>
-              <span>subscribed Users: </span>
-              {item.subscribedUsers.length}
-            </div>
-          </div>
-        </div>
-      );
-    });
+  // switch between user events and all events
+  mySwitchFunction = param => {
+    switch (param) {
+      case "All":
+        return this.setState({ list: this.state.allEvents });
+      case "User":
+        return this.setState({ list: this.state.eventsOfUser });
+      default:
+        break;
+    }
   };
 
   render() {
     const { loaded } = this.state;
     return (
       <div>
-        {loaded && <div>{this.renderEvents()}</div>}
+        {loaded && (
+          <div>
+            <div>
+              <p>
+                <input
+                  type="radio"
+                  name="event"
+                  value="All"
+                  onClick={() => {
+                    this.mySwitchFunction("All");
+                  }}
+                />
+                {" All events"}
+              </p>
+              <p>
+                <input
+                  type="radio"
+                  name="event"
+                  value="User"
+                  onClick={() => {
+                    this.mySwitchFunction("User");
+                  }}
+                />
+                {" Events of User"}
+              </p>
+            </div>
+            <MyCalendar events={this.state.list} />
+          </div>
+        )}
         {!loaded && <h1>Loading...</h1>}
       </div>
     );

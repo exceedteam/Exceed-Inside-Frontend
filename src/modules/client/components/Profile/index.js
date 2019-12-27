@@ -32,7 +32,16 @@ export default class Profile extends React.Component {
 
   // render personal user data
   render() {
-    const { avatar, firstName, lastName, email, age, position, team, aboutInfo } = this.state.profileData;
+    const {
+      avatar,
+      firstName,
+      lastName,
+      email,
+      age,
+      position,
+      team,
+      aboutInfo
+    } = this.state.profileData;
     const { loaded, id } = this.state;
     return (
       <div>
@@ -76,7 +85,6 @@ export default class Profile extends React.Component {
               }}
               value="all posts of user"
             />
-            <input type="button" onClick={() => { this.props.history.push(`/user/${id}/events`); }} value="all events of user" />
           </div>
         )}
         {!loaded && <h1>Loading...</h1>}

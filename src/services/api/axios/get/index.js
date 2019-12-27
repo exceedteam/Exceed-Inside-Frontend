@@ -2,14 +2,13 @@
   All get requests
 */
 import axios from "axios";
-import { promises } from "dns";
 const url = process.env.REACT_APP_API_URL;
 
 // search for post authors (returns post name and avatar)
 const getAuthorById = async authorId => {
   const token = localStorage.getItem("token");
   const getAuthorId = await axios.get(`${url}/user/${authorId}`, {
-    headers: { authorization: token },
+    headers: { authorization: token }
   });
   const { firstName, lastName, avatar } = getAuthorId.data;
   return {

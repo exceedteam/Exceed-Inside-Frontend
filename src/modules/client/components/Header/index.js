@@ -78,13 +78,7 @@ const Logged = ({ logout, history, id }) => {
               type="button"
               className={styles.headerButton}
               onClick={() => history.push("/events")}
-              value="All events"
-            />
-            <input
-              type="button"
-              className={styles.headerButton}
-              onClick={() => history.push("/event")}
-              value="new event"
+              value="Events"
             />
           </div>
         </div>

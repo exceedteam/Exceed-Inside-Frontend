@@ -10,9 +10,6 @@ import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
 import PostsOfUser from "./components/PostsOfUser";
 import Events from "./components/Events";
-import Event from "./components/Event";
-import CreateEvent from "./components/CreateEvent";
-import EventsOfUser from "./components/EventsOfUser"
 
 import { Switch, Route, Router, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -46,9 +43,6 @@ export default class Wrapper extends React.Component {
             <Route exact path="/createPost" component={CreatePost} />
             <Route exact path="/user/:id/posts" component={PostsOfUser} />
             <Route exact path="/events" component={Events} />
-            <Route exact path="/event/:id" component={Event} />
-            <Route exact path="/event" component={CreateEvent} />
-            <Route exact path="/user/:id/events" component={EventsOfUser} />
           </WithToken>
         </Switch>
         <footer></footer>
