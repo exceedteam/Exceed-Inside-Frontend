@@ -1,0 +1,35 @@
+.container {
+  background-color: #FFFFFF;
+  padding: 1em 1em 2em;
+  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  max-width: 680px;
+  width: 100%;
+  height: fit-content;
+}
+
+.content {
+  height: fit-content;
+}
+
+.content img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  composes: button from "../../../styles/common/index.css";
+  color: #FFF;
+  background-color: #06799F;
+  width: 50%;
+}
+
+.button:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+}

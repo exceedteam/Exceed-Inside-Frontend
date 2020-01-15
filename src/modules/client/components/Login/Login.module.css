@@ -1,0 +1,77 @@
+.button {
+ composes: button from "../../../styles/common/index.css";
+  color: #FFF;
+  background-color: #06799F;
+}
+
+.button:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+}
+
+.container {
+  display: flex;
+  -webkit-display: box;
+  -moz-display: box;
+  -ms-display: flexbox;
+  -webkit-display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  padding: 6%;
+  margin: 0;
+  width: 100%;
+}
+
+.form {
+  background-color: #FFF;
+  padding: 2em 2em 3em;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+}
+
+.input {
+  color: #384047;
+  background-color: #e8eeef;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+  border: none;
+  border-radius: 4px;
+  padding: 1em;
+  margin: 0.6em 0;
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.link {
+  font-size: 0.98em;
+  color: #8a97a0;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #06799F;
+}
+
+.title {
+  font-weight: 700;
+  color: #384047;
+  text-align: center;
+  line-height: 1.5em;
+  margin: 0.2em 0 1.2em 0;
+}
+
+.error {
+  border: #DF004F solid 0.05em;
+}
+.errorMessage {
+  color: #DF004F;
+}

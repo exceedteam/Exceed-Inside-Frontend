@@ -1,0 +1,30 @@
+.postHeader {
+  height: 70px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+.clickable {
+  cursor: pointer;
+}
+.avatar {
+  composes: clickable;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  vertical-align: top;
+}
+
+.info {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.date {
+  color: #939393;
+}
+

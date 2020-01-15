@@ -1,0 +1,134 @@
+.commonForm__label {
+  height: 4em;
+  width: 15em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0.3em 0;
+}
+
+.commonForm__input {
+  border: 0.05em solid #cccccc;
+  border-radius: 0.2em;
+  outline: none;
+  height: 2.3em;
+  color: #cccccc;
+  font-size: 1.15em;
+  padding-left: 1em;
+  font-family: Tahoma;
+  transition: border 0.5s
+}
+
+.commonForm__input.error {
+  border: red solid 0.05em;
+}
+
+.commonForm__input:focus {
+  color: #201e1e;
+  border: 0.05em solid #464343;
+}
+
+.commonForm__input:hover {
+  color: #201e1e;
+  border: 0.05em solid #464343
+}
+
+.loginForm__button_item {
+  text-transform: uppercase;
+  height: 3em;
+  width: 18em;
+  text-align: center;  
+  background-color: rgb(245, 245, 245);
+  border: 0.1em solid rgb(245, 245, 245);
+  transition: background-color 0.5s;
+  font-family: inherit;
+  margin: 0.3em 0;
+  color: rgba(1,1,1,0.7);
+  cursor: pointer;
+}
+
+.loginForm__button_item:hover {
+  background-color: #C0C0C0;
+  border: 0.1em solid #C0C0C0;
+}
+
+.error-message {
+  margin: 0.2em 0;
+  color: red;
+  font-size: 0.8em;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.justify-betwen {
+  justify-content: space-between;
+}
+
+.align-items_center {
+  align-items: center;
+}
+
+.radius {
+  border-radius: 0.2em;
+}
+
+.shadow_form {
+  box-shadow: 0 0 0.6em rgba(0,0,0,0.5);
+}
+
+.shadow_item {
+  box-shadow: 0 0 0.3em rgba(0,0,0,0.3);
+}
+
+blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 17.5px;
+  border-left: 5px solid #eee;
+}
+.button {
+  font-weight: 600;
+  text-align: center;
+  font-size: 19px;
+  /*color: #FFF;*/
+  /*background-color: #4bc970;*/
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 200ms ease-in-out;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+.button:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+}

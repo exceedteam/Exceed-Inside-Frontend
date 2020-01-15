@@ -1,0 +1,25 @@
+.pageWrapper {
+  width: 680px;
+}
+.button {
+  composes: button from "../../../styles/common/index.css";
+  width: 50%;
+  color: #FFF;
+  background-color: #06799F;
+  display: flex;
+  justify-self: center;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.post {
+  width: 100%;
+}

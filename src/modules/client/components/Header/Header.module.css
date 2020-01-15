@@ -1,0 +1,78 @@
+.header {
+  width: 100%;
+  font-family: inherit;
+  border-radius: 0.2em;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  will-change: top;
+}
+
+.dropdown:hover .subMenu {
+  opacity: 1;
+}
+
+.button {
+  composes: button from "../../../styles/common/index.css";
+  color: #FFF;
+  background-color: #06799F;
+  width: 125px ;
+}
+
+.headerLogged {
+  composes: header;
+  composes: justify-betwen from "../../../styles/common/index.css";
+  composes: align-items_center from "../../../styles/common/index.css";
+}
+
+.headerNotLogged {
+  composes: header;
+  composes: justify-end from "../../../styles/common/index.css";
+  composes: align-items_center from "../../../styles/common/index.css";
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 40px;
+}
+
+.navLogged {
+  composes: nav;
+  max-width: 500px;
+}
+
+.navNotLogged {
+  composes: nav;
+  max-width: 350px;
+}
+
+.subMenu {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  position: fixed;
+  transition: opacity .3s;
+  opacity: 0;
+  z-index: 10;
+}
+
+.subMenu .button {
+  margin: 5px 0;
+  height: 100%;
+  
+}
+.subMenu li {
+
+}
+.notActive {
+display: none;
+}
