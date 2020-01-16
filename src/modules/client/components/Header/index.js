@@ -4,8 +4,10 @@
 import React from "react";
 import styles from "./Header.module.css";
 import jwtDecode from "jwt-decode";
+import { connect } from "react-redux";
+import { clearUserProfile } from "../../../redux/actions/users/edit";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +23,7 @@ export default class Header extends React.Component {
 
   // Removing a token from the local storage and switching to the login page
   logout = () => {
+    this.props.clearUserProfile();
     this.props.handleLogin(false);
     this.props.history.push("/login");
     localStorage.removeItem("token");
@@ -134,3 +137,5 @@ const NotLogged = ({ history }) => {
     </div>
   );
 };
+
+export default connect(null, { clearUserProfile })(Header);

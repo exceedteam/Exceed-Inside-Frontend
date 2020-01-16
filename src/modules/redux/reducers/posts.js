@@ -11,7 +11,13 @@ import {
   // for post page
   FETCH_POST_PROCESS,
   FETCH_POST_SUCCESS,
-  FETCH_POST_FAIL
+  FETCH_POST_FAIL,
+  // for posts of user
+  FETCH_ALL_POSTS_OF_USER_PROCESS,
+  FETCH_ALL_POSTS_OF_USER_SUCCESS,
+  FETCH_ALL_POSTS_OF_USER_FAIL,
+  CLEAR_ALL_POSTS_OF_USER,
+  CLEAR_CURRENT_POST
 } from "../actionTypes";
 
 const initialState = {
@@ -20,6 +26,9 @@ const initialState = {
   currentPostPreview: null,
   loading: false,
   postLoaded: false,
+  errorsPostsOfUser: null,
+  postsOfUser: [],
+  loadingPostsOfUser: false
 };
 
 export default function(state = initialState, action) {
@@ -32,14 +41,6 @@ export default function(state = initialState, action) {
         loading: true
       };
     }
-    case FETCH_ALL_POSTS_SUCCESS: {
-      const { posts } = action.payload;
-      return {
-        ...state,
-        posts: [...state.posts, ...posts],
-        loading: false
-      };
-    }
     case CREATE_POST_FAIL:
     case FETCH_ALL_POSTS_FAIL:
     case FETCH_POST_FAIL: {
@@ -50,19 +51,12 @@ export default function(state = initialState, action) {
         loading: false
       };
     }
-    case FETCH_LIKE_FROM_SOCKET: {
-      const { likeCounter, dislikeCounter, id } = action.payload;
-      const posts = state.posts;
-      posts.map(post => {
-        if (post.id === id) {
-          post.likeCounter = likeCounter;
-          post.dislikeCounter = dislikeCounter;
-        }
-        return post;
-      });
+    case FETCH_ALL_POSTS_SUCCESS: {
+      const { posts } = action.payload;
       return {
         ...state,
-        posts: [...posts]
+        posts: [...state.posts, ...posts],
+        loading: false
       };
     }
     case CREATE_POST_SUCCESS: {
@@ -71,7 +65,7 @@ export default function(state = initialState, action) {
         ...state,
         posts: [post, ...state.posts],
         loading: false,
-        postLoaded: true,
+        postLoaded: true
       };
     }
     case EDIT_DISLIKE_OF_POST_SUCCESS:
@@ -80,14 +74,13 @@ export default function(state = initialState, action) {
         ...state
       };
     }
-
     case FETCH_POST_SUCCESS: {
       const { id, post } = action.payload;
       let { currentPostPreview } = state;
       if (!post) {
         currentPostPreview = state.posts.filter(post => post.id === id)[0];
       } else {
-        currentPostPreview = post
+        currentPostPreview = post;
       }
       return {
         ...state,
@@ -95,7 +88,65 @@ export default function(state = initialState, action) {
         loading: false
       };
     }
+    case CLEAR_CURRENT_POST: {
+      return {
+        ...state,
+        currentPostPreview: null
+      };
+    }
+    case CLEAR_ALL_POSTS_OF_USER: {
+      return {
+        ...state,
+        postsOfUser: []
+      };
+    }
+    case FETCH_LIKE_FROM_SOCKET: {
+      const { likeCounter, dislikeCounter, id } = action.payload;
+      
+      const {posts, currentPostPreview} = state;
+      posts.map(post => {
+        if (post.id === id) {
+          post.likeCounter = likeCounter;
+          post.dislikeCounter = dislikeCounter;
+        }
+        return post;
+      });
 
+      if(!!currentPostPreview && currentPostPreview.id === id) {
+        currentPostPreview.likeCounter = likeCounter;
+        currentPostPreview.dislikeCounter = dislikeCounter;
+      }
+
+      return {
+        ...state,
+        posts: [...posts],
+        currentPostPreview: currentPostPreview
+      };
+    }
+
+    // posts of user
+    case FETCH_ALL_POSTS_OF_USER_PROCESS: {
+      return {
+        ...state,
+        loadingPostsOfUser: true
+      };
+    }
+    case FETCH_ALL_POSTS_OF_USER_SUCCESS: {
+      const { postsOfUser } = action.payload;
+      return {
+        ...state,
+        postsOfUser: [...state.postsOfUser, ...postsOfUser],
+        loadingPostsOfUser: false
+      };
+    }
+    case FETCH_ALL_POSTS_OF_USER_FAIL: {
+      const { errorsPostsOfUser } = action.payload;
+      return {
+        ...state,
+        errorsPostsOfUser: errorsPostsOfUser,
+        loadingPostsOfUser: false
+      };
+    }
     default:
       return state;
   }

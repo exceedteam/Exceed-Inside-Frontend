@@ -22,7 +22,16 @@ class Posts extends React.Component {
 
   // request to display all posts
   componentDidMount() {
-    if (!this.props.postLoaded) this.receivePosts();
+    if (!this.props.postLoaded) {
+    const { params } = this.state;
+      this.receivePosts();
+      this.setState({
+        params: {
+          ...params,
+          page: params.page + 1
+        }
+      });
+    } 
   }
 
   receivePosts = () => {

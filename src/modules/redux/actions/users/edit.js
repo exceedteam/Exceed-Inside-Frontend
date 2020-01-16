@@ -3,6 +3,7 @@ import {
   EDIT_USER_PROFILE_FAIL,
   EDIT_USER_PROFILE_PROCESS,
   EDIT_USER_PROFILE_SUCCESS,
+  CLEAR_USER_PROFILE
 } from "../../actionTypes";
 import axios from "axios";
 
@@ -46,5 +47,12 @@ export const editUserProfileFail = (error) => {
   return {
     type: EDIT_USER_PROFILE_FAIL,
     payload: { error }
+  }
+};
+
+// when logout the account, delete user data from the store
+export const clearUserProfile = () => {
+  return {
+    type: CLEAR_USER_PROFILE,
   }
 };

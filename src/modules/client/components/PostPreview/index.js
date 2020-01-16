@@ -1,11 +1,12 @@
 import React from "react";
 import SimpleMDE from "react-simplemde-editor";
-import { PostHeader } from "../PostHeader"
-import styles from "./PostPreview.module.css"
-import axios from "axios";
+import { PostHeader } from "../PostHeader";
+import styles from "./PostPreview.module.css";
+import { connect } from "react-redux";
+import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
 
 // common function for rendering one height with simpleMDE
-const PostPreview = ({ post, history, loading, errors }) => {
+const PostPreview = ({ post, history, likePost, dislikePost }) => {
   const getInstance = editor => {
     // You can now store and manipulate the simplemde instance.
     let { images, text } = post;
@@ -17,24 +18,18 @@ const PostPreview = ({ post, history, loading, errors }) => {
       const fromIdtoImage = new RegExp(imageId);
       text = text.replace(fromIdtoImage, imageURL);
     });
-    
     editor.value(text);
     editor.togglePreview(editor);
   };
-  
-  //TODO move to redux
+
   const setLike = () => {
-    const url = process.env.REACT_APP_API_URL;
-    const token = localStorage.getItem("token");
-    axios.put(`${url}/post/${post.id}/like`, {}, { headers: { authorization: token } }).then();
+    likePost(post.id);
   };
-  
+
   const setDislike = () => {
-    const url = process.env.REACT_APP_API_URL;
-    const token = localStorage.getItem("token");
-    axios.put(`${url}/post/${post.id}/dislike`, {}, { headers: { authorization: token } }).then();
+    dislikePost(post.id);
   };
-  
+
   return (
     <div className={styles.post}>
       <div>
@@ -55,14 +50,19 @@ const PostPreview = ({ post, history, loading, errors }) => {
         onClick={() => history.push(`/post/${post.id}`)}
       />
       <div className={styles.likes}>
-        <span className={styles.clickable} onClick={setLike}>Like: </span>
+        <span className={styles.clickable} onClick={setLike}>
+          Like:{" "}
+        </span>
         {post.likeCounter}
-        <span className={styles.clickable} onClick={setDislike}>Dislike: </span>
+        <span className={styles.clickable} onClick={setDislike}>
+          Dislike:{" "}
+        </span>
         {post.dislikeCounter}
+        <span>Comments: </span>
+        {post.commentsCounter}
       </div>
     </div>
   );
 };
 
-
-export default PostPreview;
+export default connect(null, { likePost, dislikePost })(PostPreview);

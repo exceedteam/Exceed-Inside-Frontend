@@ -5,6 +5,7 @@ import {
   EDIT_USER_PROFILE_FAIL,
   EDIT_USER_PROFILE_PROCESS,
   EDIT_USER_PROFILE_SUCCESS,
+  CLEAR_USER_PROFILE
 } from '../actionTypes';
 
 const initialState = {
@@ -38,6 +39,12 @@ export default function (state = initialState, action) {
         ...state,
         errors: errors,
         loading: false
+      };
+    }
+    case CLEAR_USER_PROFILE: {
+      return {
+        ...state,
+        currentUser: {},
       };
     }
     default:

@@ -26,7 +26,8 @@ class CreateEvent extends React.Component {
       list: []
     };
   }
-
+  
+  // TODO Add filter
   componentDidMount() {
     if (!this.props.events.length) {
       const { fetchEvents } = this.props;

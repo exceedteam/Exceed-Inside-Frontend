@@ -7,8 +7,9 @@ import Header from "./components/Header";
 import Posts from "./components/Main";
 import Profile from "./components/Profile";
 import PostCreator from "./components/PostCreator";
-import Events from "./components/Events"
+import Events from "./components/Events";
 import Post from "./components/Post";
+import PostsOfUser from "./components/PostsOfUser";
 
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -34,17 +35,33 @@ export default class Main extends React.Component {
     return (
       <Provider store={store}>
         <Router history={this.customHistory}>
-          <Header history={this.customHistory} isLogged={this.state.isLogged} handleLogin={this.handleLogin} />
+          <Header
+            history={this.customHistory}
+            isLogged={this.state.isLogged}
+            handleLogin={this.handleLogin}
+          />
           <Switch>
-            <Route path="/login" component={props => <Login {...props} handleLogin={this.handleLogin} />} />
+            <Route
+              path="/login"
+              component={props => (
+                <Login {...props} handleLogin={this.handleLogin} />
+              )}
+            />
             <Route path="/registration" component={Registration} />
-      
+
             <WithToken>
-              <Route exact path="/" component={props => <Posts {...props} handleLogin={this.handleLogin} />} />
+              <Route
+                exact
+                path="/"
+                component={props => (
+                  <Posts {...props} handleLogin={this.handleLogin} />
+                )}
+              />
               <Route exact path="/user/:id" component={Profile} />
               <Route exact path="/create" component={PostCreator} />
               <Route exact path="/events" component={Events} />
               <Route exact path="/post/:id" component={Post} />
+              <Route exact path="/user/:id/posts" component={PostsOfUser} />
             </WithToken>
           </Switch>
           <footer />
@@ -55,7 +72,10 @@ export default class Main extends React.Component {
 }
 
 //if there is no token in local storage go to the login form
-const WithToken = ({ children, defaultComponent = <Redirect to="/login" /> }) => {
+const WithToken = ({
+  children,
+  defaultComponent = <Redirect to="/login" />
+}) => {
   if (getIslogin()) {
     return children;
   }

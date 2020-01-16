@@ -108,7 +108,8 @@ class Profile extends React.Component {
         position,
         team,
         aboutInfo
-      }
+      },
+      id
     } = this.state;
     const { loading } = this.props;
     return (
@@ -194,6 +195,16 @@ class Profile extends React.Component {
                   />
                 </div>
                 {this.editProfile()}
+                <div>
+                  <button
+                    className={styles.button}
+                    onClick={() => {
+                      this.props.history.push(`/user/${id}/posts`);
+                    }}
+                  >
+                    Posts of user
+                  </button>
+                </div>
               </div>
             </div>
           </div>

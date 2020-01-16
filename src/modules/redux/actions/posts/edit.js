@@ -1,53 +1,57 @@
 import {
   EDIT_LIKE_OF_POST_SUCCESS,
-  EDIT_DISLIKE_OF_POST_SUCCESS
+  EDIT_DISLIKE_OF_POST_SUCCESS,
+  CLEAR_CURRENT_POST,
+  CLEAR_ALL_POSTS_OF_USER
 } from "../../actionTypes";
 import axios from "axios";
 
 const url = process.env.REACT_APP_API_URL;
 
 // server request for like post
-export const likePost = post => {
+export const likePost = id => {
   return dispatch => {
     const token = localStorage.getItem("token");
     axios
       .put(
-        `${url}/post/${post.id}/like`,
+        `${url}/post/${id}/like`,
         {},
         { headers: { authorization: token } }
       )
-      .then(response => {
-        dispatch(likeSuccess(response.data));
+      .then(() => {
+        dispatch({ type: EDIT_LIKE_OF_POST_SUCCESS });
       });
   };
 };
 
 // server request for dislike post
-export const dislikePost = post => {
+export const dislikePost = id => {
   return dispatch => {
     const token = localStorage.getItem("token");
     axios
       .put(
-        `${url}/post/${post.id}/dislike`,
+        `${url}/post/${id}/dislike`,
         {},
         {
           headers: { authorization: token }
         }
       )
-      .then(response => {
-        dispatch(dislikeSuccess(response.data));
+      .then(() => {
+        dispatch({ type: EDIT_DISLIKE_OF_POST_SUCCESS });
       });
   };
 };
 
-export const likeSuccess = post => {
+// remove data of current post from the store
+export const clearCurrentPost = () => {
   return {
-    type: EDIT_LIKE_OF_POST_SUCCESS
+    type: CLEAR_CURRENT_POST
   };
 };
 
-export const dislikeSuccess = post => {
+// remove data of posts of user from the store
+export const clearPostsOfUser = () => {
   return {
-    type: EDIT_DISLIKE_OF_POST_SUCCESS
+    type: CLEAR_ALL_POSTS_OF_USER
   };
 };

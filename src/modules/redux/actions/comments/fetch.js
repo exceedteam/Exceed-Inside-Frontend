@@ -1,7 +1,8 @@
 import {
   FETCH_COMMENTS_OF_POST_PROCESS,
   FETCH_COMMENTS_OF_POST_SUCCESS,
-  FETCH_COMMENTS_OF_POST_FAIL
+  FETCH_COMMENTS_OF_POST_FAIL,
+  FETCH_NEW_COMMENT
 } from "../../actionTypes";
 import axios from "axios";
 
@@ -45,3 +46,17 @@ export const fetchCommentsOfPostFail = errors => {
     payload: { errors }
   };
 };
+
+// Action creator with received function:
+export function fetchNewComment() {
+  return dispatch =>
+    dispatch({
+      event: "newComment",
+      handle: data => {
+        return dispatch({
+          type: FETCH_NEW_COMMENT,
+          payload: { comment: data }
+        });
+      }
+    });
+}

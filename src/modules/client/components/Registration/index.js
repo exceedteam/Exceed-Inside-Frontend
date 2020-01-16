@@ -17,7 +17,7 @@ class Registration extends React.Component {
   
   // Writing data to the state and updating it when entering email, password and password2 in the input fields
   updateForm = event => {
-    const newInput = this.state.input;
+    const newInput = this.state;
     newInput[event.target.id] = event.target.value;
     this.setState({
       input: { ...newInput },

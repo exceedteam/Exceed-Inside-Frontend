@@ -7,7 +7,11 @@ import {
   // for post page
   FETCH_POST_PROCESS,
   FETCH_POST_SUCCESS,
-  FETCH_POST_FAIL
+  FETCH_POST_FAIL,
+  // for posts of user page
+  FETCH_ALL_POSTS_OF_USER_PROCESS,
+  FETCH_ALL_POSTS_OF_USER_SUCCESS,
+  FETCH_ALL_POSTS_OF_USER_FAIL
 } from "../../actionTypes";
 import axios from "axios";
 
@@ -39,7 +43,7 @@ export const fetchPostsSuccess = posts => {
   };
 };
 
-export const fetchPostsProcess = posts => {
+export const fetchPostsProcess = () => {
   return {
     type: FETCH_ALL_POSTS_PROCESS,
     payload: {}
@@ -66,13 +70,12 @@ export function fetchLikes() {
     });
 }
 
-
 // request for a specific post from the server
 export const fetchPost = ({ id, isPostsLoaded }) => {
   return dispatch => {
+    dispatch(fetchLikes());
     if (isPostsLoaded) {
       dispatch(fetchPostProcess());
-
       return dispatch(fetchPostSuccess({ id }));
     } else {
       dispatch(fetchPostProcess());
@@ -112,5 +115,44 @@ export const fetchPostFail = error => {
   return {
     type: FETCH_POST_FAIL,
     payload: { error }
+  };
+};
+
+// request all posts of user from the server
+export const fetchPostsOfUser = ({ id }) => {
+  return dispatch => {
+    dispatch(fetchPostsOfUserProcess());
+    const token = localStorage.getItem("token");
+    return axios
+      .get(`${url}/user/${id}/posts`, {
+        headers: { authorization: token }
+      })
+      .then(response => {
+        dispatch(fetchPostsOfUserSuccess(response.data));
+      })
+      .catch(error => {
+        dispatch(fetchPostsOfUserFail(error));
+      });
+  };
+};
+
+export const fetchPostsOfUserProcess = () => {
+  return {
+    type: FETCH_ALL_POSTS_OF_USER_PROCESS,
+    payload: {}
+  };
+};
+
+export const fetchPostsOfUserSuccess = postsOfUser => {
+  return {
+    type: FETCH_ALL_POSTS_OF_USER_SUCCESS,
+    payload: { postsOfUser }
+  };
+};
+
+export const fetchPostsOfUserFail = errorsPostsOfUser => {
+  return {
+    type: FETCH_ALL_POSTS_OF_USER_FAIL,
+    payload: { errorsPostsOfUser }
   };
 };
