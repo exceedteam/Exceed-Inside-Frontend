@@ -10,6 +10,7 @@ import PostCreator from "./components/PostCreator";
 import Events from "./components/Events";
 import Post from "./components/Post";
 import PostsOfUser from "./components/PostsOfUser";
+import ModalWindow from "./components/Modal";
 
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -62,6 +63,7 @@ export default class Main extends React.Component {
               <Route exact path="/events" component={Events} />
               <Route exact path="/post/:id" component={Post} />
               <Route exact path="/user/:id/posts" component={PostsOfUser} />
+              <Route exact path="/modal" component={ModalWindow} />
             </WithToken>
           </Switch>
           <footer />

@@ -1,21 +1,3 @@
-.createForm {
-  position: absolute;
-  margin-top: -50%;
-  margin-right: 10%;
-  margin-left: 10%;
-  background-color: rgb(250, 226, 226);
-  padding: 2em 2em 3em;
-  border-radius: 8px;
-  max-width: 900px;
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
-  z-index: 999;
-}
-
 .headerEvent {
   composes: flex from "../../../styles/common/index.css";
   composes: justify-between from "../../../styles/common/index.css";

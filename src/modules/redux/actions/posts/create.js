@@ -27,10 +27,10 @@ export const createPost = post => {
   };
 };
 
-export const createPostSuccess = (post) => {
+export const createPostSuccess = (posts) => {
   return {
     type: CREATE_POST_SUCCESS,
-    payload: { post }
+    payload: { posts }
   }
 };
 

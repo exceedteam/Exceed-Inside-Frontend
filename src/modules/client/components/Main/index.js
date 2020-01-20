@@ -7,6 +7,7 @@ import PostPreview from "../PostPreview";
 import styles from "./Main.module.css";
 import { connect } from "react-redux";
 import { fetchPosts } from "../../../redux/actions/posts/fetch";
+import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
 
 class Posts extends React.Component {
   constructor(props) {
@@ -22,16 +23,16 @@ class Posts extends React.Component {
 
   // request to display all posts
   componentDidMount() {
-    if (!this.props.postLoaded) {
     const { params } = this.state;
-      this.receivePosts();
-      this.setState({
-        params: {
-          ...params,
-          page: params.page + 1
-        }
-      });
-    } 
+    if (!this.props.postsLoaded) {
+      this.receivePosts(params);
+    }
+    this.setState({
+      params: {
+        ...params,
+        page: params.page + 1
+      }
+    });
   }
 
   receivePosts = () => {
@@ -60,7 +61,12 @@ class Posts extends React.Component {
             {posts.map(item => {
               return (
                 <div key={createID()} className={styles.post}>
-                  <PostPreview post={item} history={this.props.history} />
+                  <PostPreview
+                    post={item}
+                    history={this.props.history}
+                    likePost={this.props.likePost}
+                    dislikePost={this.props.dislikePost}
+                  />
                 </div>
               );
             })}
@@ -83,8 +89,10 @@ const mapStateToProps = state => {
     errors: state.posts.errors,
     loading: state.posts.loading,
     posts: state.posts.posts,
-    postLoaded: state.posts.postLoaded,
+    postsLoaded: state.posts.postsLoaded
   };
 };
 
-export default connect(mapStateToProps, { fetchPosts })(Posts);
+export default connect(mapStateToProps, { fetchPosts, likePost, dislikePost })(
+  Posts
+);

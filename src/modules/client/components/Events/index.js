@@ -1,5 +1,5 @@
 import React from "react";
-import MyCalendar from "../Calendar";
+import MyCalendar from "../MyCalendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import jwtDecode from "jwt-decode";
 import styles from "./Events.module.css";
@@ -10,7 +10,7 @@ import {
   unsubToAllEvents
 } from "../../../redux/actions/events/update";
 
-class CreateEvent extends React.Component {
+class Events extends React.Component {
   constructor(props) {
     super(props);
     this.decoded = jwtDecode(localStorage.getItem("token")).id;
@@ -120,4 +120,4 @@ export default connect(mapStateToProps, {
   fetchEvents,
   subToAllEvents,
   unsubToAllEvents
-})(CreateEvent);
+})(Events);

@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { fetchPost } from "../../../redux/actions/posts/fetch";
 import { createComment } from "../../../redux/actions/comments/create";
 import { clearCurrentPost } from "../../../redux/actions/posts/edit";
+import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
 import {
   fetchComments,
   fetchNewComment
@@ -55,13 +56,15 @@ class Post extends React.Component {
     const { commentText, userList } = this.state;
     return (
       <div>
-        {currentPostPreview && (
+        {!!currentPostPreview && (
           <div>
             <div>
               {/* render post content with with information about the author */}
               <PostPreview
-                post={currentPostPreview}
+                post={this.props.currentPostPreview}
                 history={this.props.history}
+                likePost={this.props.likePost}
+                dislikePost={this.props.dislikePost}
               />
             </div>
             {/* form for creating the new comment */}
@@ -115,5 +118,7 @@ export default connect(mapStateToProps, {
   fetchComments,
   createComment,
   fetchNewComment,
-  clearCurrentPost
+  clearCurrentPost,
+  likePost,
+  dislikePost
 })(Post);

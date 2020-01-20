@@ -3,13 +3,14 @@ import moment from "moment";
 import styles from "./CreateEvent.module.css";
 import { connect } from "react-redux";
 import { createEvent } from "../../../redux/actions/events/create";
-
-class PopUp extends React.Component {
+import { editEvent } from "../../../redux/actions/events/update";
+ 
+class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       eventData: {
-        title: "",
+        title: "" || this.props.title,
         startDate: this.props.start,
         startTime: moment(this.props.start).format("HH:mm"),
 
@@ -45,35 +46,44 @@ class PopUp extends React.Component {
       .set({ hour: endTime.split(":")[0], minute: endTime.split(":")[1] })
       .toDate();
 
-    this.props.createEvent({
-      title: title,
-      start: start,
-      end: end
-    });
-    this.props.handleVisible();
+    if (this.props.title) {
+      this.props.editEvent({
+        event: {
+          title: title,
+          start: start,
+          end: end
+        },
+        id: this.props.id
+      })
+    } else {
+      this.props.createEvent({
+        title: title,
+        start: start,
+        end: end
+      });
+    }
+
+    this.props.handleVisibleEvent();
   };
 
   render() {
-    const { startDate, startTime, endDate, endTime } = this.state.eventData;
+    const {
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      title
+    } = this.state.eventData;
     return (
       <div className={styles.createForm}>
-        <div className={styles.headerEvent}>
-          <h3 className={styles.title}>Create Event</h3>
-          <button
-            className={styles.button}
-            type="button"
-            onClick={this.props.handleVisible}
-            value="Cancel"
-          >
-            Cancel
-          </button>
-        </div>
+        <div className={styles.headerEvent}></div>
         <form className={styles.contain}>
           <input
             className={styles.inputTitle}
             id="title"
             type="text"
             name="name"
+            value={title || ""}
             onChange={this.updateDataOfEvent}
             placeholder="Title"
           />
@@ -117,7 +127,7 @@ class PopUp extends React.Component {
           </div>
           <br />
           <button onClick={this.submitPost} className={styles.submit}>
-            Create event
+            {this.props.button}
           </button>
         </form>
       </div>
@@ -126,4 +136,4 @@ class PopUp extends React.Component {
 }
 
 //connection with redux
-export default connect(null, { createEvent })(PopUp);
+export default connect(null, { createEvent, editEvent })(CreateEvent);

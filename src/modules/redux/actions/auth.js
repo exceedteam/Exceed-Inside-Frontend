@@ -9,7 +9,6 @@ import {
   REGISTER_FAIL
 } from "../actionTypes";
 
-
 const url = process.env.REACT_APP_API_URL;
 
 export const register = (data) => {
@@ -30,7 +29,6 @@ export const register = (data) => {
       })
   };
 };
-
 
 export const registerSuccess = (data) => {
   return {

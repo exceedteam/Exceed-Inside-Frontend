@@ -25,7 +25,7 @@ const initialState = {
   posts: [],
   currentPostPreview: null,
   loading: false,
-  postLoaded: false,
+  postsLoaded: false,
   errorsPostsOfUser: null,
   postsOfUser: [],
   loadingPostsOfUser: false
@@ -60,12 +60,12 @@ export default function(state = initialState, action) {
       };
     }
     case CREATE_POST_SUCCESS: {
-      const { post } = action.payload;
+      const { posts } = action.payload;
       return {
         ...state,
-        posts: [post, ...state.posts],
+        posts: [...posts],
+        postsLoaded: true,
         loading: false,
-        postLoaded: true
       };
     }
     case EDIT_DISLIKE_OF_POST_SUCCESS:

@@ -25,8 +25,22 @@ class PostCreator extends React.Component {
   // state update
   handleChange = value => {
     const element = document.querySelector(".CodeMirror");
+
+    let lines = value.split("\n");
+
+    let firstLine = lines[0].trim();
+
+    if (firstLine.indexOf("#") === 0 && firstLine.indexOf("# ") !== 0) {
+      firstLine = firstLine.replace("#", "# ");
+      lines[0] = firstLine;
+    } else {
+      if (firstLine.indexOf("# ") !== 0) {
+        firstLine = "# " + firstLine;
+        lines[0] = firstLine;
+      }
+    }
     this.setState({
-      text: value,
+      text: lines.join("\n"),
       height: element.scrollHeight,
       width: element.scrollWidth
     });
@@ -124,7 +138,7 @@ class PostCreator extends React.Component {
                         img.src = image.src;
                       });
                     });
-                    
+
                     images.forEach(image => {
                       const imageBase64 = `![](${image.src})`;
                       const imageId = `<id:${image.id}>`;

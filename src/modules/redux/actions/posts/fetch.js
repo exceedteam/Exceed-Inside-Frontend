@@ -18,7 +18,7 @@ import axios from "axios";
 const url = process.env.REACT_APP_API_URL;
 
 // request all posts from the server
-export const fetchPosts = ({ page = 0, perPage = 3 }) => {
+export const fetchPosts = ({ page = 0, perPage = 3}) => {
   return dispatch => {
     dispatch(fetchPostsProcess());
     const token = localStorage.getItem("token");
