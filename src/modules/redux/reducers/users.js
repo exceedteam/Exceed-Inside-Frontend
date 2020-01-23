@@ -5,22 +5,27 @@ import {
   EDIT_USER_PROFILE_FAIL,
   EDIT_USER_PROFILE_PROCESS,
   EDIT_USER_PROFILE_SUCCESS,
-  CLEAR_USER_PROFILE
-} from '../actionTypes';
+  CLEAR_USER_PROFILE,
+  FETCH_ALL_USERS_PROCESS,
+  FETCH_ALL_USERS_SUCCESS,
+  FETCH_ALL_USERS_FAIL
+} from "../actionTypes";
 
 const initialState = {
-  errors: null,
+  error: null,
   currentUser: {},
-  loading: false
+  loading: false,
+  users: []
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
+    case FETCH_ALL_USERS_PROCESS:
     case EDIT_USER_PROFILE_PROCESS:
     case FETCH_USER_PROFILE_PROCESS: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
     case EDIT_USER_PROFILE_SUCCESS:
@@ -32,19 +37,28 @@ export default function (state = initialState, action) {
         loading: false
       };
     }
-    case EDIT_USER_PROFILE_FAIL:
-    case FETCH_USER_PROFILE_FAIL: {
-      const { errors } = action.payload;
+    case FETCH_ALL_USERS_SUCCESS: {
+      const { users } = action.payload;
       return {
         ...state,
-        errors: errors,
+        users: [...state.users, ...users],
+        loading: false
+      };
+    }
+    case FETCH_ALL_USERS_FAIL:
+    case EDIT_USER_PROFILE_FAIL:
+    case FETCH_USER_PROFILE_FAIL: {
+      const { error } = action.payload;
+      return {
+        ...state,
+        error: error,
         loading: false
       };
     }
     case CLEAR_USER_PROFILE: {
       return {
         ...state,
-        currentUser: {},
+        currentUser: {}
       };
     }
     default:

@@ -1,4 +1,8 @@
-import { DELETE_EVENT_SUCCESS, DELETE_EVENT_FAIL } from "../../actionTypes";
+import {
+  DELETE_EVENT_SUCCESS,
+  DELETE_EVENT_FAIL,
+  DELETE_EVENT_PROCESS
+} from "../../actionTypes";
 import axios from "axios";
 
 const url = process.env.REACT_APP_API_URL;
@@ -6,6 +10,7 @@ const url = process.env.REACT_APP_API_URL;
 // server request to delete an event
 export const deleteEvent = event => {
   return dispatch => {
+    dispatch(deleteEventProcess());
     const token = localStorage.getItem("token");
     return axios
       .delete(`${url}/event/${event.id}`, {
@@ -20,16 +25,22 @@ export const deleteEvent = event => {
   };
 };
 
-export const deleteEventSuccess = (events) => {
+export const deleteEventProcess = () => {
   return {
-    type: DELETE_EVENT_SUCCESS,
-    payload: {events}
+    type: DELETE_EVENT_PROCESS
   };
 };
 
-export const deleteEventFail = (errors) => {
+export const deleteEventSuccess = events => {
+  return {
+    type: DELETE_EVENT_SUCCESS,
+    payload: { events }
+  };
+};
+
+export const deleteEventFail = errors => {
   return {
     type: DELETE_EVENT_FAIL,
-    payload: {errors}
+    payload: { errors }
   };
 };

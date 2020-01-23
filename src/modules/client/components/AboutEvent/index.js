@@ -7,6 +7,7 @@ import { deleteEvent } from "../../../redux/actions/events/delete";
 import { subToEvent, unsubToEvent } from "../../../redux/actions/events/update";
 import ModalWindow from "../Modal";
 import CreateEvent from "../CreateEvent";
+import { PostHeader } from "../PostHeader";
 
 class AboutEvent extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class AboutEvent extends React.Component {
   handleVisibleEvent = () => {
     const { visibleEdit } = this.state;
     this.setState({ visibleEdit: !visibleEdit });
+    if (visibleEdit) this.props.handleVisibleInfo();
   };
 
   editEvent = () => {
@@ -86,10 +88,21 @@ class AboutEvent extends React.Component {
       <div>
         {modal && (
           <div>
+            <div>
+              <PostHeader
+                name={specificEvent.author.name}
+                avatar={specificEvent.author.avatar}
+              />
+            </div>
             <div className={styles.titleOfEvent}>{specificEvent.title}</div>
-            <div>{moment(specificEvent.start).format("ddd L HH:mm")}</div>
-            <div>{moment(specificEvent.end).format("ddd L HH:mm")}</div>
-            <div>{specificEvent.author.name}</div>
+            <div>
+              <span>{"Srart: "}</span>
+              {moment(specificEvent.start).format("ddd L HH:mm")}
+            </div>
+            <div>
+              <span>{"End: "}</span>
+              {moment(specificEvent.end).format("ddd L HH:mm")}
+            </div>
             {this.eventInfo(specificEvent.authorId)}
             <button onClick={this.subscribeToAnEvent}>Subscribe</button>
             <button onClick={this.unsubscribeToAnEvent}>Unubscribe</button>

@@ -1,13 +1,14 @@
 /*
   Component whith which the application Main page is rendered 
 */
-import React from "react";
+import React, {Fragment} from "react";
 import { createID } from "../../../../services/helpers";
 import PostPreview from "../PostPreview";
 import styles from "./Main.module.css";
 import { connect } from "react-redux";
 import { fetchPosts } from "../../../redux/actions/posts/fetch";
 import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
+import Loader from "../Loader"
 
 class Posts extends React.Component {
   constructor(props) {
@@ -56,8 +57,9 @@ class Posts extends React.Component {
     const { posts, loading } = this.props;
     return (
       <div className={styles.pageWrapper}>
+        <div className={styles.content}>
         {!!posts.length && (
-          <div className={styles.content}>
+          <Fragment>
             {posts.map(item => {
               return (
                 <div key={createID()} className={styles.post}>
@@ -66,6 +68,7 @@ class Posts extends React.Component {
                     history={this.props.history}
                     likePost={this.props.likePost}
                     dislikePost={this.props.dislikePost}
+                    isMainPost
                   />
                 </div>
               );
@@ -75,9 +78,10 @@ class Posts extends React.Component {
                 Receive Posts
               </button>
             )}
-          </div>
+            </Fragment>
         )}
-        {loading && <h1 className={styles.loading}>Loading...</h1>}
+        {loading && <Loader />}
+        </div>
       </div>
     );
   }

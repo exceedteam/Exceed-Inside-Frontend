@@ -4,6 +4,9 @@
   padding: 1em 1em 2em;
   box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  width: 680px;
 }
 
 .content img {
@@ -11,7 +14,7 @@
 }
 
 .content .CodeMirror {
-  height: 500px;
+  border: none;
   max-width: 680px;
 }
 
@@ -22,5 +25,33 @@
   width: 15em;
 }
 .clickable {
+  cursor: pointer;
+}
+.textarea {
+  overflow: hidden;
+  background: #ffffff;
+  padding: 10px;
+  width: 100%;
+}
+
+.gradient {
+  height: 350px;
+  width: 95%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.seeTitle {
+  /* background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 1)); */
+  background-color: rgba(255, 255, 255, .7);
+  border-radius: 25px;
+  padding: 5px;
+  margin: 5px;
+  font-weight: bold;
   cursor: pointer;
 }

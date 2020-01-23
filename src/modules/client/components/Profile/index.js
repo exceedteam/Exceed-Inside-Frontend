@@ -5,6 +5,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { fetchUserProfile } from "../../../redux/actions/users/fetch";
 import { editUserProfile } from "../../../redux/actions/users/edit";
+import Loader from "../Loader";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -209,7 +210,7 @@ class Profile extends React.Component {
             </div>
           </div>
         )}
-        {loading && <h1>Loading...</h1>}
+        {loading && <Loader />}
       </div>
     );
   }

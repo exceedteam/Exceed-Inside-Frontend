@@ -62,7 +62,21 @@ class MyCalendar extends React.Component {
   };
 
   // Allows you to change the time intervals of the event
-  moveEvent = ({ event, start, end }) => {
+  moveEvent = ({ event, start }) => {
+    const oldEnd = event.end;
+    const oldStart = event.start;
+    const minutes = moment(oldEnd).diff(moment(oldStart), "minutes");
+    const newEnd = moment(start)
+      .add(minutes, "minutes")
+      .toDate();
+    const updatedEvent = { ...event, start, end: newEnd };
+    this.props.editEvent({
+      event: updatedEvent,
+      id: event.id
+    });
+  };
+
+  resizeEvent = ({ event, start, end }) => {
     const updatedEvent = { ...event, start, end };
     this.props.editEvent({
       event: updatedEvent,
@@ -77,6 +91,7 @@ class MyCalendar extends React.Component {
       <div className={styles.selectableDate}>
         <DragAndDropCalendar
           selectable
+          resizable
           localizer={localizer}
           onSelectSlot={this.handleSelect}
           events={events.map(event => {
@@ -86,7 +101,7 @@ class MyCalendar extends React.Component {
               start: moment(event.start).toDate()
             };
           })}
-          onEventResize={this.moveEvent}
+          onEventResize={this.resizeEvent}
           onEventDrop={this.moveEvent}
           popup
           onSelectEvent={event => {

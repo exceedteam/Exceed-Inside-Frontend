@@ -24,7 +24,7 @@
 
 .headerLogged {
   composes: header;
-  composes: justify-betwen from "../../../styles/common/index.css";
+  composes: justify-between from "../../../styles/common/index.css";
   composes: align-items_center from "../../../styles/common/index.css";
 }
 
@@ -70,9 +70,7 @@
   height: 100%;
   
 }
-.subMenu li {
 
-}
 .notActive {
 display: none;
 }

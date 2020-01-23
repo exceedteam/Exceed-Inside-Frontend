@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode";
 import styles from "./Events.module.css";
 import { connect } from "react-redux";
 import { fetchEvents } from "../../../redux/actions/events/fetch";
+import Loader from "../Loader";
 import {
   subToAllEvents,
   unsubToAllEvents
@@ -22,11 +23,10 @@ class Events extends React.Component {
       isEventsOfUser: false,
       newEvent: {
         selectedDays: []
-      },
-      list: []
+      }
     };
   }
-  
+
   // TODO Add filter
   componentDidMount() {
     if (!this.props.events.length) {
@@ -63,45 +63,73 @@ class Events extends React.Component {
     }
   };
 
+  visbleLoad = () => {
+    const internal = document.getElementById("internal");
+    if (this.props.internalLoading) {
+      internal.style.display = "block";
+    } else {
+      internal.style.display = "none";
+    }
+  };
+
   render() {
-    const { loading, events } = this.props;
+    const { loading, events, internalLoading } = this.props;
     const { isEventsOfUser, eventsOfUser } = this.state;
     return (
       <div className={styles.container}>
         {!loading && (
-          <div className={styles.form}>
-            <div>
-              <input
-                type="radio"
-                name="event"
-                value="All"
-                onClick={() => {
-                  this.handleDataCalendar("All");
-                }}
-              />
-              {" All events"}
-              <input
-                type="radio"
-                name="event"
-                value="User"
-                onClick={() => {
-                  this.handleDataCalendar("User");
-                }}
-              />
-              {" Events of User"}
-            </div>
-            <MyCalendar events={!!isEventsOfUser ? eventsOfUser : events} />
-            <div className={styles.subscribeContainer}>
-              <button className={styles.button} onClick={this.subToAllEvents}>
-                sub
-              </button>
-              <button className={styles.button} onClick={this.unsubToAllEvents}>
-                unsub
-              </button>
+          <div>
+            <div className={styles.form}>
+            {internalLoading && <Loader />}
+              <MyCalendar events={!!isEventsOfUser ? eventsOfUser : events} />
+              <div className={styles.bottom}>
+                <div className={styles.subscribeContainer}>
+                  <button
+                    className={styles.button}
+                    onClick={this.subToAllEvents}
+                  >
+                    sub
+                  </button>
+                  <button
+                    className={styles.button}
+                    onClick={this.unsubToAllEvents}
+                  >
+                    unsub
+                  </button>
+                </div>
+                <div className={styles.radioContainer}>
+                  <div>
+                    <input
+                      type="radio"
+                      name="event"
+                      value="All"
+                      id="all"
+                      className={styles.radio}
+                      onClick={() => {
+                        this.handleDataCalendar("All");
+                      }}
+                    />
+                    <label htmlFor="all">All Events</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="event"
+                      value="User"
+                      id="some"
+                      className={styles.radio}
+                      onClick={() => {
+                        this.handleDataCalendar("User");
+                      }}
+                    />
+                    <label htmlFor="some">My Events</label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
-        {loading && <h1>Loading...</h1>}
+        {loading && <Loader />}
       </div>
     );
   }
@@ -112,7 +140,8 @@ const mapStateToProps = state => {
   return {
     errors: state.events.errors,
     loading: state.events.loading,
-    events: state.events.events
+    events: state.events.events,
+    internalLoading: state.events.internalLoading
   };
 };
 

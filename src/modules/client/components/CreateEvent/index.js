@@ -62,7 +62,6 @@ class CreateEvent extends React.Component {
         end: end
       });
     }
-
     this.props.handleVisibleEvent();
   };
 

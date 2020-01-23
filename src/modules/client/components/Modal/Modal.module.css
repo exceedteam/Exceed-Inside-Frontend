@@ -24,7 +24,7 @@
 
 .header {
   composes: flex from "../../../styles/common/index.css";
-  composes: justify-betwen from "../../../styles/common/index.css";
+  composes: justify-between from "../../../styles/common/index.css";
   font-weight: 700;
   color: #384047;
   margin-top: 0.2em;

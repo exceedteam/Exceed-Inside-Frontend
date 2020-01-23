@@ -18,7 +18,7 @@ class PostCreator extends React.Component {
       images: [],
       height: 0,
       width: 0,
-      fontSize: 16
+      fontSize: 20
     };
   }
 
@@ -27,7 +27,6 @@ class PostCreator extends React.Component {
     const element = document.querySelector(".CodeMirror");
 
     let lines = value.split("\n");
-
     let firstLine = lines[0].trim();
 
     if (firstLine.indexOf("#") === 0 && firstLine.indexOf("# ") !== 0) {
@@ -48,12 +47,17 @@ class PostCreator extends React.Component {
 
   // saving a post to the DB
   submitPost = () => {
+    const { images, text } = this.state;
+    let textWithId = text;
+    if (images) {
+      textWithId = replaceImg({ type: "id", text, images });
+    }
     this.props
       .createPost({
-        text: this.state.text,
+        text: textWithId,
         images: this.state.images
       })
-      .then(res => {
+      .then(() => {
         this.props.history.push(`/`);
       })
       .catch(error => {
@@ -112,7 +116,6 @@ class PostCreator extends React.Component {
                           images: img
                         });
                       };
-
                       reader.readAsDataURL(file);
                     };
                     input.click();
@@ -125,9 +128,9 @@ class PostCreator extends React.Component {
                   title: "toggle Preview",
                   className: "fa fa-eye no-disable",
                   action: function(editor) {
-                    const { images } = self.state;
-                    let withImage = self.state.text;
-                    let withoutImage = self.state.text;
+                    const { images, text } = self.state;
+                    let withImage = replaceImg({ type: "img", text, images });
+                    let withoutImage = replaceImg({ type: "id", text, images });
 
                     const promises = images.map(image => {
                       return new Promise((resolve, reject) => {
@@ -139,17 +142,17 @@ class PostCreator extends React.Component {
                       });
                     });
 
-                    images.forEach(image => {
-                      const imageBase64 = `![](${image.src})`;
-                      const imageId = `<id:${image.id}>`;
-                      const fromIdtoImage = new RegExp(imageId);
-                      const fromImagetoId = /!\[\]\(.+?\)/;
-                      withImage = withImage.replace(fromIdtoImage, imageBase64);
-                      withoutImage = withoutImage.replace(
-                        fromImagetoId,
-                        imageId
-                      );
-                    });
+                    // images.forEach(image => {
+                    //   const imageBase64 = `![](${image.src})`;
+                    //   const imageId = `<id:${image.id}>`;
+                    //   const fromIdtoImage = new RegExp(imageId);
+                    //   const fromImagetoId = /!\[\]\(.+?\)/;
+                    //   withImage = withImage.replace(fromIdtoImage, imageBase64);
+                    //   withoutImage = withoutImage.replace(
+                    //     fromImagetoId,
+                    //     imageId
+                    //   );
+                    // });
 
                     editor.isPreviewActive()
                       ? editor.value(withoutImage)
@@ -177,12 +180,9 @@ class PostCreator extends React.Component {
                         el.style.height = `${height + superHeight}px`;
                       });
                     }
-
                     editor.togglePreview(editor);
                   }
                 },
-                "side-by-side",
-                "fullscreen",
                 "guide"
               ]
             }}
@@ -194,3 +194,25 @@ class PostCreator extends React.Component {
 }
 
 export default connect(null, { createPost })(PostCreator);
+
+const replaceImg = ({ type, text, images }) => {
+  switch (type) {
+    case "img":
+      images.forEach(image => {
+        const imageBase64 = `![](${image.src})`;
+        const imageId = `<id:${image.id}>`;
+        const fromIdtoImage = new RegExp(imageId);
+        text = text.replace(fromIdtoImage, imageBase64);
+      });
+      return text;
+    case "id":
+      const fromImagetoId = /!\[\]\(.+?\)/;
+      images.forEach(image => {
+        const imageId = `<id:${image.id}>`;
+        text = text.replace(fromImagetoId, imageId);
+      });
+      return text;
+    default:
+      return text;
+  }
+};

@@ -26,7 +26,7 @@
   color: #fff;
   background-color: #06799f;
   width: 5em;
-  margin: 0px;
+  margin: 0 3em 0 0;
 }
 
 .title {
@@ -57,3 +57,36 @@
   composes: input;
   width: 100%;
 }
+
+.bottom {
+  margin: 1em 0 0 0;
+  composes: flex from "../../../styles/common/index.css";
+  composes: justify-between from "../../../styles/common/index.css";
+}
+
+.subscribeContainer {
+  width: inherit;
+  composes: justify-end from "../../../styles/common/index.css";
+}
+
+.radio {
+  /* display: inline-block; */
+  cursor: pointer;
+  position: relative;
+  padding: 0 0 0 35px;
+  cursor: pointer;
+}
+
+.radioContainer {
+  margin: 0 1.7em 0 0;
+  composes: column from "../../../styles/common/index.css";
+}
+
+#internal {
+  position: absolute;
+  margin-top: 20%;
+  margin-left: 30%;
+  z-index: 10;
+}
+
+
