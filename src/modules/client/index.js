@@ -11,6 +11,7 @@ import Events from "./components/Events";
 import Post from "./components/Post";
 import PostsOfUser from "./components/PostsOfUser";
 import ModalWindow from "./components/Modal";
+import AlertMessage from "./components/AlertMessage";
 
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -18,6 +19,7 @@ import store from "../redux/store";
 import { Switch, Route, Router, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { getIslogin } from "../../services/helpers";
+import "../styles/index.scss"
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -41,6 +43,8 @@ export default class Main extends React.Component {
             isLogged={this.state.isLogged}
             handleLogin={this.handleLogin}
           />
+
+          <AlertMessage />
           <Switch>
             <Route
               path="/login"
@@ -72,6 +76,11 @@ export default class Main extends React.Component {
     );
   }
 }
+
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
 
 //if there is no token in local storage go to the login form
 const WithToken = ({

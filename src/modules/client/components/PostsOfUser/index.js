@@ -4,6 +4,7 @@ import PostPreview from "../PostPreview";
 import { connect } from "react-redux";
 import { fetchPostsOfUser } from "../../../redux/actions/posts/fetch";
 import { clearPostsOfUser } from "../../../redux/actions/posts/edit";
+import Loader from "../Loader";
 
 class PostsOfUser extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class PostsOfUser extends React.Component {
             })}
           </div>
         )}
-        {loadingPostsOfUser && <h1>Loading...</h1>}
+        {loadingPostsOfUser && <Loader />}
       </div>
     );
   }

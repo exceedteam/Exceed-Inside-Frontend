@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import styles from "./CreateComment.module.css";
 import { MentionsInput, Mention } from "react-mentions";
 import { createComment } from "../../../redux/actions/comments/create";
-import { fetchAllUsers } from "../../../redux/actions/users/fetch";
 
 class CreateComment extends React.Component {
   constructor(props) {
@@ -14,15 +12,23 @@ class CreateComment extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchAllUsers } = this.props;
-    fetchAllUsers();
+    const { mention } = this.props;
+    if (mention) {
+      this.setState({
+        commentText: `@[${mention.name}](${mention.id})`
+      })
+    }
   }
 
   newComment = event => {
     event.preventDefault();
     const { commentText } = this.state;
-    const { id, createComment } = this.props;
-    createComment({ commentText, id });
+    const { id, createComment, parent, withoutParent } = this.props;
+    if (!withoutParent) {
+      createComment({ commentText, id, parent, withoutParent});
+    } else {
+      createComment({ commentText, id });
+    }
     this.setState({ commentText: "" });
   };
 
@@ -30,9 +36,9 @@ class CreateComment extends React.Component {
     const { commentText } = this.state;
     const { users } = this.props;
     return (
-      <form onSubmit={this.submit} className={styles.createComment}>
+      <form onSubmit={this.submit} className="createComment">
         <MentionsInput
-          className={styles.new}
+          className="new"
           value={commentText}
           onChange={event => this.setState({ commentText: event.target.value })}
         >
@@ -44,8 +50,8 @@ class CreateComment extends React.Component {
             }}
           />
         </MentionsInput>
-        <button onClick={this.newComment} className={styles.button}>
-          submit comment
+        <button onClick={this.newComment} className="button">
+          submit
         </button>
       </form>
     );
@@ -58,6 +64,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { createComment, fetchAllUsers })(
+export default connect(mapStateToProps, { createComment })(
   CreateComment
 );

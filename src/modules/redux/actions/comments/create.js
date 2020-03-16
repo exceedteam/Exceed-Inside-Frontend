@@ -8,14 +8,14 @@ import axios from "axios";
 const url = process.env.REACT_APP_API_URL;
 
 // request to create a comment for post from the server
-export const createComment = ({ commentText, id }) => {
+export const createComment = ({ commentText, id, parent, withoutParent }) => {
   return dispatch => {
     dispatch(createCommentProcess());
     const token = localStorage.getItem("token");
     return axios
       .post(
         `${url}/post/${id}/comment`,
-        { text: commentText },
+        { text: commentText, parent: parent, withoutParent: withoutParent },
         {
           headers: { authorization: token }
         }

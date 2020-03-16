@@ -7,6 +7,7 @@ import { createID } from "../../../../services/helpers";
 import styles from "./PostCreator.module.css";
 import { connect } from "react-redux";
 import { createPost } from "../../../redux/actions/posts/create";
+import { replaceImg } from "../../../../services/helpers";
 
 // Component for creating a new post
 class PostCreator extends React.Component {
@@ -18,7 +19,7 @@ class PostCreator extends React.Component {
       images: [],
       height: 0,
       width: 0,
-      fontSize: 20
+      fontSize: 25
     };
   }
 
@@ -26,9 +27,11 @@ class PostCreator extends React.Component {
   handleChange = value => {
     const element = document.querySelector(".CodeMirror");
 
+    // text spliting by lines
     let lines = value.split("\n");
     let firstLine = lines[0].trim();
 
+    // force header to be created if the header is missing
     if (firstLine.indexOf("#") === 0 && firstLine.indexOf("# ") !== 0) {
       firstLine = firstLine.replace("#", "# ");
       lines[0] = firstLine;
@@ -142,18 +145,6 @@ class PostCreator extends React.Component {
                       });
                     });
 
-                    // images.forEach(image => {
-                    //   const imageBase64 = `![](${image.src})`;
-                    //   const imageId = `<id:${image.id}>`;
-                    //   const fromIdtoImage = new RegExp(imageId);
-                    //   const fromImagetoId = /!\[\]\(.+?\)/;
-                    //   withImage = withImage.replace(fromIdtoImage, imageBase64);
-                    //   withoutImage = withoutImage.replace(
-                    //     fromImagetoId,
-                    //     imageId
-                    //   );
-                    // });
-
                     editor.isPreviewActive()
                       ? editor.value(withoutImage)
                       : editor.value(withImage);
@@ -182,8 +173,7 @@ class PostCreator extends React.Component {
                     }
                     editor.togglePreview(editor);
                   }
-                },
-                "guide"
+                }
               ]
             }}
           />
@@ -194,25 +184,3 @@ class PostCreator extends React.Component {
 }
 
 export default connect(null, { createPost })(PostCreator);
-
-const replaceImg = ({ type, text, images }) => {
-  switch (type) {
-    case "img":
-      images.forEach(image => {
-        const imageBase64 = `![](${image.src})`;
-        const imageId = `<id:${image.id}>`;
-        const fromIdtoImage = new RegExp(imageId);
-        text = text.replace(fromIdtoImage, imageBase64);
-      });
-      return text;
-    case "id":
-      const fromImagetoId = /!\[\]\(.+?\)/;
-      images.forEach(image => {
-        const imageId = `<id:${image.id}>`;
-        text = text.replace(fromImagetoId, imageId);
-      });
-      return text;
-    default:
-      return text;
-  }
-};

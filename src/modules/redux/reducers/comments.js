@@ -11,6 +11,7 @@ import {
 const initialState = {
   errors: null,
   comments: [],
+  // subcomments: [],
   loading: false,
   newComment: [],
   errorOfCreateComment: null,
@@ -39,14 +40,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        comments: comments
+        comments: [...state.comments, ...comments]
       };
     }
+
     case FETCH_NEW_COMMENT: {
       const { comment } = action.payload;
       return {
         ...state,
-        comments: [comment, ...state.comments],
+        comments: [comment, ...state.comments]
       };
     }
     // create comment
@@ -61,7 +63,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loadingNewComment: false,
-        comments: [...comments],
+        comments: [...comments]
       };
     }
     case CREATE_COMMENT_FAIL: {

@@ -21,14 +21,17 @@ import {
   EDIT_SUBSCRIBTION_TO_EVENT_PROCESS,
   EDIT_SUBSCRIBE_TO_ALL_EVENTS,
   EDIT_UNSUBSCRIBE_TO_ALL_EVENTS,
-  EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS
+  EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS,
+  // remove message from the store
+  CLEAR_MESSAGE
 } from "../actionTypes";
 
 const initialState = {
   errors: null,
   events: [],
   loading: false,
-  internalLoading: false
+  internalLoading: false,
+  message: ""
 };
 
 export default function(state = initialState, action) {
@@ -90,12 +93,34 @@ export default function(state = initialState, action) {
         events: [...events]
       };
     }
-    case EDIT_SUBSCRIBE_TO_EVENT:
-    case EDIT_UNSUBSCRIBE_TO_EVENT:
-    case EDIT_SUBSCRIBE_TO_ALL_EVENTS:
+    case EDIT_SUBSCRIBE_TO_EVENT:{
+      return {
+        ...state,
+        message: "you subscribed from the event",
+        loading: false,
+        internalLoading: false
+      };
+    }
+    case EDIT_UNSUBSCRIBE_TO_EVENT: {
+      return {
+        ...state,
+        message: "you have unsubscribed from the event",
+        loading: false,
+        internalLoading: false
+      };
+    }
+    case EDIT_SUBSCRIBE_TO_ALL_EVENTS: {
+      return {
+        ...state,
+        message: "you subscribed from the all events",
+        loading: false,
+        internalLoading: false
+      };
+    }
     case EDIT_UNSUBSCRIBE_TO_ALL_EVENTS: {
       return {
         ...state,
+        message: "you unsubscribed from the all events",
         loading: false,
         internalLoading: false
       };
@@ -114,6 +139,12 @@ export default function(state = initialState, action) {
         ...state,
         internalLoading: true
       };
+    }
+    case CLEAR_MESSAGE: {
+      return {
+        ...state,
+        message: ""
+      }
     }
     default:
       return state;

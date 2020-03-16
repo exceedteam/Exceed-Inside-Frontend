@@ -7,7 +7,8 @@ import {
   EDIT_UNSUBSCRIBE_TO_ALL_EVENTS,
   EDIT_EVENT_SUCCESS,
   EDIT_EVENT_FAIL,
-  EDIT_EVENT_PROCESS
+  EDIT_EVENT_PROCESS,
+  CLEAR_MESSAGE
 } from "../../actionTypes";
 import axios from "axios";
 
@@ -152,5 +153,12 @@ export const unsubToAllEventsSuccess = () => {
 export const changeAllSubscriptionStatus = () => {
   return {
     type: EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS
+  };
+};
+
+// remove message
+export const ClearMessage = () => {
+  return {
+    type: CLEAR_MESSAGE
   };
 };

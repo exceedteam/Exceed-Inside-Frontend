@@ -5,10 +5,12 @@ import React from "react";
 import PostPreview from "../PostPreview";
 import DisplayComments from "../DisplayComments";
 import CreateComment from "../CreateComment";
+import Loader from "../Loader";
 import { connect } from "react-redux";
 import { fetchPost } from "../../../redux/actions/posts/fetch";
 import { clearCurrentPost } from "../../../redux/actions/posts/edit";
 import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
+import { fetchAllUsers } from "../../../redux/actions/users/fetch";
 import {
   fetchComments,
   fetchNewComment
@@ -24,19 +26,21 @@ class Post extends React.Component {
   componentDidMount() {
     const {
       fetchPost,
-      currentPostPreview,
       fetchComments,
-      fetchNewComment
+      fetchNewComment,
+      fetchAllUsers
     } = this.props;
-    if(!currentPostPreview)
     fetchPost({
       id: this.id,
-      // isPostsLoaded: !!posts.length
+      
     });
     fetchComments({
       id: this.id
     });
     fetchNewComment();
+    if (this.props.users.length === 0) {
+      fetchAllUsers();
+    }
   }
 
   componentWillUnmount() {
@@ -68,7 +72,7 @@ class Post extends React.Component {
             />
           </div>
         )}
-        {!currentPostPreview && <h1>Loading...</h1>}
+        {!currentPostPreview && <Loader />}
       </div>
     );
   }
@@ -83,6 +87,7 @@ const mapStateToProps = state => {
     errors: state.comments.errors,
     comments: state.comments.comments,
     loading: state.comments.loading,
+    users: state.users.users
   };
 };
 
@@ -92,5 +97,6 @@ export default connect(mapStateToProps, {
   fetchNewComment,
   clearCurrentPost,
   likePost,
-  dislikePost
+  dislikePost,
+  fetchAllUsers
 })(Post);

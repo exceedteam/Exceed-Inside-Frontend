@@ -9,14 +9,22 @@ import axios from "axios";
 const url = process.env.REACT_APP_API_URL;
 
 // request all post comments from the server
-export const fetchComments = ({ id, page = 0, perPage = 10 }) => {
+export const fetchComments = ({
+  id,
+  page = 0,
+  perPage = 10,
+  commentId = 0
+}) => {
   return dispatch => {
     dispatch(fetchCommentsOfPostProcess());
     const token = localStorage.getItem("token");
     return axios
-      .get(`${url}/post/${id}/comments?page=${page}&perPage=${perPage}`, {
-        headers: { authorization: token }
-      })
+      .get(
+        `${url}/post/${id}/comments?page=${page}&perPage=${perPage}&commentId=${commentId}`,
+        {
+          headers: { authorization: token }
+        }
+      )
       .then(response => {
         dispatch(fetchCommentsOfPostSuccess(response.data));
       })
@@ -39,6 +47,8 @@ export const fetchCommentsOfPostSuccess = comments => {
     payload: { comments }
   };
 };
+
+
 
 export const fetchCommentsOfPostFail = errors => {
   return {

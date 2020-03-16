@@ -1,0 +1,56 @@
+.createComment {
+	margin: 0 auto;
+	width: 400px;
+
+	.button {
+		color: #fff;
+		background-color: #06799f;
+		margin: 0 auto;
+		width: 35%;
+		padding: 0.2em 0;
+	}
+
+	.new {
+		font-size: 20px;
+		margin: 0.3em;
+		padding: 0.2em;
+	}
+}
+
+.commentsField {
+	width: 75%;
+
+	.displayComment {
+		width: 20em;
+		height: 2em;
+		margin: 0 auto;
+		align-items: center;
+	}
+
+	.displayText {
+		width: 20em;
+		height: 2em;
+	}
+
+	.textarea {
+		display: block;
+		width: 25em;
+		height: 2em;
+		resize: vertical;
+		border-width: 2px;
+		border-radius: 4px;
+		margin: 0 0 1em 0;
+		color: #384047;
+		background-color: #e8eeef;
+		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+		border: none;
+		padding: 1em;
+	}
+
+	.avatar {
+		img {
+			width: 40px;
+			height: 40px;
+		}
+	}
+}
