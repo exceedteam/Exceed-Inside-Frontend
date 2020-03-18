@@ -15,8 +15,8 @@
   opacity: 1;
 }
 
-.button {
-  composes: button from "../../../styles/common/index.css";
+.btn {
+  composes: btn from "../../../styles/common/index.css";
   color: #FFF;
   background-color: #06799F;
   width: 125px ;
@@ -26,6 +26,9 @@
   composes: header;
   composes: justify-between from "../../../styles/common/index.css";
   composes: align-items_center from "../../../styles/common/index.css";
+  background-color: white;
+  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+  height: 60px;
 }
 
 .headerNotLogged {
@@ -47,6 +50,11 @@
   max-width: 500px;
 }
 
+.navLoggedRight {
+  composes: nav;
+  max-width: 200px;
+}
+
 .navNotLogged {
   composes: nav;
   max-width: 350px;
@@ -65,11 +73,10 @@
   z-index: 8;
 }
 
-.subMenu .button {
-  margin: 5px 0;
-  height: 100%;
-  
+.drpdwn {
+  margin: 10px 0;
 }
+
 
 .notActive {
 display: none;

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 // generating idi for children in lists
 export const createID = (payload = '') => {
   return payload + ' ' + Math.random().toString(36).substr(2, 9);
@@ -34,4 +36,15 @@ export const replaceImg = ({ type, text, images }) => {
     default:
       return text;
   }
+};
+
+// display of different time formats for different time periods
+export const typeOfTime = (date) => {
+	let currentTime = moment();
+	let createdTime = moment(date);
+	if (currentTime.diff(createdTime, 'days') <= 1) {
+		return moment(date).startOf('hour').fromNow();
+	} else {
+		return moment(date).format('LLL');
+	}
 };

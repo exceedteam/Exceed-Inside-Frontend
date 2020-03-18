@@ -85,13 +85,13 @@ class Events extends React.Component {
               <div className={styles.bottom}>
                 <div className={styles.subscribeContainer}>
                   <button
-                    className={styles.button}
+                    className={styles.btn}
                     onClick={this.subToAllEvents}
                   >
                     sub
                   </button>
                   <button
-                    className={styles.button}
+                    className={styles.btn}
                     onClick={this.unsubToAllEvents}
                   >
                     unsub

@@ -1,8 +1,8 @@
 .pageWrapper {
   width: 680px;
 }
-.button {
-  composes: button from "../../../styles/common/index.css";
+.btn {
+  composes: btn from "../../../styles/common/index.css";
   width: 50%;
   color: #FFF;
   background-color: #06799F;

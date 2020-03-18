@@ -1,65 +1,38 @@
-import React, { useRef, useState, useEffect } from 'react';
-import SimpleMDE from 'react-simplemde-editor';
+import React, { useRef, useEffect } from 'react';
 import { PostHeader } from '../PostHeader';
-import { replaceImg } from '../../../../services/helpers';
-import styles from './PostPreview.module.css';
-import { Card, Icon, Comment } from 'semantic-ui-react';
+import { Icon, Comment } from 'semantic-ui-react';
+import Editor from '../../../libs/Editor';
 
 // common function for rendering one height with simpleMDE
 const PostPreview = ({ post: currentPost, history, likePost, dislikePost, isMainPost = false }) => {
 	const post = useRef(currentPost);
-	const [ height, setHeight ] = useState(0);
-
+	const editorInstance = useRef();
 	useEffect(
 		() => {
+
+			console.log('----------editorInstance.current.$blockEdit.current.style.height = 0', );
+			editorInstance.current.$blockEdit.current.style.height = 0
 			// display depending: on the location on the main page or on the page with the post
-			const codeMirrorCode = document.querySelectorAll('.CodeMirror-code');
+			const editorPanel = document.querySelectorAll('.for-panel');
+			const editor = document.querySelectorAll('.for-container');
 			if (isMainPost) {
-				const codeMirror = document.querySelectorAll('.CodeMirror');
-				for (let item of codeMirror) {
-					item.style.height = height + 'px';
-					item.style.border = 'none';
+				for (let item of editor) {
+					item.style.height = '350px';
 				}
-				for (let item of codeMirrorCode) {
-					item.style.fontSize = '0px';
+				for (let item of editorPanel) {
+					item.style.overflow = 'hidden';
 				}
-			} else {
-				const codeMirror = document.querySelector('.CodeMirror');
-				codeMirror.style.border = 'none';
-				codeMirror.style.height = codeMirror.scrollHeight + height - 32 + 'px';
+			}
+			for (let item of editor) {
+				item.style.width = '98%';
+				item.style.border = 'none';
+				item.style.boxShadow = '0 0 0 0'
+				item.style.overflow = 'hidden';
+				item.style.background = '#FFFFFF';
 			}
 		},
-		[ height, isMainPost ]
+		[ isMainPost ]
 	);
-
-	// You can now store and manipulate the simplemde instance.
-	const getInstance = (editor) => {
-		let { images, text } = post.current;
-		text = replaceImg({ type: 'img', text, images });
-		editor.value(text);
-		editor.togglePreview(editor);
-
-		// display depending: on the location on the main page or on the page with the post
-		if (isMainPost) {
-			setHeight(350);
-		} else {
-			const collectionImages = document.querySelectorAll('.CodeMirror div.editor-preview-full img');
-			// getting post image sizes
-			function getImgDimension(img) {
-				const i = new Image();
-				i.src = img.src;
-				return {
-					width: img.width,
-					height: img.height
-				};
-			}
-			for (let item of collectionImages) {
-				item.addEventListener('load', function() {
-					setHeight(getImgDimension(this).height);
-				});
-			}
-		}
-	};
 
 	const setLike = () => {
 		likePost(post.current.id);
@@ -70,7 +43,7 @@ const PostPreview = ({ post: currentPost, history, likePost, dislikePost, isMain
 	};
 
 	return (
-		<div className={styles.post}>
+		<div className="postPreview">
 			<div>
 				<PostHeader
 					name={post.current.author.name}
@@ -80,44 +53,37 @@ const PostPreview = ({ post: currentPost, history, likePost, dislikePost, isMain
 				/>
 			</div>
 			{isMainPost && (
-				<div id="gradient1" className={styles.gradient}>
-					<div className={styles.seeTitle}>
+				<div id="gradient1" className="gradient">
+					<div className="seeTitle">
 						<span onClick={() => history.push(`/post/${post.current.id}`)}>Show full post</span>
 					</div>
 				</div>
 			)}
-			<SimpleMDE
-				getMdeInstance={getInstance}
-				className={styles.content}
-				options={{
-					toolbar: false,
-					status: false,
-					previewClass: styles.textarea
-				}}
-			/>
-			{/* <Card header="Some header" image={post.current.images[0]} description={post.current.text} /> */}
-			{/* <Comment>
-				<Comment.Actions>
-					<Comment.Action>Reply</Comment.Action>
-				</Comment.Actions>
-				<Comment.Metadata>
-					<div onClick={setLike}>Like: {post.current.likeCounter}</div>
-					<div onClick={setLike}>Dislike: {post.current.dislikeCounter}</div>
-					<div>Comments: {post.current.commentsCounter}</div>
-				</Comment.Metadata>
-			</Comment> */}
-			<div className={styles.likes}>
-				<span className={styles.clickable} onClick={setLike}>
-					Like:{' '}
-				</span>
-				{post.current.likeCounter}
-				<span className={styles.clickable} onClick={setDislike}>
-					Dislike:{' '}
-				</span>
-				{post.current.dislikeCounter}
-				<span>Comments: </span>
-				{post.current.commentsCounter}
-			</div>
+			<Editor
+					ref={editorInstance}
+					value={post.current.text}
+					language={'en'}
+					preview={true}
+					images={post.current.images}
+					lineNum={false}
+					toolbar={{}}
+					className="editorPreview"
+				/>
+			<Comment.Group>
+				<Comment>
+					<Comment.Metadata>
+						<div onClick={setLike}>
+							<Icon name="thumbs up" /> {post.current.likeCounter}
+						</div>
+						<div onClick={setDislike}>
+							<Icon name="thumbs down" /> {post.current.dislikeCounter}
+						</div>
+						<div>
+							<Icon name="comment" /> {post.current.commentsCounter}
+						</div>
+					</Comment.Metadata>
+				</Comment>
+			</Comment.Group>
 		</div>
 	);
 };

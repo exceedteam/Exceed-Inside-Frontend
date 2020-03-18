@@ -1,24 +1,6 @@
-.createComment {
-	margin: 0 auto;
-	width: 400px;
-
-	.button {
-		color: #fff;
-		background-color: #06799f;
-		margin: 0 auto;
-		width: 35%;
-		padding: 0.2em 0;
-	}
-
-	.new {
-		font-size: 20px;
-		margin: 0.3em;
-		padding: 0.2em;
-	}
-}
-
 .commentsField {
-	width: 75%;
+	width: 78%;
+  margin: 20px auto;
 
 	.displayComment {
 		width: 20em;
@@ -53,4 +35,34 @@
 			height: 40px;
 		}
 	}
+
+	.commentInput:last-child {
+		margin-bottom: 100px;
+	}
+}
+
+.createTheNewComment {
+	padding: 0 5em;
+
+	.findedUsers {
+		display: none;
+		max-height: 100px;
+		overflow: auto;
+		margin-bottom: 10px;
+	}
+	.new {
+		max-width: 570px;
+		min-height: 3em;
+		background-color: #ffffff;
+		border-radius: 5px;
+		margin: 10px 0;
+	}
+	.new__input {
+		border-radius: 5px !important;
+		padding: 0.3em;
+	}
+}
+
+.Reply {
+	padding: 0 0.3em;
 }

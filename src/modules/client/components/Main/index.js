@@ -8,7 +8,8 @@ import styles from "./Main.module.css";
 import { connect } from "react-redux";
 import { fetchPosts } from "../../../redux/actions/posts/fetch";
 import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
-import Loader from "../Loader"
+import Loader from "../Loader";
+import { Button } from "semantic-ui-react";
 
 class Posts extends React.Component {
   constructor(props) {
@@ -74,9 +75,7 @@ class Posts extends React.Component {
               );
             })}
             {!loading && (
-              <button className={styles.button} onClick={this.changePage}>
-                Receive Posts
-              </button>
+              <Button className="receive" onClick={this.changePage} primary>Receive Posts</Button>
             )}
             </Fragment>
         )}

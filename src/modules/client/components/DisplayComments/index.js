@@ -1,14 +1,11 @@
 // display post comments
 import React from 'react';
-import { createID } from '../../../../services/helpers';
-import { PostHeader } from '../PostHeader';
-import { MentionsInput, Mention } from 'react-mentions';
+import { createID, typeOfTime } from '../../../../services/helpers';
 import CreateComment from '../CreateComment';
 import Loader from '../Loader';
 import { connect } from 'react-redux';
 import { fetchComments } from '../../../redux/actions/comments/fetch';
 import { Comment } from 'semantic-ui-react';
-import moment from "moment";
 
 class DisplayComments extends React.Component {
 	constructor(props) {
@@ -37,25 +34,39 @@ class DisplayComments extends React.Component {
 		this.setState(
 			{
 				currentCommentId: commentId
-			},
-			() => {
-				console.log('----------callback');
-				this.visibleSubcomments();
 			}
 		);
+		this.visibleSubcomments();
 	};
 
 	renderSubcomments = () => {
 		const { comments } = this.props;
 		const { currentCommentId } = this.state;
 		const subComments = comments.filter((comment) => comment.parent === currentCommentId);
-
 		return (
-			<ul>
+			<Comment.Group>
 				{subComments.map((comment) => {
-					return <li key={createID()}>{/* header with data about comment author */}</li>;
+					return (
+						<Comment key={createID()}>
+							<Comment.Avatar src={comment.author.avatar} />
+							<Comment.Content>
+								<Comment.Author
+									as="a"
+									onClick={() => {
+										this.props.history.push(`/user/${comment.authorId}`);
+									}}
+								>
+									{comment.author.name}
+								</Comment.Author>
+								<Comment.Metadata>
+									<div>{typeOfTime(comment.createdAt)}</div>
+								</Comment.Metadata>
+								<Comment.Text>{comment.text}</Comment.Text>
+							</Comment.Content>
+						</Comment>
+					);
 				})}
-			</ul>
+			</Comment.Group>
 		);
 	};
 
@@ -68,7 +79,7 @@ class DisplayComments extends React.Component {
 				{!loading && (
 					<Comment.Group>
 						{comments.filter((comment) => comment.parent === '').map((comment) => (
-              <React.Fragment>
+							<React.Fragment key={createID()}>
 								<Comment>
 									<Comment.Avatar src={comment.author.avatar} />
 									<Comment.Content>
@@ -81,60 +92,44 @@ class DisplayComments extends React.Component {
 											{comment.author.name}
 										</Comment.Author>
 										<Comment.Metadata>
-											<div>{moment(comment.createdAt).startOf('day').fromNow()}</div>
+											<div>{typeOfTime(comment.createdAt)}</div>
 										</Comment.Metadata>
 										<Comment.Text>{comment.text}</Comment.Text>
 										<Comment.Actions>
-											<Comment.Action>Reply</Comment.Action>
+											<Comment.Action onClick={() => this.handleVisible(comment.id)}>
+												Reply
+											</Comment.Action>
+											{comment.answeredUser.length > 0 &&
+											!isVisibleSubcomments && (
+												<Comment.Action
+													onClick={() => {
+														this.uploadAnsveredComments({
+															postId: comment.postId,
+															commentId: comment.id
+														});
+													}}
+												>
+													Show replied messages
+												</Comment.Action>
+											)}
 										</Comment.Actions>
 									</Comment.Content>
+									{isVisibleSubcomments && (comment.id === currentCommentId) && this.renderSubcomments()}
 								</Comment>
-								{/* <PostHeader
-									name={comment.author.name}
-									avatar={comment.author.avatar}
-									date={comment.createdAt}
-									onClick={() => {
-										this.props.history.push(`/user/${comment.authorId}`);
-									}}
-								/> */}
-								<div className="commentInput" onClick={() => this.handleVisible(comment.id)}>
-									{/* comment text with metioned users*/}
-									<MentionsInput disabled value={comment.text} className="textarea">
-										<Mention
-											trigger="@"
-											displayTransform={(id, display) => {
-												return '@' + display;
-											}}
-										/>
-									</MentionsInput>
-								</div>
-								{comment.answeredUser.length > 0 &&
-								!isVisibleSubcomments && (
-									<button
-										onClick={() => {
-											this.uploadAnsveredComments({
-												postId: comment.postId,
-												commentId: comment.id
-											});
-										}}
-									>
-										load more comments
-									</button>
-								)}
-								{isVisibleSubcomments && this.renderSubcomments()}
 								{isVisibleInput &&
 								currentCommentId === comment.id && (
 									<CreateComment
 										id={comment.postId}
 										withoutParent={false}
 										parent={comment.id}
+										type={'Reply'}
 										mention={{
 											id: comment.authorId,
 											name: comment.author.name
 										}}
 									/>
 								)}
-                </React.Fragment>
+							</React.Fragment>
 						))}
 					</Comment.Group>
 				)}

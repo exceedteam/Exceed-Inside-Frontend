@@ -1,0 +1,73 @@
+.postPreview {
+	margin: 2em auto;
+	background-color: #ffffff;
+	padding: 1em 1em 2em;
+	box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+	border-radius: 8px;
+	overflow: hidden;
+	position: relative;
+	width: 680px;
+
+	.content img {
+		max-width: 100%;
+	}
+
+	.content .CodeMirror {
+		border: none;
+		max-width: 680px;
+	}
+
+	.likes {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		width: 15em;
+	}
+	.clickable {
+		cursor: pointer;
+	}
+	.textarea {
+		overflow: hidden;
+		background: #ffffff;
+		padding: 10px;
+		width: 100%;
+	}
+
+	.gradient {
+		height: 350px;
+		width: 95%;
+		background: linear-gradient(
+			to bottom,
+			rgba(255, 255, 255, 0) 75%,
+			rgba(255, 255, 255, 0.5),
+			rgba(255, 255, 255, 1)
+		);
+		position: absolute;
+		z-index: 5;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		flex-direction: column;
+	}
+
+	.seeTitle {
+		background-color: rgba(255, 255, 255, .7);
+		border-radius: 25px;
+		padding: 5px;
+		margin: 5px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.metadata {
+		font-size: 16px !important;
+
+		div {
+			margin-right: 20px !important;
+			cursor: pointer;
+		}
+		div:last-child {
+			cursor: auto;
+		}
+	}
+}

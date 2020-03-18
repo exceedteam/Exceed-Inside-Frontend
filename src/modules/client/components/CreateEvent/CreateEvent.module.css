@@ -3,8 +3,8 @@
   composes: justify-between from "../../../styles/common/index.css";
 }
 
-.button {
-  composes: button from "../../../styles/common/index.css";
+.btn {
+  composes: btn from "../../../styles/common/index.css";
   color: #fff;
   background-color: #06799f;
   width: 5em;
@@ -18,7 +18,7 @@
 }
 
 .submit {
-  composes: button from "../../../styles/common/index.css";
+  composes: btn from "../../../styles/common/index.css";
   color: #fff;
   background-color: #06799f;
   width: 8em;

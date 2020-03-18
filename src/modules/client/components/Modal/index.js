@@ -15,7 +15,7 @@ export default class ModalWindow extends React.Component {
       >
         <div className={styles.header}>
           <h1>{title}</h1>
-          <button onClick={handleVisible} className={styles.button}>
+          <button onClick={handleVisible} className={styles.btn}>
             Close
           </button>
         </div>

@@ -75,7 +75,7 @@ class Login extends React.Component {
             />
             <span className={styles.errorMessage}>{this.messageError()}</span>
           </label>
-          <input className={styles.button} type="submit" value={this.props.loading ? "Loading..." : "Sign in"}/>
+          <input className={styles.btn} type="submit" value={this.props.loading ? "Loading..." : "Sign in"}/>
           <label>
             <span>Not registered? </span>
             <Link to="/registration">Create an account</Link>

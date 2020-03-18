@@ -22,14 +22,14 @@
   justify-content: center;
 }
 
-.button {
-  composes: button from "../../../styles/common/index.css";
+.btn {
+  composes: btn from "../../../styles/common/index.css";
   color: #FFF;
   background-color: #06799F;
   width: 50%;
 }
 
-.button:hover {
+.btn:hover {
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
   transform: translateY(-4px);
 }

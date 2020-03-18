@@ -92,7 +92,7 @@ class Registration extends React.Component {
               className={`${styles.input} ${errors.password2 ? styles.error : ""}`}
             />
           </label>
-          <input className={styles.button} type="submit" value="Sign up"/>
+          <input className={styles.btn} type="submit" value="Sign up"/>
           <label>
             <span> Already registered? </span>
             <Link to="/login" className={styles.link}>Login</Link>

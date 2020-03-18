@@ -30,8 +30,8 @@
   margin-top: 0.2em;
 }
 
-.button {
-  composes: button from "../../../styles/common/index.css";
+.btn {
+  composes: btn from "../../../styles/common/index.css";
   color: #fff;
   background-color: #06799f;
   width: 5em;

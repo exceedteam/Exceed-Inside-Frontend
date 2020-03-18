@@ -13,7 +13,6 @@ class AlertMessage extends React.Component {
           className={styles.closebtn}
           onClick={()=> {
             this.props.ClearMessage()
-            // this.alert.style.display = 'none'
           }}
         >
           &times;

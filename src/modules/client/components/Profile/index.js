@@ -75,7 +75,7 @@ class Profile extends React.Component {
       return (
         <div>
           <button
-            className={styles.button}
+            className={styles.btn}
             onClick={() => {
               this.setState({ isEdit: !isEdit });
             }}
@@ -85,7 +85,7 @@ class Profile extends React.Component {
           </button>
           {isEdit && (
             <button
-              className={styles.button}
+              className={styles.btn}
               disabled={!this.state.isEdit}
               onClick={this.submitEditProfile}
             >
@@ -198,7 +198,7 @@ class Profile extends React.Component {
                 {this.editProfile()}
                 <div>
                   <button
-                    className={styles.button}
+                    className={styles.btn}
                     onClick={() => {
                       this.props.history.push(`/user/${id}/posts`);
                     }}
