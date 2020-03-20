@@ -21,6 +21,7 @@ export const createComment = ({ commentText, id, parent, withoutParent }) => {
         }
       )
       .then(response => {
+        console.log("res", response)
         return dispatch(createCommentSuccess(response.data));
       })
       .catch(error => {

@@ -9,6 +9,7 @@ import Loader from "../Loader";
 import { connect } from "react-redux";
 import { fetchPost } from "../../../redux/actions/posts/fetch";
 import { clearCurrentPost } from "../../../redux/actions/posts/edit";
+import { clearCurrentComments } from "../../../redux/actions/comments/edit";
 import { likePost, dislikePost } from "../../../redux/actions/posts/edit";
 import { fetchAllUsers } from "../../../redux/actions/users/fetch";
 import {
@@ -45,10 +46,11 @@ class Post extends React.Component {
 
   componentWillUnmount() {
     this.props.clearCurrentPost();
+    this.props.clearCurrentComments();
   }
 
   render() {
-    const { currentPostPreview, comments, loading } = this.props;
+    const { currentPostPreview, comments } = this.props;
     return (
       <div>
         {!!currentPostPreview && (
@@ -66,7 +68,6 @@ class Post extends React.Component {
             {/* render comments of post */}
             <DisplayComments
               comments={comments}
-              loading={loading}
               history={this.props.history}
               onClick={() => {}}
             />
@@ -86,7 +87,6 @@ const mapStateToProps = state => {
     currentPostPreview: state.posts.currentPostPreview,
     errors: state.comments.errors,
     comments: state.comments.comments,
-    loading: state.comments.loading,
     users: state.users.users
   };
 };
@@ -95,6 +95,7 @@ export default connect(mapStateToProps, {
   fetchPost,
   fetchComments,
   fetchNewComment,
+  clearCurrentComments,
   clearCurrentPost,
   likePost,
   dislikePost,

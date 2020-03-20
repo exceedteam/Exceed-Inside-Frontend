@@ -2,6 +2,12 @@ import * as React from 'react'
 import classNames from 'classnames'
 
 class Toolbars extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isWidth: true,
+    }
+  }
   static defaultProps = {
     onClick: () => {},
     toolbars: {},
@@ -9,8 +15,18 @@ class Toolbars extends React.Component {
   };
 
   onClick(type) {
+    const width = document.getElementsByClassName("createTheNewPost")[0]
+    const {isWidth} = this.state;
+    if ( type === 'subfield' && isWidth) {
+      width.style.width = "900px";
+      this.setState({isWidth: !isWidth})
+    } else {
+      width.style.width = "600px";
+      this.setState({isWidth: !isWidth})
+    }
     this.props.onClick(type)
   }
+
 
   render() {
     const { preview, expand, subfield, toolbar, words } = this.props;
@@ -55,7 +71,7 @@ class Toolbars extends React.Component {
         {toolbar.subfield && (
           <li
             className={subfieldActive}
-            onClick={() => this.onClick('subfield')}
+            onClick={() => {this.onClick('subfield'); }}
             title={subfieldActive ? words.singleColumn : words.doubleColumn}
           >
             <i className="foricon for-subfield" />

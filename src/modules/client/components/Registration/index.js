@@ -1,7 +1,6 @@
 import React from "react";
 import { createID } from "../../../../services/helpers";
 import { Link } from "react-router-dom";
-import styles from "./Registration.module.css"
 import { connect } from "react-redux";
 import { register } from "../../../redux/actions/auth";
 
@@ -55,21 +54,21 @@ class Registration extends React.Component {
     const { email, password, password2 } = this.state;
     const { errors } = this.props
     return (
-      <div className={styles.container}>
+      <div className="container">
         <form
           onSubmit={this.submitUser}
-          className={styles.form}
+          className="form"
         >
-          <h1 className={styles.title}>Create an account</h1>
+          <h1 className="title">Create an account</h1>
           <label htmlFor="email">
             <input
               id="email"
               value={email}
               onChange={this.updateForm}
               placeholder="E-mail"
-              className={`${styles.input} ${errors.email ? styles.error : ""}`}
+              className={`input ${errors.email ? "error" : ""}`}
             />
-            <span className={styles.errorMessage}>{errors.email}</span>
+            <span className="errorMessage">{errors.email}</span>
           </label>
           <label htmlFor="password">
             <input
@@ -78,9 +77,9 @@ class Registration extends React.Component {
               value={password}
               onChange={this.updateForm}
               placeholder="Password"
-              className={`${styles.input} ${errors.password ? styles.error : ""}`}
+              className={`input ${errors.password ? "error" : ""}`}
             />
-            <span className={styles.errorMessage}>{errors.password}</span>
+            <span className="errorMessage">{errors.password}</span>
           </label>
           <label htmlFor="password2">
             <input
@@ -89,13 +88,13 @@ class Registration extends React.Component {
               value={password2}
               onChange={this.updateForm}
               placeholder="Confirm password"
-              className={`${styles.input} ${errors.password2 ? styles.error : ""}`}
+              className={`input ${errors.password2 ? "error" : ""}`}
             />
           </label>
-          <input className={styles.btn} type="submit" value="Sign up"/>
+          <input className="btn" type="submit" value="Sign up"/>
           <label>
             <span> Already registered? </span>
-            <Link to="/login" className={styles.link}>Login</Link>
+            <Link to="/login" className="link">Login</Link>
           </label>
         </form>
       </div>

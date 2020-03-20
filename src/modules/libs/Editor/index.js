@@ -182,7 +182,7 @@ class MdEditor extends React.Component {
       code: {
         prefix: '```',
         subfix: '\n\n```',
-        str: 'language'
+        str: ''
       },
       tab: {
         prefix: '  ',

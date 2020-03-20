@@ -8,6 +8,7 @@ import { createID } from '../../../../services/helpers';
 import { connect } from 'react-redux';
 import { createPost } from '../../../redux/actions/posts/create';
 import { Button, Icon } from 'semantic-ui-react';
+import './postCreator.scss';
 
 // Component for creating a new post
 class PostCreator extends React.Component {
@@ -16,6 +17,8 @@ class PostCreator extends React.Component {
 		this.$vm = React.createRef();
 		this.state = {
 			value: `# Intro\nGo ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like cmd-b or ctrl-b.\n## Lists\nUnordered lists can be started using the toolbar or by typing *  , -  , or +  . Ordered lists can be started by typing 1. .\n\n#### Unordered\n* Lists are a piece of cake\n* They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!`,
+			memo: `# H1 \n ## H2 \n ### H3 \n #### H4 \n **bold** \n\n *italic* \n\n 	code \n\n * list \n\n 1. list `,
+			code: `# H1 \n\n\n ## H2 \n\n ### H3 \n #### H4 \n **bold** \n *italic* \n\n \`\`\`code\`\`\` \n\n * list \n\n 1. list `,
 			images: []
 		};
 	}
@@ -91,42 +94,62 @@ class PostCreator extends React.Component {
 	}
 
 	render() {
-		const { value, images } = this.state;
+		const { value, images, memo, code } = this.state;
 		return (
 			<React.Fragment>
-				<Editor
-					ref={this.$vm}
-					value={value}
-					language={'en'}
-					preview={false}
-					images={images}
-					toolbar={{
-						h1: true,
-						h2: true,
-						h3: true,
-						h4: true,
-						img: true,
-						link: true,
-						code: true,
-						preview: true,
-						expand: true,
-						/* v0.0.9 */
-						undo: true,
-						redo: true,
-						save: false,
-						/* v0.2.3 */
-						subfield: true
-					}}
-					lineNum={false}
-					addImg={($file) => this.addImg($file)}
-					onChange={(value) => this.handleChange(value)}
-				/>
-				<Button onClick={this.submitPost} className="publishPost" primary animated>
-					<Button.Content visible>Submit</Button.Content>
-					<Button.Content hidden>
-						<Icon name='checkmark' />
-					</Button.Content>
-				</Button>
+				<div className="postCreator">
+					<div className="leftSide">
+						<div className="createTheNewPost">
+							<Editor
+								ref={this.$vm}
+								value={value}
+								language={'en'}
+								preview={false}
+								images={images}
+								toolbar={{
+									h1: true,
+									h2: true,
+									h3: true,
+									h4: true,
+									img: true,
+									link: true,
+									code: true,
+									preview: true,
+									expand: false,
+									/* v0.0.9 */
+									undo: true,
+									redo: true,
+									save: false,
+									/* v0.2.3 */
+									subfield: true
+								}}
+								lineNum={false}
+								addImg={($file) => this.addImg($file)}
+								onChange={(value) => this.handleChange(value)}
+							/>
+						</div>
+						<Button onClick={this.submitPost} className="publishPost" primary animated>
+							<Button.Content visible>Submit</Button.Content>
+							<Button.Content hidden>
+								<Icon name="checkmark" />
+							</Button.Content>
+						</Button>
+					</div>
+					<div className="rightSide">
+						<div className="header">Memo</div>
+						<div className="listOfActions">
+							<div className="code">
+								<Editor value={code} preview={false} lineNum={false} images={images} toolbar={{}} />
+							</div>
+							<div className="prettier">
+								<Editor value={memo} preview={true} images={images} toolbar={{}} />
+							</div>
+						</div>
+						<a className="link" href="https://pandao.github.io/editor.md/en.html">
+							More examples here
+						</a>
+					</div>
+				</div>
 			</React.Fragment>
 		);
 	}

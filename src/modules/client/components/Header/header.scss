@@ -1,0 +1,50 @@
+@mixin header {
+  width: 100%;
+  font-family: inherit;
+  border-radius: 0.2em;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  z-index: 7;
+  left: 0;
+  top: 0;
+  will-change: top;
+  background-color: white;
+  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+  height: 60px;
+  align-items: center;
+}
+
+@mixin nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 40px;
+}
+
+.headerLogged {
+  @include header;
+  justify-content: space-between;
+}
+
+.headerNotLogged {
+  @include header;
+  justify-content: flex-end;
+}
+
+.navLogged {
+  @include nav;
+  max-width: 500px;
+}
+
+.navLoggedRight {
+  @include nav;
+  max-width: 200px;
+}
+
+.navNotLogged {
+  @include nav;
+  max-width: 350px;
+}
+

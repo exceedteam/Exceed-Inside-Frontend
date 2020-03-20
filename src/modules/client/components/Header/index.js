@@ -2,11 +2,11 @@
   Component with which the application header is rendered
 */
 import React from 'react';
-import styles from './Header.module.css';
 import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { clearUserProfile } from '../../../redux/actions/users/edit';
 import { Button, Dropdown } from 'semantic-ui-react';
+import "./header.scss";
 
 class Header extends React.Component {
 	constructor(props) {
@@ -59,13 +59,13 @@ class Header extends React.Component {
 // If the User logged in
 const Logged = ({ logout, history, id }) => {
 	return (
-		<div className={styles.headerLogged}>
-			<div className={styles.navLogged}>
+		<div className="headerLogged">
+			<div className="navLogged">
 				<Button onClick={() => history.push('/')}>Main page</Button>
 				<Button onClick={() => history.push('/create')}>New post</Button>
 				<Button onClick={() => history.push('/events')}>Events</Button>
 			</div>
-			<div className={styles.navLoggedRight}>
+			<div className="navLoggedRight">
 				<Dropdown text="User" floating labeled button icon="user" className="icon">
 					<Dropdown.Menu>
 						<Dropdown.Item text="Profile" icon="address card" onClick={() => history.push(`/user/${id}`)} />
@@ -80,19 +80,11 @@ const Logged = ({ logout, history, id }) => {
 // If the User not logged
 const NotLogged = ({ history }) => {
 	return (
-		<div className={styles.headerNotLogged}>
-			<ul className={styles.navNotLogged}>
-				<li>
-					<button className={styles.btn} onClick={() => history.push('/login')}>
-						Sign in
-					</button>
-				</li>
-				<li>
-					<button className={styles.btn} onClick={() => history.push('/registration')}>
-						Sign up
-					</button>
-				</li>
-			</ul>
+		<div className="headerNotLogged">
+			<div className="navNotLogged">
+				<Button onClick={() => history.push('/login')}>Sign in</Button>
+				<Button onClick={() => history.push('/registration')}>Sign up</Button>
+			</div>
 		</div>
 	);
 };

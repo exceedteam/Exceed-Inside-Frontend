@@ -101,11 +101,12 @@ export default function(state = initialState, action) {
       };
     }
     case FETCH_LIKE_FROM_SOCKET: {
-      const { likeCounter, dislikeCounter, id } = action.payload;
-      
+      const { likeCounter, dislikeCounter, id, likesUsers, dislikesUsers } = action.payload;
       const {posts, currentPostPreview} = state;
       posts.map(post => {
         if (post.id === id) {
+          post.dislikesUsers = dislikesUsers;
+          post.likesUsers = likesUsers;
           post.likeCounter = likeCounter;
           post.dislikeCounter = dislikeCounter;
         }

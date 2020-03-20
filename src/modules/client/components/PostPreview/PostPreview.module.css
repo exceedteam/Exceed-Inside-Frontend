@@ -40,6 +40,7 @@
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
   position: absolute;
   z-index: 5;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-end;

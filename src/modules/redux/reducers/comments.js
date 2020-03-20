@@ -5,13 +5,13 @@ import {
   CREATE_COMMENT_PROCESS,
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAIL,
-  FETCH_NEW_COMMENT
+  FETCH_NEW_COMMENT,
+  CLEAR_CURRENT_COMMENTS
 } from "../actionTypes";
 
 const initialState = {
   errors: null,
   comments: [],
-  // subcomments: [],
   loading: false,
   newComment: [],
   errorOfCreateComment: null,
@@ -73,6 +73,12 @@ export default function(state = initialState, action) {
         loadingNewComment: false,
         errorOfCreateComment: errorOfCreateComment
       };
+    }
+    case CLEAR_CURRENT_COMMENTS: {
+      return {
+        ...state,
+        comments: []
+      }
     }
     default:
       return state;

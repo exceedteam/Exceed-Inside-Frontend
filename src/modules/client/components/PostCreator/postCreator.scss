@@ -1,0 +1,72 @@
+.postCreator {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	margin-top: 10px;
+
+	.leftSide {
+		background-color: transparent;
+		.createTheNewPost {
+			width: 600px;
+			border-radius: 8px;
+			box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 12px;
+			background-color: white;
+			border: 1px solid #ddd;
+			transition: width 0.2s linear;
+		}
+		.publishPost {
+			position: relative;
+			top: 10px;
+			margin-bottom: 20px;
+		}
+	}
+
+	.rightSide {
+		width: 250px;
+		height: 410px;
+		background-color: white;
+		border-radius: 8px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 12px;
+		position: sticky;
+		top: 100px;
+		padding: 10px;
+
+		.header {
+			text-align: center;
+		}
+		.listOfActions {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			.code,
+			.prettier {
+				width: 45%;
+			}
+		}
+		.link {
+			font-size: 12px;
+			text-align: center;
+			margin-left: 12px;
+		}
+	}
+
+	@media only screen and (max-width: 1150px) {
+		.rightSide {
+			display: none;
+		}
+	}
+}
+
+#scrollToTop {
+	width: 50px;
+	height: 50px;
+	background-color: rgba(0, 0, 0, 0.1);
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	font-weight: bold;
+	cursor: pointer;
+	opacity: 0;
+	transition: all 0.5s ease-in;
+}
