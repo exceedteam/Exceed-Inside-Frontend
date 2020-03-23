@@ -1,0 +1,36 @@
+@import "../../../styles/common/index.scss";
+
+.aboutEvent {
+	margin-top: -20px;
+
+	.threeDots {
+		position: relative !important;
+		left: 605px;
+		i {
+			font-size: 1.3em;
+		}
+	}
+
+	.header {
+		justify-content: flex-start;
+		margin-top: -25px !important;
+	}
+
+	.timeOfEvent {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+
+    .date {
+      color: #2185d0;
+      font-size: 1.3em;
+      margin: 0 10px; 
+    }
+  }
+  
+  .linkToAuthor {
+    @include linkToMentionUser;
+    width: fit-content;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,22 @@
+.alert {
+	background-color: #2185d0; /* Red */
+	color: white;
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+.closebtn:hover {
+	color: black;
+}

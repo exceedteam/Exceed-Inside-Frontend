@@ -1,0 +1,56 @@
+.createForm {
+	margin-top: -30px;
+
+	.titleOfEvent {
+		padding: 0 !important;
+    font-size: 1.3em !important;
+    width: 98%;
+	}
+
+	#title::-webkit-input-placeholder {
+		color: rgba(33, 133, 208, 0.8);
+	}
+
+	.input {
+		color: #384047;
+		background-color: #e8eeef;
+		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+		border: none;
+		border-radius: 4px;
+		padding: 1em;
+		margin: 0.6em 0;
+	}
+
+	.changeTime {
+		display: flex;
+		align-items: center;
+		.startTime,
+		.endTime {
+      display: flex;
+			.input {
+        width: 180px;
+        padding: 0;
+        margin: 0 5px;
+				input {
+					color: rgba(33, 133, 208, 0.8);
+				}
+			}
+		}
+	}
+
+	.changeTime {
+		.calendar {
+			margin: 10px 6px;
+			border: 1px solid rgba(33, 133, 208, 0.3);
+			padding: 10px 0 10px 10px;
+			font-size: 17px;
+			border-radius: 3px;
+			width: fit-content;
+			color: rgb(33,133,208);
+		}
+	}
+
+	.button {
+		margin-top: 15px !important;
+	}
+}

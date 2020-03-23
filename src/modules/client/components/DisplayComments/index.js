@@ -5,7 +5,8 @@ import CreateComment from '../CreateComment';
 import Loader from '../Loader';
 import { connect } from 'react-redux';
 import { fetchComments } from '../../../redux/actions/comments/fetch';
-import { Comment } from 'semantic-ui-react';
+import { Comment, Popup, Button } from 'semantic-ui-react';
+import moment from 'moment';
 
 class DisplayComments extends React.Component {
 	constructor(props) {
@@ -13,7 +14,11 @@ class DisplayComments extends React.Component {
 		this.state = {
 			isVisibleInput: false,
 			idsOfCommentsIsShown: new Set([]),
-			currentCommentId: ''
+			currentCommentId: '',
+			params: {
+				page: 1,
+				perPage: 10
+			}
 		};
 	}
 
@@ -40,38 +45,82 @@ class DisplayComments extends React.Component {
 		});
 	};
 
+	// display message with mentioned users
+	replaceId = (text) => {
+		const re = /@\[(.+?)\]\(\w+?\)/g;
+		const { users } = this.props;
+		return (
+			<div className="subcomment">
+				{text.split(re).map((partOfText) => {
+					const currentUserDisplayInPopUp = users.find((user) => user.display === partOfText);
+					if (currentUserDisplayInPopUp) {
+						return (
+							<Popup
+								key={createID()}
+								header={currentUserDisplayInPopUp.display}
+								content={moment(currentUserDisplayInPopUp.age).format('LL')}
+								trigger={<div className="mentionUser">@{partOfText} </div>}
+								className="miniPopup"
+								basic
+							/>
+						);
+					} else {
+						return <div key={createID()}>{partOfText + ' '}</div>;
+					}
+				})}
+			</div>
+		);
+	};
+
 	renderSubcomments = (currentCommentId) => {
 		const { comments, loading } = this.props;
 		const { currentCommentId: onClickComment } = this.state;
 		const subComments = comments.filter((comment) => comment.parent === currentCommentId);
 		return (
 			<div>
-					<Comment.Group>
-						{subComments.map((comment) => {
-							return (
-								<Comment key={createID()}>
-									<Comment.Avatar src={comment.author.avatar} />
-									<Comment.Content>
-										<Comment.Author
-											as="a"
-											onClick={() => {
-												this.props.history.push(`/user/${comment.authorId}`);
-											}}
-										>
-											{comment.author.name}
-										</Comment.Author>
-										<Comment.Metadata>
-											<div>{typeOfTime(comment.createdAt)}</div>
-										</Comment.Metadata>
-										<Comment.Text>{comment.text}</Comment.Text>
-									</Comment.Content>
-								</Comment>
-							);
-						})}
-					</Comment.Group>
+				<Comment.Group>
+					{subComments.map((comment) => {
+						return (
+							<Comment key={createID()}>
+								<Comment.Avatar src={comment.author.avatar} />
+								<Comment.Content>
+									<Comment.Author
+										as="a"
+										onClick={() => {
+											this.props.history.push(`/user/${comment.authorId}`);
+										}}
+									>
+										{comment.author.name}
+									</Comment.Author>
+									<Comment.Metadata>
+										<div>{typeOfTime(comment.createdAt)}</div>
+									</Comment.Metadata>
+									<Comment.Text>{this.replaceId(comment.text)}</Comment.Text>
+								</Comment.Content>
+							</Comment>
+						);
+					})}
+				</Comment.Group>
 				{loading && onClickComment === currentCommentId && <Loader />}
 			</div>
 		);
+	};
+
+	//pagination
+	changePage = () => {
+		const { params } = this.state;
+		this.setState({
+			params: {
+				...params,
+				page: params.page + 1
+			}
+		});
+		this.recieveComments();
+	};
+
+	recieveComments = () => {
+		const { fetchComments } = this.props;
+		fetchComments({ ...this.state.params, id: this.props.comments[0].postId });
 	};
 
 	render() {
@@ -79,8 +128,7 @@ class DisplayComments extends React.Component {
 		const { isVisibleInput, currentCommentId, idsOfCommentsIsShown } = this.state;
 		return (
 			<div className="commentsField">
-
-				<Comment.Group>
+				<Comment.Group threaded>
 					{comments.filter((comment) => comment.parent === '').map((comment) => (
 						<React.Fragment key={createID()}>
 							<Comment>
@@ -135,6 +183,9 @@ class DisplayComments extends React.Component {
 							)}
 						</React.Fragment>
 					))}
+					<Button className="receive" onClick={() => this.changePage()} primary>
+						Receive Comments
+					</Button>
 				</Comment.Group>
 			</div>
 		);
@@ -144,6 +195,7 @@ class DisplayComments extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		loading: state.comments.loading,
+		users: state.users.users
 	};
 };
 

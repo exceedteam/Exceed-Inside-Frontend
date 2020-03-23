@@ -1,17 +1,25 @@
 import React from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
-import styles from "./MyCalendar.module.css";
 import moment from "moment";
 import CreateEvent from "../CreateEvent";
 import AboutEvent from "../AboutEvent";
 import ModalWindow from "../Modal";
 import { connect } from "react-redux";
 import { editEvent } from "../../../redux/actions/events/update";
+import "./myCalendar.scss"
 
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.scss";
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
+
+// start of week from monday
+moment.locale('ko', {
+  week: {
+      dow: 1,
+      doy: 1,
+  },
+});
 
 class MyCalendar extends React.Component {
   constructor(props) {
@@ -55,6 +63,7 @@ class MyCalendar extends React.Component {
             specificEvent={info}
             handleVisibleInfo={this.handleVisibleInfo}
             modal={this.state}
+            history={this.props.history}
           />
         </ModalWindow>
       </div>
@@ -88,7 +97,7 @@ class MyCalendar extends React.Component {
     const { modal, specificEvent } = this.state;
     const { events } = this.props;
     return (
-      <div className={styles.selectableDate}>
+      <div className="selectableDate">
         <DragAndDropCalendar
           selectable
           resizable

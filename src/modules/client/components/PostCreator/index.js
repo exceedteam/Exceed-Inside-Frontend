@@ -121,7 +121,8 @@ class PostCreator extends React.Component {
 									redo: true,
 									save: false,
 									/* v0.2.3 */
-									subfield: true
+									subfield: true,
+									help: true
 								}}
 								lineNum={false}
 								addImg={($file) => this.addImg($file)}
@@ -139,10 +140,10 @@ class PostCreator extends React.Component {
 						<div className="header">Memo</div>
 						<div className="listOfActions">
 							<div className="code">
-								<Editor value={code} preview={false} lineNum={false} images={images} toolbar={{}} />
+								<Editor value={code} preview={false} lineNum={false} toolbar={{}} />
 							</div>
 							<div className="prettier">
-								<Editor value={memo} preview={true} images={images} toolbar={{}} />
+								<Editor value={memo} preview={true} toolbar={{}} />
 							</div>
 						</div>
 						<a className="link" href="https://pandao.github.io/editor.md/en.html">

@@ -58,3 +58,11 @@ export const togglePropertyInSet = (set, property) => {
 	}
 	return set;
 };
+
+// delete the id of the mentioned user
+export const replaceId = (text) => {
+	const re = /@\[(.+?)\]\(\w+?\)/g;
+	// const newText = text.replace(re, "@$1")
+	const newText = text.replace(re, `<Popup content='${text}' trigger=<span>@$1</span> />`)
+	return newText;
+}

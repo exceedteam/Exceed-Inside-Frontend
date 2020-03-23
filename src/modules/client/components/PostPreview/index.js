@@ -22,28 +22,31 @@ const PostPreview = ({ post: currentPost, history, likePost, dislikePost, isMain
 		[ isMainPost ]
 	);
 
-	const changeLike = () => {
+
+	// change color when like/dislike is active
+	function changeColor(type) {
 		const token = localStorage.getItem('token');
 		const tokenId = jwtDecode(token).id;
 		const isLike = post.current.likesUsers.filter((item) => item === tokenId);
-		return isLike.length > 0;
-	};
+		const isDislike = post.current.dislikesUsers.filter((item) => item === tokenId);
+		switch (type) {
+			case 'like':
+				return isLike.length > 0;
+			case 'dislike':
+				return isDislike.length > 0;
+			default:
+				break;
+		}
+	}
 
 	const setLike = () => {
 		likePost(post.current.id);
-		changeLike();
-	};
-
-	const changeDislike = () => {
-		const token = localStorage.getItem('token');
-		const tokenId = jwtDecode(token).id;
-		const isDislike = post.current.dislikesUsers.filter((item) => item === tokenId);
-		return isDislike.length > 0;
+		changeColor("like")
 	};
 
 	const setDislike = () => {
 		dislikePost(post.current.id);
-		changeDislike();
+		changeColor("dislike")
 	};
 
 	return (
@@ -72,10 +75,11 @@ const PostPreview = ({ post: currentPost, history, likePost, dislikePost, isMain
 				<Comment>
 					<Comment.Metadata>
 						<div onClick={setLike}>
-							<Icon name="thumbs up" color={changeLike() ? 'red' : 'grey'} /> {post.current.likeCounter}
+							<Icon name="thumbs up" color={changeColor('like') ? 'red' : 'grey'} />{' '}
+							{post.current.likeCounter}
 						</div>
 						<div onClick={setDislike}>
-							<Icon name="thumbs down" color={changeDislike() ? 'red' : 'grey'} />{' '}
+							<Icon name="thumbs down" color={changeColor('dislike') ? 'red' : 'grey'} />{' '}
 							{post.current.dislikeCounter}
 						</div>
 						<div>

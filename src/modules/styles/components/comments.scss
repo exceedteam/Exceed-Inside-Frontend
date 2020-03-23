@@ -1,6 +1,10 @@
 .commentsField {
 	width: 78%;
-  margin: 20px auto;
+	margin: 0 auto 30px auto;
+	background-color: white;
+	padding: 10px;
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
 
 	.displayComment {
 		width: 20em;
@@ -42,7 +46,10 @@
 }
 
 .createTheNewComment {
-	padding: 0 5em;
+	padding: 1em 5em;
+	background-color: white;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 
 	.findedUsers {
 		display: none;
