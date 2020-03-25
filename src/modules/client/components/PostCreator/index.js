@@ -3,11 +3,12 @@
 */
 import React from 'react';
 import Editor from '../../../libs/Editor';
+import Help from './help';
 import { replaceImg } from '../../../libs/Editor/lib/helpers/function';
 import { createID } from '../../../../services/helpers';
 import { connect } from 'react-redux';
 import { createPost } from '../../../redux/actions/posts/create';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import './postCreator.scss';
 
 // Component for creating a new post
@@ -19,7 +20,8 @@ class PostCreator extends React.Component {
 			value: `# Intro\nGo ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like cmd-b or ctrl-b.\n## Lists\nUnordered lists can be started using the toolbar or by typing *  , -  , or +  . Ordered lists can be started by typing 1. .\n\n#### Unordered\n* Lists are a piece of cake\n* They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!`,
 			memo: `# H1 \n ## H2 \n ### H3 \n #### H4 \n **bold** \n\n *italic* \n\n 	code \n\n * list \n\n 1. list `,
 			code: `# H1 \n\n\n ## H2 \n\n ### H3 \n #### H4 \n **bold** \n *italic* \n\n \`\`\`code\`\`\` \n\n * list \n\n 1. list `,
-			images: []
+			images: [],
+			isVisibleHelp: true
 		};
 	}
 
@@ -94,7 +96,7 @@ class PostCreator extends React.Component {
 	}
 
 	render() {
-		const { value, images, memo, code } = this.state;
+		const { value, images, isVisibleHelp } = this.state;
 		return (
 			<React.Fragment>
 				<div className="postCreator">
@@ -124,32 +126,24 @@ class PostCreator extends React.Component {
 									subfield: true,
 									help: true
 								}}
+								onHelpClick={() => {
+									this.setState({ isVisibleHelp: !isVisibleHelp });
+								}}
 								lineNum={false}
 								addImg={($file) => this.addImg($file)}
 								onChange={(value) => this.handleChange(value)}
 							/>
 						</div>
-						<Button onClick={this.submitPost} className="publishPost" primary animated>
-							<Button.Content visible>Submit</Button.Content>
-							<Button.Content hidden>
-								<Icon name="checkmark" />
-							</Button.Content>
+						<Button onClick={this.submitPost} primary attached="bottom" className="publishPost">
+							Submit
 						</Button>
 					</div>
-					<div className="rightSide">
-						<div className="header">Memo</div>
-						<div className="listOfActions">
-							<div className="code">
-								<Editor value={code} preview={false} lineNum={false} toolbar={{}} />
-							</div>
-							<div className="prettier">
-								<Editor value={memo} preview={true} toolbar={{}} />
-							</div>
-						</div>
-						<a className="link" href="https://pandao.github.io/editor.md/en.html">
-							More examples here
-						</a>
-					</div>
+					<Help
+						isVisible={!isVisibleHelp}
+						toggleVisibleHelpWindow={() => {
+							this.setState({ isVisibleHelp: !isVisibleHelp });
+						}}
+					/>
 				</div>
 			</React.Fragment>
 		);

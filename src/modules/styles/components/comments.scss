@@ -1,5 +1,5 @@
 .commentsField {
-	width: 78%;
+	width: 100%;
 	margin: 0 auto 30px auto;
 	background-color: white;
 	padding: 10px;
@@ -42,6 +42,13 @@
 
 	.commentInput:last-child {
 		margin-bottom: 100px;
+	}
+
+	.comment {
+		margin: 0 5em !important;
+		.comment {
+			margin: 0 !important;
+		}
 	}
 }
 

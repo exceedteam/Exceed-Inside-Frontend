@@ -26,7 +26,7 @@ export const fetchEvents = ({page = 0, perPage = 10}) => {
   };
 };
 
-export const fetchAllEventsProcess = events => {
+export const fetchAllEventsProcess = () => {
   return {
     type: FETCH_ALL_EVENTS_PROCESS,
     payload: {}

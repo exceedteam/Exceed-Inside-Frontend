@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { fetchEvents } from '../../../redux/actions/events/fetch';
 import Loader from '../Loader';
 import { subToAllEvents, unsubToAllEvents } from '../../../redux/actions/events/update';
-import { Button, Radio } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import './events.scss';
 
 class Events extends React.Component {
@@ -21,7 +21,9 @@ class Events extends React.Component {
 			isEventsOfUser: false,
 			newEvent: {
 				selectedDays: []
-			}
+			},
+			all: 'linkedin',
+			my: 'grey'
 		};
 	}
 
@@ -51,10 +53,10 @@ class Events extends React.Component {
 	handleDataCalendar = (param) => {
 		switch (param) {
 			case 'All':
-				this.setState({ isEventsOfUser: false });
+				this.setState({ isEventsOfUser: false, all: 'linkedin', my: 'grey' });
 				break;
 			case 'User':
-				this.setState({ isEventsOfUser: true });
+				this.setState({ isEventsOfUser: true, all: 'grey', my: 'linkedin' });
 				break;
 			default:
 				break;
@@ -69,6 +71,13 @@ class Events extends React.Component {
 			internal.style.display = 'none';
 		}
 	};
+
+	componentDidUpdate() {
+		const eventsOfUser = this.props.events.filter((event) => event.authorId === this.decoded);
+		if (eventsOfUser.length !== this.state.eventsOfUser.length || JSON.stringify(eventsOfUser) !== JSON.stringify(this.state.eventsOfUser)) {
+			this.setState({ eventsOfUser: eventsOfUser });
+		}
+	}
 
 	render() {
 		const { loading, events, internalLoading } = this.props;
@@ -88,24 +97,25 @@ class Events extends React.Component {
 								</Button>
 							</div>
 							<div className="radioContainer">
-								<Radio
-									label="All Events"
-									name="radioGroup"
-									value="User"
-									checked={this.state.isEventsOfUser === false}
-									onClick={() => {
-										this.handleDataCalendar('All');
-									}}
-								/>
-								<Radio
-									label="My Events"
-									name="radioGroup"
-									value="All"
-									checked={this.state.isEventsOfUser === true}
-									onClick={() => {
-										this.handleDataCalendar('User');
-									}}
-								/>
+								<Button.Group>
+									<Button
+										color={this.state.all}
+										onClick={() => {
+											this.handleDataCalendar('All');
+										}}
+									>
+										All
+									</Button>
+									<Button.Or />
+									<Button
+										color={this.state.my}
+										onClick={() => {
+											this.handleDataCalendar('User');
+										}}
+									>
+										My
+									</Button>
+								</Button.Group>
 							</div>
 						</div>
 					</div>

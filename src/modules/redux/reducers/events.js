@@ -90,7 +90,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        events: [...events]
+        events: [...events],
+        internalLoading: false
       };
     }
     case EDIT_SUBSCRIBE_TO_EVENT:{

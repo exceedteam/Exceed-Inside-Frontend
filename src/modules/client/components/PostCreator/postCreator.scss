@@ -1,6 +1,14 @@
+@mixin active-help {
+	@if & {
+		&.active {
+			margin-left: -300px;
+		}
+	}
+}
+
 .postCreator {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	width: 100%;
 	margin-top: 10px;
 
@@ -8,28 +16,29 @@
 		background-color: transparent;
 		.createTheNewPost {
 			width: 600px;
-			border-radius: 8px;
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
 			box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 12px;
 			background-color: white;
 			border: 1px solid #ddd;
 			transition: width 0.2s linear;
 		}
 		.publishPost {
-			position: relative;
-			top: 10px;
-			margin-bottom: 20px;
+			margin-bottom: 20px !important;
 		}
 	}
 
 	.rightSide {
 		width: 250px;
-		height: 410px;
+		height: 420px;
 		background-color: white;
 		border-radius: 8px;
 		box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 12px;
 		position: sticky;
 		top: 100px;
 		padding: 10px;
+		transition: 0.3s;
+		margin-left: 30px;
 
 		.header {
 			text-align: center;
@@ -48,14 +57,30 @@
 			font-size: 12px;
 			text-align: center;
 			margin-left: 12px;
+			margin-bottom: 10px;
+		}
+
+		.closeBtn {
+			width: fit-content;
+			height: fit-content;
+			padding: 6px !important;
+			font-size: 1.3rem !important;
+			position: relative;
+			left: 80px;
+			background-color: transparent !important;
 		}
 	}
 
-	@media only screen and (max-width: 1150px) {
-		.rightSide {
-			display: none;
-		}
+	.active {
+		opacity: 0;
+		@include active-help;
 	}
+
+	// @media only screen and (max-width: 1150px) {
+	// 	.rightSide {
+	// 		display: none;
+	// 	}
+	// }
 }
 
 #scrollToTop {

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Modal } from 'semantic-ui-react';
-import Editor from '../../Editor';
+import { Icon } from 'semantic-ui-react';
 
 class Toolbars extends React.Component {
 	static defaultProps = {
@@ -14,9 +13,7 @@ class Toolbars extends React.Component {
 
 		this.state = {
 			imgHidden: true,
-			imgList: [],
-			memo: `# H1 \n ## H2 \n ### H3 \n #### H4 \n **bold** \n\n *italic* \n\n 	code \n\n * list \n\n 1. list `,
-			code: `# H1 \n\n\n ## H2 \n\n ### H3 \n #### H4 \n **bold** \n *italic* \n\n \`\`\`code\`\`\` \n\n * list \n\n 1. list `
+			imgList: []
 		};
 	}
 
@@ -67,31 +64,31 @@ class Toolbars extends React.Component {
 			<ul>
 				{toolbar.undo && (
 					<li onClick={() => this.onClick('undo')} title={`${words.undo} (ctrl+z)`}>
-						<i className="foricon for-undo" />
+						<Icon name="reply" size="mini" className="size12" />
 					</li>
 				)}
 				{toolbar.redo && (
 					<li onClick={() => this.onClick('redo')} title={`${words.redo} (ctrl+y)`}>
-						<i className="foricon for-redo" />
+						<Icon name="share" size="mini" className="size12" />
 					</li>
 				)}
 				{toolbar.h1 && (
-					<li onClick={() => this.onClick('h1')} title={words.h1}>
+					<li onClick={() => this.onClick('h1')} title={words.h1} className="bold">
 						H1
 					</li>
 				)}
 				{toolbar.h2 && (
-					<li onClick={() => this.onClick('h2')} title={words.h2}>
+					<li onClick={() => this.onClick('h2')} title={words.h2} className="bold">
 						H2
 					</li>
 				)}
 				{toolbar.h3 && (
-					<li onClick={() => this.onClick('h3')} title={words.h3}>
+					<li onClick={() => this.onClick('h3')} title={words.h3} className="bold">
 						H3
 					</li>
 				)}
 				{toolbar.h4 && (
-					<li onClick={() => this.onClick('h4')} title={words.h4}>
+					<li onClick={() => this.onClick('h4')} title={words.h4} className="bold">
 						H4
 					</li>
 				)}
@@ -101,7 +98,7 @@ class Toolbars extends React.Component {
 						onMouseOver={() => this.imgMouseOver()}
 						onMouseOut={() => this.imgMouseOut()}
 					>
-						<i className="foricon for-image" />
+						<Icon name="image" size="mini" className="size12" />
 						<ul style={imgHidden ? { display: 'none' } : {}}>
 							<li onClick={() => this.addImgUrl()}>{words.addImgLink}</li>
 							<li>
@@ -117,12 +114,12 @@ class Toolbars extends React.Component {
 				)}
 				{toolbar.link && (
 					<li onClick={() => this.onClick('link')} title={words.link}>
-						<i className="foricon for-link" />
+						<Icon name="linkify" size="mini" className="size12" />
 					</li>
 				)}
 				{toolbar.code && (
 					<li onClick={() => this.onClick('code')} title={words.code}>
-						<i className="foricon for-code" />
+						<Icon name="code" size="mini" className="size12" />
 					</li>
 				)}
 				{toolbar.save && (
@@ -131,29 +128,9 @@ class Toolbars extends React.Component {
 					</li>
 				)}
 				{toolbar.help && (
-					<Modal
-            size="tiny"
-            className="Help"
-						trigger={
-							<li title={`Help`}>
-								<i className="foricon for-save" />
-							</li>
-            }
-					>
-						<Modal.Header>Help</Modal.Header>
-						<Modal.Content image>
-							<Modal.Description>
-								<div className="listOfActions">
-									<div className="code">
-										<Editor value={this.state.code} preview={false} lineNum={false} toolbar={{}} />
-									</div>
-									<div className="prettier">
-										<Editor value={this.state.memo} preview={true} toolbar={{}} />
-									</div>
-								</div>
-							</Modal.Description>
-						</Modal.Content>
-					</Modal>
+					<li title={`Help`} onClick={this.props.onHelpClick}>
+						<Icon name="help" size="mini" className="size12" />
+					</li>
 				)}
 			</ul>
 		);

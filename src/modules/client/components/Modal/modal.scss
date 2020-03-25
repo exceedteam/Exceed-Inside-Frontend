@@ -1,43 +1,42 @@
+@import "../../../styles/common/index.scss";
+
 .modalContent {
-  margin: 10em auto;
-  padding: 2em;
-  border-radius: 8px;
-  max-width: 700px;
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #ffffff;
-  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+	margin: 10em auto;
+	padding: 2em;
+	border-radius: 8px;
+	max-width: 700px;
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	background-color: #ffffff;
+	box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+	outline: none;
 
-  .closeBtn {
-    width: fit-content;
-    height: fit-content;
-    padding: 6px !important;
-    font-size: 1.3rem !important;
-    position: relative;
-    bottom: 55px;
-    left: 600px;
-    background-color: transparent !important;
+	.closeBtn {
+		@include button-without-background;
+		position: relative;
+		bottom: 55px;
+		left: 600px;
 
-    .close {
-      margin: 0 !important;
-    }
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-  }
+		.close {
+			margin: 0 !important;
+		}
+	}
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+	}
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 10;
 }

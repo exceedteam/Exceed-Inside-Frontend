@@ -49,6 +49,10 @@
 		z-index: 2;
 		background-color: white;
 
+		.bold {
+			font-weight: bold;
+		}
+
 		> ul {
 			display: flex;
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { createEvent } from '../../../redux/actions/events/create';
 import { editEvent } from '../../../redux/actions/events/update';
@@ -12,14 +11,6 @@ class CreateEvent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			eventData: {
-				title: '' || this.props.title,
-				startDate: this.props.start,
-				startTime: moment(this.props.start).format('HH:mm'),
-
-				endDate: this.props.end,
-				endTime: moment(this.props.end).format('HH:mm')
-			},
 			startDate: this.props.start,
 			endDate: this.props.end,
 			title: '' || this.props.title
@@ -28,7 +19,7 @@ class CreateEvent extends React.Component {
 
 	// save data about new event on state
 	updateDataOfEvent = (event) => {
-		const newState = this.state.eventData;
+		const newState = this.state;
 		newState[event.target.id] = event.target.value;
 		this.setState({ ...newState });
 	};
@@ -47,7 +38,7 @@ class CreateEvent extends React.Component {
 			});
 		} else {
 			this.props.createEvent({
-				title: title,
+				title: title || 'Default Title',
 				start: startDate,
 				end: endDate
 			});
@@ -56,7 +47,6 @@ class CreateEvent extends React.Component {
 	};
 
 	render() {
-		console.log('----------this.state.title', this.state.title);
 		const { title, startDate, endDate } = this.state;
 		return (
 			<div className="createForm">
@@ -77,7 +67,7 @@ class CreateEvent extends React.Component {
 						onChange={(date) => this.setState({ startDate: date })}
 						showTimeSelect
 						timeFormat="HH:mm"
-						timeIntervals={15}
+						timeIntervals={30}
 						timeCaption="time"
 						dateFormat="MMMM d, yyyy HH:mm"
 					/>
@@ -88,7 +78,7 @@ class CreateEvent extends React.Component {
 						onChange={(date) => this.setState({ endDate: date })}
 						showTimeSelect
 						timeFormat="HH:mm"
-						timeIntervals={15}
+						timeIntervals={30}
 						timeCaption="time"
 						dateFormat="MMMM d, yyyy HH:mm"
 					/>
@@ -96,6 +86,11 @@ class CreateEvent extends React.Component {
 				<Button onClick={this.submitPost} primary>
 					{this.props.button}
 				</Button>
+				{this.props.title && (
+					<Button onClick={this.props.handleVisibleInfo} className="backBtn">
+						<Icon name="reply" />
+					</Button>	
+				)}
 			</div>
 		);
 	}

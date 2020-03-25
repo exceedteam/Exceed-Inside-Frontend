@@ -1,10 +1,20 @@
+$semantic-blue: #2185d0;
+
 @mixin linkToMentionUser {
 	font-weight: bold;
-	color: #2185d0;
+	color: $semantic-blue;
 	border-radius: 5px;
 	padding: 0 5px;
 	margin: 0 3px;
 	background-color: rgba(0, 0, 0, 0.1);
+}
+
+@mixin button-without-background {
+	width: fit-content;
+	height: fit-content;
+	padding: 6px !important;
+	font-size: 1.3rem !important;
+	background-color: transparent !important;
 }
 
 .drpdwn {
@@ -12,7 +22,7 @@
 }
 
 .receive {
-	margin: 20px 0 !important;
+	margin: 20px 5em !important;
 }
 
 .miniPopup {
@@ -47,4 +57,8 @@
 	width: 300px !important;
 	height: 450px !important;
 	margin: 100px auto !important;
+}
+
+.size12 {
+	font-size: 13px !important;
 }

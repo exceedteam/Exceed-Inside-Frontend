@@ -1,10 +1,15 @@
+@import "../../../styles/common/index.scss";
+
 .createForm {
 	margin-top: -30px;
 
 	.titleOfEvent {
 		padding: 0 !important;
-    font-size: 1.3em !important;
-    width: 98%;
+		font-size: 1.3em !important;
+		width: 98%;
+		input {
+			color: $semantic-blue !important;
+		}
 	}
 
 	#title::-webkit-input-placeholder {
@@ -26,15 +31,25 @@
 		align-items: center;
 		.startTime,
 		.endTime {
-      display: flex;
+			display: flex;
 			.input {
-        width: 180px;
-        padding: 0;
-        margin: 0 5px;
+				width: 180px;
+				padding: 0;
+				margin: 0 5px;
 				input {
 					color: rgba(33, 133, 208, 0.8);
 				}
 			}
+		}
+	}
+
+	.backBtn {
+		@include button-without-background;
+		position: relative;
+		bottom: 200px;
+		left: 450px;
+		.icon {
+			color: black;
 		}
 	}
 
@@ -46,7 +61,7 @@
 			font-size: 17px;
 			border-radius: 3px;
 			width: fit-content;
-			color: rgb(33,133,208);
+			color: rgb(33, 133, 208);
 		}
 	}
 

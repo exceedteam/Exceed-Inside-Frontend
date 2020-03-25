@@ -1,5 +1,7 @@
+@import ".././../../styles/common/index.scss";
+
 .alert {
-	background-color: #2185d0; /* Red */
+	background-color: $semantic-blue;
 	color: white;
 	position: fixed;
 	left: 20px;
