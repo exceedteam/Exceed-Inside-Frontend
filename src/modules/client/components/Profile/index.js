@@ -1,12 +1,13 @@
 import React from 'react';
 import jwtDecode from 'jwt-decode';
-import styles from './Profile.module.css';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { fetchUserProfile } from '../../../redux/actions/users/fetch';
-import { editUserProfile } from '../../../redux/actions/users/edit';
+import { editUserProfile, clearUserProfile } from '../../../redux/actions/users/edit';
 import Loader from '../Loader';
+import EditProfile from './editProfile';
+import ViewProfile from './viewProfile';
 import './profile.scss';
+import { Button, Icon } from 'semantic-ui-react';
 
 class Profile extends React.Component {
 	constructor(props) {
@@ -43,6 +44,10 @@ class Profile extends React.Component {
 			fetchUserProfile(this.props.match.params.id).then((profile) => this.setState({ profileData: profile }));
 	}
 
+	componentWillUnmount() {
+    this.props.clearUserProfile();
+  }
+
 	// saving changed user data
 	submitEditProfile = () => {
 		const { profileData, id } = this.state;
@@ -70,22 +75,22 @@ class Profile extends React.Component {
 	// render of the profile edit button if the user is the owner of the account
 	editProfile() {
 		const { id, isEdit } = this.state;
+		
 		if (this.decoded === id) {
 			return (
-				<div>
-					<button
-						className={styles.btn}
+				<div className="navigation">
+					<Button
+						className="button"
 						onClick={() => {
 							this.setState({ isEdit: !isEdit });
 						}}
 					>
-						{' '}
-						{isEdit ? 'Cancel' : 'Edit Profile'}
-					</button>
+						{isEdit ? <Icon color="blue" name="reply" /> : <Icon color="blue" name="edit" />}
+					</Button>
 					{isEdit && (
-						<button className={styles.btn} disabled={!this.state.isEdit} onClick={this.submitEditProfile}>
-							Save changes
-						</button>
+						<Button className="button" onClick={this.submitEditProfile} disabled={!this.state.isEdit}>
+							<Icon color="blue" name="save" />
+						</Button>
 					)}
 				</div>
 			);
@@ -94,103 +99,18 @@ class Profile extends React.Component {
 
 	// render personal user data
 	render() {
-		const { profileData: { avatar, firstName, lastName, email, age, position, team, aboutInfo }, id } = this.state;
-		const { loading } = this.props;
+		const { id, isEdit, profileData } = this.state;
+		const { loading, profile } = this.props;
 		return (
-			<div className={styles.container}>
-				{!loading && (
-					<div className={styles.form}>
-						<img src={avatar} alt="" className={styles.avatar} />
-						<div className={styles.row}>
-							<div className={styles.column}>
-								<div>
-									<span className={styles.title}>E-mail: </span>
-									<input
-										id="email"
-										value={email || ''}
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										className={styles.input}
-									/>
-								</div>
-								<div>
-									<span className={styles.title}>First Name: </span>
-									<input
-										id="firstName"
-										value={firstName || ''}
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										className={styles.input}
-									/>
-								</div>
-								<div>
-									<span className={styles.title}>Last Name: </span>
-									<input
-										id="lastName"
-										value={lastName || ''}
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										className={styles.input}
-									/>
-								</div>
-								<div>
-									<span className={styles.title}>Date Of Birth: </span>
-									<input
-										id="age"
-										type="date"
-										min="1900-01-01"
-										max="2001-12-31"
-										value={moment(age).format('YYYY-MM-DD') || ''}
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										className={styles.input}
-									/>
-								</div>
-								<div>
-									<span className={styles.title}>Position: </span>
-									<input
-										id="position"
-										value={position || ''}
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										className={styles.input}
-									/>
-								</div>
-							</div>
-							<div className={styles.column}>
-								<div>
-									<span className={styles.title}>Team: </span>
-									<input
-										id="team"
-										value={team || ''}
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										className={styles.input}
-									/>
-								</div>
-								<div>
-									<span className={styles.title}>About info</span>
-									<textarea
-										id="aboutInfo"
-										disabled={!this.state.isEdit}
-										onChange={this.updateForm}
-										value={aboutInfo || ''}
-										className={styles.aboutMe}
-									/>
-								</div>
-								{this.editProfile()}
-								<div>
-									<button
-										className={styles.btn}
-										onClick={() => {
-											this.props.history.push(`/user/${id}/posts`);
-										}}
-									>
-										Posts of user
-									</button>
-								</div>
-							</div>
-						</div>
+			<div className="userProgileContainer">
+				{profile.email && (
+					<div className="form">
+						{this.editProfile()}
+						{isEdit ? (
+							<EditProfile profileData={profileData} isEdit={isEdit}  updateForm={this.updateForm}/>
+						) : (
+							<ViewProfile profileData={profile} isEdit={isEdit} id={id} history={this.props.history} />
+						)}
 					</div>
 				)}
 				{loading && <Loader />}
@@ -207,4 +127,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchUserProfile, editUserProfile })(Profile);
+export default connect(mapStateToProps, { fetchUserProfile, editUserProfile, clearUserProfile })(Profile);

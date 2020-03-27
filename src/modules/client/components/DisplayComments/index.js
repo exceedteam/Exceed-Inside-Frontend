@@ -5,7 +5,7 @@ import CreateComment from '../CreateComment';
 import Loader from '../Loader';
 import { connect } from 'react-redux';
 import { fetchComments } from '../../../redux/actions/comments/fetch';
-import { Comment, Popup, Button } from 'semantic-ui-react';
+import { Comment, Popup, Button, Image } from 'semantic-ui-react';
 import moment from 'moment';
 
 class DisplayComments extends React.Component {
@@ -77,12 +77,12 @@ class DisplayComments extends React.Component {
 		const { currentCommentId: onClickComment } = this.state;
 		const subComments = comments.filter((comment) => comment.parent === currentCommentId);
 		return (
-			<div>
+			<React.Fragment>
 				<Comment.Group>
 					{subComments.map((comment) => {
 						return (
 							<Comment key={createID()}>
-								<Comment.Avatar src={comment.author.avatar} />
+								<Comment.Avatar as={Image} src={comment.author.avatar} size="tiny" circular />
 								<Comment.Content>
 									<Comment.Author
 										as="a"
@@ -102,7 +102,7 @@ class DisplayComments extends React.Component {
 					})}
 				</Comment.Group>
 				{loading && onClickComment === currentCommentId && <Loader />}
-			</div>
+			</React.Fragment>
 		);
 	};
 
@@ -132,7 +132,7 @@ class DisplayComments extends React.Component {
 					{comments.filter((comment) => comment.parent === '').map((comment) => (
 						<React.Fragment key={createID()}>
 							<Comment>
-								<Comment.Avatar src={comment.author.avatar} />
+								<Comment.Avatar as={Image} src={comment.author.avatar} size="tiny" circular />
 								<Comment.Content>
 									<Comment.Author
 										as="a"

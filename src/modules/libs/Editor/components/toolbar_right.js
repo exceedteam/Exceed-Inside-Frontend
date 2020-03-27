@@ -68,7 +68,7 @@ class Toolbars extends React.Component {
 						}}
 						title={subfieldActive ? words.singleColumn : words.doubleColumn}
 					>
-						<i className="foricon for-subfield" />
+						<Icon name="columns" size="mini" className="size12" />
 					</li>
 				)}
 			</ul>

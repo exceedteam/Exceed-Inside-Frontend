@@ -59,27 +59,30 @@ class Registration extends React.Component {
 				<div className="form">
 					<h1 className="title">Create an account</h1>
 					<input
+						id="email"
 						value={email}
 						onChange={this.updateForm}
 						placeholder="E-mail"
-            className={`input ${errors.email ? 'error' : ''}`}
+						className={`input ${errors.email ? 'error' : ''}`}
 					/>
 					<span className="errorMessage">{errors.email}</span>
 					<input
+						id="password"
 						type="password"
 						value={password}
 						onChange={this.updateForm}
 						placeholder="Password"
-            className={`input ${errors.password ? 'error' : ''}`}
+						className={`input ${errors.password ? 'error' : ''}`}
 					/>
 					<span className="errorMessage">{errors.password}</span>
 					<input
+						id="password2"
 						type="password"
 						value={password2}
 						onChange={this.updateForm}
 						placeholder="Confirm password"
-            className={`input ${errors.password2 ? 'error' : ''}`}
-            autoComplete="new-password"
+						className={`input ${errors.password2 ? 'error' : ''}`}
+						autoComplete="new-password"
 					/>
 					<Button onClick={() => this.submitUser()} primary>
 						Sign Up

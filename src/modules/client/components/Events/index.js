@@ -22,8 +22,8 @@ class Events extends React.Component {
 			newEvent: {
 				selectedDays: []
 			},
-			all: 'linkedin',
-			my: 'grey'
+			all: true,
+			my: false
 		};
 	}
 
@@ -53,10 +53,10 @@ class Events extends React.Component {
 	handleDataCalendar = (param) => {
 		switch (param) {
 			case 'All':
-				this.setState({ isEventsOfUser: false, all: 'linkedin', my: 'grey' });
+				this.setState({ isEventsOfUser: false, all: true, my: false });
 				break;
 			case 'User':
-				this.setState({ isEventsOfUser: true, all: 'grey', my: 'linkedin' });
+				this.setState({ isEventsOfUser: true, all: false, my: true });
 				break;
 			default:
 				break;
@@ -73,9 +73,10 @@ class Events extends React.Component {
 	};
 
 	componentDidUpdate() {
-		const eventsOfUser = this.props.events.filter((event) => event.authorId === this.decoded);
-		if (eventsOfUser.length !== this.state.eventsOfUser.length || JSON.stringify(eventsOfUser) !== JSON.stringify(this.state.eventsOfUser)) {
-			this.setState({ eventsOfUser: eventsOfUser });
+		const cameArr = this.props.events.filter((event) => event.authorId === this.decoded);
+		const currentArr = this.state.eventsOfUser;
+		if (cameArr.length !== currentArr.length || JSON.stringify(cameArr) !== JSON.stringify(currentArr)) {
+			this.setState({ eventsOfUser: cameArr });
 		}
 	}
 
@@ -99,7 +100,7 @@ class Events extends React.Component {
 							<div className="radioContainer">
 								<Button.Group>
 									<Button
-										color={this.state.all}
+										primary={this.state.all}
 										onClick={() => {
 											this.handleDataCalendar('All');
 										}}
@@ -108,7 +109,7 @@ class Events extends React.Component {
 									</Button>
 									<Button.Or />
 									<Button
-										color={this.state.my}
+										primary={this.state.my}
 										onClick={() => {
 											this.handleDataCalendar('User');
 										}}
