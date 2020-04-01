@@ -3,6 +3,7 @@ import {
   FETCH_ALL_POSTS_FAIL,
   FETCH_ALL_POSTS_PROCESS,
   FETCH_LIKE_FROM_SOCKET,
+  FETCH_COMMENT_COUNTER_FROM_SOCKET,
   CREATE_POST_SUCCESS,
   CREATE_POST_PROCESS,
   CREATE_POST_FAIL,
@@ -123,6 +124,23 @@ export default function(state = initialState, action) {
         posts: [...posts],
         currentPostPreview: currentPostPreview
       };
+    }
+
+    case FETCH_COMMENT_COUNTER_FROM_SOCKET: {
+      const { commentsCounter, id } = action.payload;
+      const { posts, currentPostPreview } = state;
+      posts.map(post => {
+        if (post.id === id) {
+          post.commentsCounter = commentsCounter
+        }
+        return post;
+      });
+      if(!!currentPostPreview && currentPostPreview.id === id) {
+        currentPostPreview.commentsCounter = commentsCounter
+      }
+      return {
+        ...state
+      }
     }
 
     // posts of user

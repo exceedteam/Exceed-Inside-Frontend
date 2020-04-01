@@ -4,6 +4,7 @@ import {
 	FETCH_ALL_POSTS_FAIL,
 	FETCH_ALL_POSTS_PROCESS,
 	FETCH_LIKE_FROM_SOCKET,
+	FETCH_COMMENT_COUNTER_FROM_SOCKET,
 	// for post page
 	FETCH_POST_PROCESS,
 	FETCH_POST_SUCCESS,
@@ -11,7 +12,7 @@ import {
 	// for posts of user page
 	FETCH_ALL_POSTS_OF_USER_PROCESS,
 	FETCH_ALL_POSTS_OF_USER_SUCCESS,
-	FETCH_ALL_POSTS_OF_USER_FAIL
+	FETCH_ALL_POSTS_OF_USER_FAIL,
 } from '../../actionTypes';
 import axios from 'axios';
 
@@ -74,6 +75,7 @@ export function fetchLikes() {
 export const fetchPost = ({ id, isPostsLoaded }) => {
 	return (dispatch) => {
 		dispatch(fetchLikes());
+		dispatch(commentCounter());
 		if (isPostsLoaded) {
 			dispatch(fetchPostProcess());
 			return dispatch(fetchPostSuccess({ id }));
@@ -156,3 +158,15 @@ export const fetchPostsOfUserFail = (errorsPostsOfUser) => {
 		payload: { errorsPostsOfUser }
 	};
 };
+
+export const commentCounter = () => {
+	return (dispatch) =>
+		dispatch({
+			event: 'commentCounter',
+			handle: (data) =>
+				dispatch({
+					type: FETCH_COMMENT_COUNTER_FROM_SOCKET,
+					payload: data
+				})
+		})
+}
