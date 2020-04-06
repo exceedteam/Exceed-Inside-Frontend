@@ -30,7 +30,7 @@ class AlertMessage extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		message: state.events.message
+		message: state.events.message || state.comments.message
 	};
 };
 

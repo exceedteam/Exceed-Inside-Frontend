@@ -159,6 +159,7 @@ export const fetchPostsOfUserFail = (errorsPostsOfUser) => {
 	};
 };
 
+// comment counter for posts with socket
 export const commentCounter = () => {
 	return (dispatch) =>
 		dispatch({

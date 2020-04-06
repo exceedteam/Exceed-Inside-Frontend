@@ -50,7 +50,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const { currentPostPreview, comments } = this.props;
+    const { currentPostPreview, comments, history, likePost, dislikePost } = this.props;
     return (
       <div>
         {!!currentPostPreview && (
@@ -58,17 +58,17 @@ class Post extends React.Component {
             <div>
               {/* render post content with with information about the author */}
               <PostPreview
-                post={this.props.currentPostPreview}
-                history={this.props.history}
-                likePost={this.props.likePost}
-                dislikePost={this.props.dislikePost}
+                post={currentPostPreview}
+                history={history}
+                likePost={likePost}
+                dislikePost={dislikePost}
               />
             </div>
             <CreateComment id={this.id} />
             {/* render comments of post */}
             <DisplayComments
               comments={comments}
-              history={this.props.history}
+              history={history}
               onClick={() => {}}
             />
           </div>

@@ -99,3 +99,5 @@ export const CLEAR_CURRENT_POST = "CLEAR_CURRENT_POST";
 
 // remove message of the store
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const USER_WITHOUT_NAME = "USER_WITHOUT_NAME";

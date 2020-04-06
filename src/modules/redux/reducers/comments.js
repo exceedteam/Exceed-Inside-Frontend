@@ -6,7 +6,8 @@ import {
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAIL,
   FETCH_NEW_COMMENT,
-  CLEAR_CURRENT_COMMENTS
+  CLEAR_CURRENT_COMMENTS,
+  USER_WITHOUT_NAME
 } from "../actionTypes";
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   loading: false,
   newComment: [],
   errorOfCreateComment: null,
-  loadingNewComment: false
+  loadingNewComment: false,
+  message: '',
 };
 
 export default function(state = initialState, action) {
@@ -46,6 +48,14 @@ export default function(state = initialState, action) {
 
     case FETCH_NEW_COMMENT: {
       const { comment } = action.payload;
+      const { parent } = comment
+      if (parent) {
+        state.comments.map(comm => {
+          if (parent === comm.id) {
+            comm.answeredUser = [ comm.parent, ...comm.answeredUser]
+          }
+        })
+      }
       return {
         ...state,
         comments: [comment, ...state.comments]
@@ -59,11 +69,11 @@ export default function(state = initialState, action) {
       };
     }
     case CREATE_COMMENT_SUCCESS: {
-      const { comments } = action.payload;
+      const { comment } = action.payload;
       return {
         ...state,
         loadingNewComment: false,
-        comments: [...comments]
+        comments: [comment, ...state.comments]
       };
     }
     case CREATE_COMMENT_FAIL: {
@@ -78,6 +88,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         comments: []
+      }
+    }
+    case USER_WITHOUT_NAME: {
+      return {
+        ...state,
+        message: "Before writing a comment, fill in your name and surname in profile",
       }
     }
     default:

@@ -1,7 +1,8 @@
 import {
   CREATE_COMMENT_PROCESS,
   CREATE_COMMENT_SUCCESS,
-  CREATE_COMMENT_FAIL
+  CREATE_COMMENT_FAIL,
+  USER_WITHOUT_NAME
 } from "../../actionTypes";
 import axios from "axios";
 
@@ -21,7 +22,6 @@ export const createComment = ({ commentText, id, parent, withoutParent }) => {
         }
       )
       .then(response => {
-        console.log("res", response)
         return dispatch(createCommentSuccess(response.data));
       })
       .catch(error => {
@@ -37,10 +37,10 @@ export const createCommentProcess = () => {
   };
 };
 
-export const createCommentSuccess = comments => {
+export const createCommentSuccess = comment => {
   return {
     type: CREATE_COMMENT_SUCCESS,
-    payload: { comments }
+    payload: { comment }
   };
 };
 
@@ -50,3 +50,9 @@ export const createCommentFail = error => {
     payload: { error }
   };
 };
+
+export const withoutName = () => {
+  return {
+    type: USER_WITHOUT_NAME
+  }
+}

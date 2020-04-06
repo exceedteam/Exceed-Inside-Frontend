@@ -2,11 +2,11 @@ import io from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
 
 export default function socketMiddleware() {
-  const socket = io(process.env.REACT_APP_DOMAIN);
-  if(localStorage.getItem('token')) {
-	const id = jwtDecode(localStorage.getItem('token')).id;
-	socket.emit('id', id);
-
+	const socket = io(process.env.REACT_APP_DOMAIN);
+	
+  if (localStorage.getItem('token')) {
+		const id = jwtDecode(localStorage.getItem('token')).id;
+		socket.emit('id', id);
   }
 
 	return ({ dispatch }) => (next) => (action) => {

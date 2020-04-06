@@ -18,7 +18,7 @@ class DisplayComments extends React.Component {
 			params: {
 				page: 1,
 				perPage: 10
-			}
+			},
 		};
 	}
 
@@ -145,7 +145,7 @@ class DisplayComments extends React.Component {
 									<Comment.Metadata>
 										<div>{typeOfTime(comment.createdAt)}</div>
 									</Comment.Metadata>
-									<Comment.Text>{comment.text}</Comment.Text>
+									<Comment.Text>{this.replaceId(comment.text)}</Comment.Text>
 									<Comment.Actions>
 										<Comment.Action onClick={() => this.handleVisible(comment.id)}>
 											Reply
@@ -174,6 +174,7 @@ class DisplayComments extends React.Component {
 									id={comment.postId}
 									withoutParent={false}
 									parent={comment.id}
+									replyCallback={()=> {idsOfCommentsIsShown.add(currentCommentId)}}
 									type={'Reply'}
 									mention={{
 										id: comment.authorId,

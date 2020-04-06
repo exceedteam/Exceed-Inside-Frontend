@@ -17,10 +17,11 @@ export default class ViewProfile extends React.Component {
 						<Icon className="isOnline" disabled name="circle" size="small" />
 					)}
 				</Header>
-
-				<div className="team">
-					{team}: {position}
-				</div>
+				{team && position && 
+					<div className="team">
+						{team}: {position}
+					</div>
+				}
 				<div className="about">{aboutInfo}</div>
 				<div className="contactInformation">
 					<div className="birthday">

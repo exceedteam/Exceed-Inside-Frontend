@@ -31,6 +31,7 @@ class CreateComment extends React.Component {
 			createComment({ commentText, id });
 		}
 		this.setState({ commentText: '' });
+		this.props.replyCallback()
 	};
 
 	render() {
@@ -69,6 +70,11 @@ const mapStateToProps = (state) => {
 	return {
 		users: state.users.users
 	};
+};
+
+// default props if the following props is undefined
+CreateComment.defaultProps = {
+  replyCallback: () => {}
 };
 
 export default connect(mapStateToProps, { createComment })(CreateComment);
