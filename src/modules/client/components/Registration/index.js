@@ -11,7 +11,9 @@ class Registration extends React.Component {
 		this.state = {
 			email: '',
 			password: '',
-			password2: ''
+			password2: '',
+			firstName: '',
+			lastName: '',
 		};
 	}
 
@@ -52,7 +54,7 @@ class Registration extends React.Component {
 
 	// render data entry form for registration
 	render() {
-		const { email, password, password2 } = this.state;
+		const { email, password, password2, firstName, lastName } = this.state;
 		const { errors } = this.props;
 		return (
 			<div className="container">
@@ -66,6 +68,22 @@ class Registration extends React.Component {
 						className={`input ${errors.email ? 'error' : ''}`}
 					/>
 					<span className="errorMessage">{errors.email}</span>
+					<input
+						id="firstName"
+						type='text'
+						value={firstName}
+						onChange={this.updateForm}
+						placeholder='First name'
+						className={`input ${errors.name ? 'error' : ''}`}
+					/>
+					<input
+						id='lastName'
+						type='text'
+						value={lastName} 
+						onChange={this.updateForm}
+						placeholder='Last name'
+						className={`input ${errors.name ? 'error' : ''}`}
+					/>
 					<input
 						id="password"
 						type="password"
