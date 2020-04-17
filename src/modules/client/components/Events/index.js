@@ -84,9 +84,9 @@ class Events extends React.Component {
 		const { loading, events, internalLoading } = this.props;
 		const { isEventsOfUser, eventsOfUser } = this.state;
 		return (
-			<div>
+			<div className="eventContainer">
 				{!loading && (
-					<div className="eventContainer">
+					<React.Fragment>
 						<MyCalendar events={!!isEventsOfUser ? eventsOfUser : events} history={this.props.history} />
 						<div className="someButton">
 							<div className="subscribeContainer">
@@ -119,7 +119,7 @@ class Events extends React.Component {
 								</Button.Group>
 							</div>
 						</div>
-					</div>
+					</React.Fragment>
 				)}
 				{loading && <Loader />}
 			</div>

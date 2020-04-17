@@ -43,7 +43,7 @@ export const typeOfTime = (date) => {
 	let currentTime = moment();
 	let createdTime = moment(date);
 	if (currentTime.diff(createdTime, 'days') <= 1) {
-		return moment(date).startOf('hour').fromNow();
+		return moment(date).startOf('minute').fromNow();
 	} else {
 		return moment(date).format('LLL');
 	}

@@ -1,4 +1,6 @@
-@mixin header {
+@import '../../../styles/common/index.scss';
+
+.mainHeader {
   width: 100%;
   font-family: inherit;
   border-radius: 0.2em;
@@ -23,16 +25,6 @@
   padding: 0 40px;
 }
 
-.headerLogged {
-  @include header;
-  justify-content: space-between;
-}
-
-.headerNotLogged {
-  @include header;
-  justify-content: flex-end;
-}
-
 .navLogged {
   @include nav;
   max-width: 500px;
@@ -41,10 +33,19 @@
 .navLoggedRight {
   @include nav;
   max-width: 200px;
+  margin: 0 15% 0 auto;
 }
 
 .navNotLogged {
   @include nav;
   max-width: 350px;
+  margin: 0 15% 0 auto;
 }
 
+.logoField {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: $font-family;
+  margin-left: 15%;
+}

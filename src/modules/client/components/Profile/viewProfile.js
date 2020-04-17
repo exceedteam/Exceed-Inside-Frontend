@@ -4,18 +4,13 @@ import { Image, Header, Icon } from 'semantic-ui-react';
 
 export default class ViewProfile extends React.Component {
 	render() {
-		const { avatar, firstName, lastName, email, age, position, team, aboutInfo, onlineInfo } = this.props.profileData;
+		const { avatar, firstName, lastName, email, age, position, team, aboutInfo } = this.props.profileData;
 		const { id } = this.props;
 		return (
 			<React.Fragment>
 				<Image size="small" rounded src={avatar} className="avatar" />
 				<Header dividing>
 					{firstName} {lastName}{' '}
-					{onlineInfo.isOnline ? (
-						<Icon className="isOnline" color="blue" name="circle" size="small" />
-					) : (
-						<Icon className="isOnline" disabled name="circle" size="small" />
-					)}
 				</Header>
 				{team && position && 
 					<div className="team">

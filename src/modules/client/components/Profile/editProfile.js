@@ -60,7 +60,7 @@ class EditProfile extends React.Component {
 						placeholder="Position"
 					/>
 				</div>
-				<div className="widthDescription">
+				<div className="withDescription">
 					<Icon color="blue" name="calendar alternate" />
 					<DatePicker
 						selected={new Date(age)}
@@ -69,9 +69,10 @@ class EditProfile extends React.Component {
 						showYearDropdown
 						dropdownMode="select"
 						className="calendarPicker"
+						dateFormat='dd-MM-yyyy'
 					/>
 				</div>
-				<div className="widthDescription">
+				<div className="withDescription">
 					<Icon color="blue" name="mail" />
 					<Input
 						id="email"

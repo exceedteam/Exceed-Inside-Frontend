@@ -1,82 +1,90 @@
+@import "../common/index.scss";
+
 .commentsField {
-	width: 100%;
-	margin: 0 auto 30px auto;
-	background-color: white;
-	padding: 10px;
-	border-bottom-right-radius: 8px;
-	border-bottom-left-radius: 8px;
+  width: 100%;
+  margin: 0 auto 30px auto;
+  background-color: white;
+  padding: 10px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 
-	.displayComment {
-		width: 20em;
-		height: 2em;
-		margin: 0 auto;
-		align-items: center;
-	}
+  .displayComment {
+    width: 20em;
+    height: 2em;
+    margin: 0 auto;
+    align-items: center;
+  }
 
-	.displayText {
-		width: 20em;
-		height: 2em;
-	}
+  .displayText {
+    width: 20em;
+    height: 2em;
+  }
+  .textarea {
+    display: block;
+    width: 25em;
+    height: 2em;
+    resize: vertical;
+    border-width: 2px;
+    border-radius: 4px;
+    margin: 0 0 1em 0;
+    color: #384047;
+    background-color: #e8eeef;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+    border: none;
+    padding: 1em;
+  }
 
-	.textarea {
-		display: block;
-		width: 25em; 
-		height: 2em;
-		resize: vertical;
-		border-width: 2px;
-		border-radius: 4px;
-		margin: 0 0 1em 0;
-		color: #384047;
-		background-color: #e8eeef;
-		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
-		border: none;
-		padding: 1em;
-	}
+  .avatar {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
 
-	.avatar {
-		img {
-			width: 40px;
-			height: 40px;
-		}
-	}
+  .commentInput:last-child {
+    margin-bottom: 100px;
+  }
 
-	.commentInput:last-child {
-		margin-bottom: 100px;
-	}
-
-	.comment {
-		margin: 0 5em !important;
-		.comment {
-			margin: 0 !important;
-		}
-	}
+  .comment {
+    margin: 0 5em !important;
+    .comment {
+      margin: 0 !important;
+    }
+  }
 }
-
 .createTheNewComment {
-	padding: 1em 5em;
-	background-color: white;
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
+  padding: 1em 5em 0;
+  background-color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  justify-content: center;
 
-	.findedUsers {
-		display: none;
-		max-height: 100px;
-		overflow: auto;
-		margin-bottom: 10px;
-	}
-	.new {
-		max-width: 570px;
-		min-height: 3em;
-		background-color: #ffffff;
-		border-radius: 5px;
-		margin: 10px 0;
-	}
-	.new__input {
-		border-radius: 5px !important;
-		padding: 0.3em;
-	}
+  .findedUsers {
+    display: none;
+    max-height: 100px;
+    overflow: auto;
+    margin-bottom: 10px;
+  }
+  .new {
+    max-width: 570px;
+    width: 80%;
+    min-height: 2em;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin: 10px 10px 10px 0;
+  }
+  .new__input {
+    border-radius: 5px !important;
+    padding: 0.3em;
+  }
+  .sendBtn {
+    @include button-without-background;
+    align-self: center;
+    color: $exceed-blue !important;
+  }
 }
 
 .Reply {
-	padding: 0 0.3em;
+  padding: 0 7em;
 }

@@ -107,16 +107,16 @@ class Profile extends React.Component {
 		const { id, isEdit, profileData } = this.state;
 		const { loading, profile } = this.props;
 		return (
-			<div className="userProgileContainer">
+			<div className="userProfileContainer">
 				{profile.email && (
-					<div className="form">
+					<React.Fragment>
 						{this.editProfile()}
 						{isEdit ? (
 							<EditProfile profileData={profileData} isEdit={isEdit}  updateForm={this.updateForm} />
 						) : (
 							<ViewProfile profileData={profile} isEdit={isEdit} id={id} history={this.props.history} />
 						)}
-					</div>
+					</React.Fragment>
 				)}
 				{loading && <Loader />}
 			</div>

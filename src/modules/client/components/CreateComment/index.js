@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { MentionsInput, Mention } from 'react-mentions';
 import { createComment } from '../../../redux/actions/comments/create';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 
 class CreateComment extends React.Component {
 	constructor(props) {
@@ -54,13 +54,9 @@ class CreateComment extends React.Component {
 						}}
 					/>
 				</MentionsInput>
-				<Button
-					content={`Add ${this.props.type || 'Comment'}`}
-					labelPosition="left"
-					icon="edit"
-					primary
-					onClick={this.newComment}
-				/>
+				<Button className="sendBtn" onClick={this.newComment}>
+					<Icon name='send'/>
+				</Button>
 			</div>
 		);
 	}

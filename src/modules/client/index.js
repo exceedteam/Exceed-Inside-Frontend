@@ -12,6 +12,7 @@ import Post from "./components/Post";
 import PostsOfUser from "./components/PostsOfUser";
 import ModalWindow from "./components/Modal";
 import AlertMessage from "./components/AlertMessage";
+import LeftMenu from "./components/LeftMenu";
 
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -19,14 +20,14 @@ import store from "../redux/store";
 import { Switch, Route, Router, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { getIslogin } from "../../services/helpers";
-import "../styles/index.scss"
+import "../styles/index.scss";
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.customHistory = createBrowserHistory();
     this.state = {
-      isLogged: getIslogin()
+      isLogged: getIslogin(),
     };
   }
 
@@ -48,26 +49,30 @@ export default class Main extends React.Component {
           <Switch>
             <Route
               path="/login"
-              component={props => (
+              component={(props) => (
                 <Login {...props} handleLogin={this.handleLogin} />
               )}
             />
             <Route path="/registration" component={Registration} />
-
             <WithToken>
-              <Route
-                exact
-                path="/"
-                component={props => (
-                  <Posts {...props} handleLogin={this.handleLogin} />
-                )}
-              />
-              <Route exact path="/user/:id" component={Profile} />
-              <Route exact path="/create" component={PostCreator} />
-              <Route exact path="/events" component={Events} />
-              <Route exact path="/post/:id" component={Post} />
-              <Route exact path="/user/:id/posts" component={PostsOfUser} />
-              <Route exact path="/modal" component={ModalWindow} />
+              <div className="abc">
+                <LeftMenu history={this.customHistory} />
+                <div className='content'>
+                  <Route
+                    exact
+                    path="/"
+                    component={(props) => (
+                      <Posts {...props} handleLogin={this.handleLogin} />
+                    )}
+                  />
+                  <Route exact path="/user/:id" component={Profile} />
+                  <Route exact path="/create" component={PostCreator} />
+                  <Route exact path="/events" component={Events} />
+                  <Route exact path="/post/:id" component={Post} />
+                  <Route exact path="/user/:id/posts" component={PostsOfUser} />
+                  <Route exact path="/modal" component={ModalWindow} />
+                </div>
+              </div>
             </WithToken>
           </Switch>
           <footer />
@@ -79,13 +84,14 @@ export default class Main extends React.Component {
 
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
-styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+styleLink.href =
+  "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
 document.head.appendChild(styleLink);
 
 //if there is no token in local storage go to the login form
 const WithToken = ({
   children,
-  defaultComponent = <Redirect to="/login" />
+  defaultComponent = <Redirect to="/login" />,
 }) => {
   if (getIslogin()) {
     return children;

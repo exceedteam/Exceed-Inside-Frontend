@@ -6,7 +6,6 @@ import Loader from '../Loader';
 import { connect } from 'react-redux';
 import { fetchComments } from '../../../redux/actions/comments/fetch';
 import { Comment, Popup, Button, Image } from 'semantic-ui-react';
-import moment from 'moment';
 
 class DisplayComments extends React.Component {
 	constructor(props) {
@@ -58,7 +57,7 @@ class DisplayComments extends React.Component {
 							<Popup
 								key={createID()}
 								header={currentUserDisplayInPopUp.display}
-								content={moment(currentUserDisplayInPopUp.age).format('LL')}
+								content={`${currentUserDisplayInPopUp.team} : ${currentUserDisplayInPopUp.position}`}
 								trigger={<div className="mentionUser">@{partOfText} </div>}
 								className="miniPopup"
 								basic

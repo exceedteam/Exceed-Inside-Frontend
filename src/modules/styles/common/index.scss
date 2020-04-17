@@ -1,8 +1,10 @@
 $semantic-blue: #2185d0;
+$exceed-blue: #004FEF;
+$font-family: Montserrat, sans-serif;
 
 @mixin linkToMentionUser {
 	font-weight: bold;
-	color: $semantic-blue;
+	color: $exceed-blue;
 	border-radius: 5px;
 	padding: 0 5px;
 	margin: 0 3px;
@@ -61,4 +63,17 @@ $semantic-blue: #2185d0;
 
 .size12 {
 	font-size: 13px !important;
+}
+
+// client pages
+.abc {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	margin-top: 2rem;
+
+	.content {
+		display: flex;
+		margin-right: 15%;
+	}
 }

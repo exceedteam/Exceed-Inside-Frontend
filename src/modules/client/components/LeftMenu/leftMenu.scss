@@ -1,0 +1,12 @@
+.leftMenu {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 2% auto 15%;
+  position: sticky;
+  top: calc(60px + 2rem);
+
+  .navigationBtn {
+    width: 150px;
+  }
+}

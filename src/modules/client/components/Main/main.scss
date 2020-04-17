@@ -1,0 +1,26 @@
+.pageWrapper {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+
+  .postsContent {
+    width: 730px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 2%;
+
+    .post {
+      width: 100%;
+    }
+  }
+  
+  .rightColumn {
+    width: 400px;
+    height: 600px;
+    position: sticky;
+    top: 100px;
+  }
+}
