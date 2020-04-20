@@ -21,6 +21,14 @@
     width: 400px;
     height: 600px;
     position: sticky;
-    top: 100px;
+    top: calc(60px + 2rem);
+
+    .react-calendar {
+      border-radius: 8px;
+      border: none;
+      background-color: #ffffff;
+      box-shadow: 0 10px 40px -14px rgba(0,0,0,.25);
+      padding: .5rem;
+    }
   }
 }

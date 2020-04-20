@@ -1,6 +1,6 @@
 // display post comments
 import React from 'react';
-import { createID, typeOfTime, togglePropertyInSet } from '../../../../services/helpers';
+import { createID, typeOfTime, togglePropertyInSet, isAuthor } from '../../../../services/helpers';
 import CreateComment from '../CreateComment';
 import Loader from '../Loader';
 import { connect } from 'react-redux';
@@ -163,6 +163,11 @@ class DisplayComments extends React.Component {
 													: 'Show'} replied messages`}
 											</Comment.Action>
 										)}
+										{isAuthor(comment.authorId) && 
+											<Comment.Action onClick={() => console.log('profile', comment)}>
+												edit 
+											</Comment.Action>
+										}
 									</Comment.Actions>
 								</Comment.Content>
 								{idsOfCommentsIsShown.has(comment.id) && this.renderSubcomments(comment.id)}
@@ -183,10 +188,10 @@ class DisplayComments extends React.Component {
 							)}
 						</React.Fragment>
 					))}
-					<Button className="receive" onClick={() => this.changePage()} primary>
+				</Comment.Group>
+				<Button className="receive" onClick={() => this.changePage()} primary>
 						Receive Comments
 					</Button>
-				</Comment.Group>
 			</div>
 		);
 	}

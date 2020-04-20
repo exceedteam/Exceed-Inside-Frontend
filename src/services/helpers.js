@@ -1,4 +1,5 @@
 import moment from 'moment';
+import jwtDecode from 'jwt-decode';
 
 // generating idi for children in lists
 export const createID = (payload = '') => {
@@ -65,4 +66,15 @@ export const replaceId = (text) => {
 	// const newText = text.replace(re, "@$1")
 	const newText = text.replace(re, `<Popup content='${text}' trigger=<span>@$1</span> />`)
 	return newText;
+}
+
+// verification of authorship
+export const isAuthor = (itemId) => {
+	const token = localStorage.getItem("token");
+	const decodedToken = jwtDecode(token).id;
+	if (itemId === decodedToken) {
+		return true
+	} else {
+		return false
+	}
 }
