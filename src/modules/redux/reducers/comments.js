@@ -5,9 +5,12 @@ import {
   CREATE_COMMENT_PROCESS,
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAIL,
+  EDIT_COMMENT_SUCCESS,
+  EDIT_COMMENT_FAIL,
+  EDIT_COMMENT_PROCESS,
   FETCH_NEW_COMMENT,
   CLEAR_CURRENT_COMMENTS,
-  USER_WITHOUT_NAME
+  USER_WITHOUT_NAME,
 } from "../actionTypes";
 
 const initialState = {
@@ -16,17 +19,18 @@ const initialState = {
   loading: false,
   newComment: [],
   errorOfCreateComment: null,
+  errorOfEditComment: null,
   loadingNewComment: false,
-  message: '',
+  message: "",
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     // get comments of post
     case FETCH_COMMENTS_OF_POST_PROCESS: {
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     }
     case FETCH_COMMENTS_OF_POST_FAIL: {
@@ -34,7 +38,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         errors: errors,
-        loading: false
+        loading: false,
       };
     }
     case FETCH_COMMENTS_OF_POST_SUCCESS: {
@@ -42,30 +46,30 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        comments: [...state.comments, ...comments]
+        comments: [...state.comments, ...comments],
       };
     }
 
     case FETCH_NEW_COMMENT: {
       const { comment } = action.payload;
-      const { parent } = comment
+      const { parent } = comment;
       if (parent) {
-        state.comments.map(comm => {
+        state.comments.map((comm) => {
           if (parent === comm.id) {
-            comm.answeredUser = [ comm.parent, ...comm.answeredUser]
+            comm.answeredUser = [comm.parent, ...comm.answeredUser];
           }
-        })
+        });
       }
       return {
         ...state,
-        comments: [comment, ...state.comments]
+        comments: [comment, ...state.comments],
       };
     }
     // create comment
     case CREATE_COMMENT_PROCESS: {
       return {
         ...state,
-        loadingNewComment: true
+        loadingNewComment: true,
       };
     }
     case CREATE_COMMENT_SUCCESS: {
@@ -73,7 +77,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loadingNewComment: false,
-        comments: [comment, ...state.comments]
+        comments: [comment, ...state.comments],
       };
     }
     case CREATE_COMMENT_FAIL: {
@@ -81,20 +85,49 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loadingNewComment: false,
-        errorOfCreateComment: errorOfCreateComment
+        errorOfCreateComment: errorOfCreateComment,
+      };
+    }
+    // edit comment
+    case EDIT_COMMENT_PROCESS: {
+      return {
+        ...state,
+        loadingNewComment: true,
+      };
+    }
+    case EDIT_COMMENT_SUCCESS: {
+      const { comment } = action.payload;
+      const { comments } = state;
+      const updatedComments = comments.map((specificComment) => {
+        if (specificComment.id === comment.id) {
+          specificComment = comment
+        }
+        return specificComment
+      })
+      return {
+        ...state,
+        comments: [...updatedComments],
+      };
+    }
+    case EDIT_COMMENT_FAIL: {
+      const { errorOfEditComment } = action.payload;
+      return {
+        ...state,
+        errorOfEditComment: errorOfEditComment,
       };
     }
     case CLEAR_CURRENT_COMMENTS: {
       return {
         ...state,
-        comments: []
-      }
+        comments: [],
+      };
     }
     case USER_WITHOUT_NAME: {
       return {
         ...state,
-        message: "Before writing a comment, fill in your name and surname in profile",
-      }
+        message:
+          "Before writing a comment, fill in your name and surname in profile",
+      };
     }
     default:
       return state;

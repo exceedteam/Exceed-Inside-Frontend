@@ -24,9 +24,11 @@ class CreateEvent extends React.Component {
 		this.setState({ ...newState });
 	};
 
+	// create or update events
 	submitPost = () => {
 		const { title, startDate, endDate } = this.state;
 
+		//edit
 		if (this.props.title) {
 			this.props.editEvent({
 				event: {
@@ -37,6 +39,8 @@ class CreateEvent extends React.Component {
 				id: this.props.id
 			});
 		} else {
+
+			// create
 			this.props.createEvent({
 				title: title || 'Default Title',
 				start: startDate,

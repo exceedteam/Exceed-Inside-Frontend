@@ -21,6 +21,7 @@ class CreateComment extends React.Component {
 		}
 	}
 
+	// posting a new comment
 	newComment = (event) => {
 		event.preventDefault();
 		const { commentText } = this.state;
