@@ -13,6 +13,8 @@ import {
   USER_WITHOUT_NAME,
 } from "../actionTypes";
 
+import { isInvalidToken } from "../../../services/helpers";
+
 const initialState = {
   errors: null,
   comments: [],
@@ -34,10 +36,11 @@ export default function (state = initialState, action) {
       };
     }
     case FETCH_COMMENTS_OF_POST_FAIL: {
-      const { errors } = action.payload;
+      const { error } = action.payload;
+      isInvalidToken(error);
       return {
         ...state,
-        errors: errors,
+        errors: error,
         loading: false,
       };
     }
@@ -58,6 +61,7 @@ export default function (state = initialState, action) {
           if (parent === comm.id) {
             comm.answeredUser = [comm.parent, ...comm.answeredUser];
           }
+          return comm
         });
       }
       return {
@@ -81,11 +85,12 @@ export default function (state = initialState, action) {
       };
     }
     case CREATE_COMMENT_FAIL: {
-      const { errorOfCreateComment } = action.payload;
+      const { error } = action.payload;
+      isInvalidToken(error);
       return {
         ...state,
         loadingNewComment: false,
-        errorOfCreateComment: errorOfCreateComment,
+        errorOfCreateComment: error,
       };
     }
     // edit comment
@@ -110,10 +115,11 @@ export default function (state = initialState, action) {
       };
     }
     case EDIT_COMMENT_FAIL: {
-      const { errorOfEditComment } = action.payload;
+      const { error } = action.payload;
+      isInvalidToken(error);
       return {
         ...state,
-        errorOfEditComment: errorOfEditComment,
+        errorOfEditComment: error,
       };
     }
     case CLEAR_CURRENT_COMMENTS: {

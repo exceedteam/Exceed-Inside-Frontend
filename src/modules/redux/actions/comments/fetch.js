@@ -40,10 +40,10 @@ export const fetchCommentsOfPostSuccess = (comments) => {
 	};
 };
 
-export const fetchCommentsOfPostFail = (errors) => {
+export const fetchCommentsOfPostFail = (error) => {
 	return {
 		type: FETCH_COMMENTS_OF_POST_FAIL,
-		payload: { errors }
+		payload: { error }
 	};
 };
 

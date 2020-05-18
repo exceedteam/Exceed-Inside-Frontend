@@ -13,6 +13,7 @@ import PostsOfUser from "./components/PostsOfUser";
 import ModalWindow from "./components/Modal";
 import AlertMessage from "./components/AlertMessage";
 import LeftMenu from "./components/LeftMenu";
+import GoogleCalendar from "./components/GoogleCalendar";
 
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -40,7 +41,6 @@ export default class Main extends React.Component {
       <Provider store={store}>
         <Router history={this.customHistory}>
           <Header
-            history={this.customHistory}
             isLogged={this.state.isLogged}
             handleLogin={this.handleLogin}
           />
@@ -56,7 +56,7 @@ export default class Main extends React.Component {
             <Route path="/registration" component={Registration} />
             <WithToken>
               <div className="abc">
-                <LeftMenu history={this.customHistory} />
+                <LeftMenu />
                 <div className='content'>
                   <Route
                     exact
@@ -71,6 +71,7 @@ export default class Main extends React.Component {
                   <Route exact path="/post/:id" component={Post} />
                   <Route exact path="/user/:id/posts" component={PostsOfUser} />
                   <Route exact path="/modal" component={ModalWindow} />
+                  <Route exact path="/calendar" component={GoogleCalendar} />
                 </div>
               </div>
             </WithToken>

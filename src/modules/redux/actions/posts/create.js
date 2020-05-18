@@ -15,9 +15,10 @@ export const createPost = post => {
         .post(`${url}/post`, post, {
           headers: { authorization: token },
         })
-        .then(response => {
-          dispatch(createPostSuccess(response.data));
-          return { success: true, id: response.data.id }
+        .then(() => {
+          // dispatch(createPostSuccess(response.data));
+          // return { success: true, id: response.data.id }
+          return null
         })
         .catch(errors => {
           dispatch(createPostFail(errors));
@@ -27,16 +28,16 @@ export const createPost = post => {
   };
 };
 
-export const createPostSuccess = (posts) => {
+export const createPostSuccess = (post) => {
   return {
     type: CREATE_POST_SUCCESS,
-    payload: { posts }
+    payload: { post }
   }
 };
 
-export const createPostFail = (errors) => {
+export const createPostFail = (error) => {
   return {
     type: CREATE_POST_FAIL,
-    payload: { errors }
+    payload: { error }
   }
 };

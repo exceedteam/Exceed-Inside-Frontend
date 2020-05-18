@@ -3,6 +3,7 @@ import {
 	FETCH_ALL_POSTS_SUCCESS,
 	FETCH_ALL_POSTS_FAIL,
 	FETCH_ALL_POSTS_PROCESS,
+	FETCH_NEW_POST_FROM_SOCKET,
 	FETCH_LIKE_FROM_SOCKET,
 	FETCH_COMMENT_COUNTER_FROM_SOCKET,
 	// for post page
@@ -12,7 +13,7 @@ import {
 	// for posts of user page
 	FETCH_ALL_POSTS_OF_USER_PROCESS,
 	FETCH_ALL_POSTS_OF_USER_SUCCESS,
-	FETCH_ALL_POSTS_OF_USER_FAIL,
+	FETCH_ALL_POSTS_OF_USER_FAIL
 } from '../../actionTypes';
 import axios from 'axios';
 
@@ -29,6 +30,7 @@ export const fetchPosts = ({ page = 0, perPage = 3 }) => {
 			})
 			.then((response) => {
 				dispatch(fetchLikes());
+				dispatch(fetchNewPost());
 				dispatch(fetchPostsSuccess(response.data));
 			})
 			.catch((error) => {
@@ -120,6 +122,19 @@ export const fetchPostFail = (error) => {
 	};
 };
 
+// loading new post to the feed
+export const fetchNewPost = () => {
+	return (dispatch) =>
+		dispatch({
+			event: 'newPost',
+			handle: (data) =>
+				dispatch({
+					type: FETCH_NEW_POST_FROM_SOCKET,
+					payload: data
+				})
+		});
+};
+
 // request all posts of user from the server
 export const fetchPostsOfUser = ({ id }) => {
 	return (dispatch) => {
@@ -152,10 +167,10 @@ export const fetchPostsOfUserSuccess = (postsOfUser) => {
 	};
 };
 
-export const fetchPostsOfUserFail = (errorsPostsOfUser) => {
+export const fetchPostsOfUserFail = (error) => {
 	return {
 		type: FETCH_ALL_POSTS_OF_USER_FAIL,
-		payload: { errorsPostsOfUser }
+		payload: { error }
 	};
 };
 
@@ -169,5 +184,5 @@ export const commentCounter = () => {
 					type: FETCH_COMMENT_COUNTER_FROM_SOCKET,
 					payload: data
 				})
-		})
-}
+		});
+};

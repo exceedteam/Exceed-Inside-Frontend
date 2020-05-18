@@ -2,6 +2,7 @@
   Component with which the application header is rendered
 */
 import React from "react";
+import { withRouter } from 'react-router'
 import jwtDecode from "jwt-decode";
 import { connect } from "react-redux";
 import { clearUserProfile } from "../../../redux/actions/users/edit";
@@ -70,12 +71,12 @@ class Header extends React.Component {
 const Logged = ({ logout, history, id, user }) => {
   return (
     <div className="mainHeader">
-      <div className="logoField">
-        <div className="logoText">Exceed-Team</div>
-      </div>
-      <div className="navLoggedRight">
+      <div className="headerWrapper">
+        <div className="logoField">
+          <div className="logoText">Exceed-Team</div>
+        </div>
         <Dropdown
-          text={user.firstName}
+          text={user.firstName || 'user'}
           floating
           labeled
           button
@@ -115,5 +116,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { clearUserProfile, fetchUserProfile })(
-  Header
+  withRouter(Header)
 );

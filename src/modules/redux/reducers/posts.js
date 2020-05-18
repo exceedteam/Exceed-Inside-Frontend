@@ -2,6 +2,7 @@ import {
   FETCH_ALL_POSTS_SUCCESS,
   FETCH_ALL_POSTS_FAIL,
   FETCH_ALL_POSTS_PROCESS,
+  FETCH_NEW_POST_FROM_SOCKET,
   FETCH_LIKE_FROM_SOCKET,
   FETCH_COMMENT_COUNTER_FROM_SOCKET,
   CREATE_POST_SUCCESS,
@@ -21,6 +22,8 @@ import {
   CLEAR_CURRENT_POST
 } from "../actionTypes";
 
+import { isInvalidToken } from '../../../services/helpers';
+
 const initialState = {
   errors: null,
   posts: [],
@@ -29,14 +32,20 @@ const initialState = {
   postsLoaded: false,
   errorsPostsOfUser: null,
   postsOfUser: [],
-  loadingPostsOfUser: false
+  loadingPostsOfUser: false,
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case FETCH_NEW_POST_FROM_SOCKET: {
+      return {
+        ...state,
+        posts: [action.payload,  ...state.posts]
+      }
+    }
     case CREATE_POST_PROCESS:
     case FETCH_ALL_POSTS_PROCESS:
-    case FETCH_POST_PROCESS: {
+    case FETCH_POST_PROCESS: { 
       return {
         ...state,
         loading: true
@@ -45,10 +54,11 @@ export default function(state = initialState, action) {
     case CREATE_POST_FAIL:
     case FETCH_ALL_POSTS_FAIL:
     case FETCH_POST_FAIL: {
-      const { errors } = action.payload;
+      const { error } = action.payload;
+      isInvalidToken(error)
       return {
         ...state,
-        errors: errors,
+        errors: error,
         loading: false
       };
     }
@@ -57,14 +67,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: [...state.posts, ...posts],
-        loading: false
+        loading: false,
+        postsLoaded: true,
       };
     }
     case CREATE_POST_SUCCESS: {
-      const { posts } = action.payload;
+      const { post } = action.payload;
       return {
         ...state,
-        posts: [...posts],
+        posts: [post, ...state.posts],
         postsLoaded: true,
         loading: false,
       };
@@ -159,10 +170,11 @@ export default function(state = initialState, action) {
       };
     }
     case FETCH_ALL_POSTS_OF_USER_FAIL: {
-      const { errorsPostsOfUser } = action.payload;
+      const { error } = action.payload;
+      isInvalidToken(error)
       return {
         ...state,
-        errorsPostsOfUser: errorsPostsOfUser,
+        errorsPostsOfUser: error,
         loadingPostsOfUser: false
       };
     }

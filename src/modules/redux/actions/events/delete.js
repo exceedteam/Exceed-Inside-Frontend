@@ -38,9 +38,9 @@ export const deleteEventSuccess = events => {
   };
 };
 
-export const deleteEventFail = errors => {
+export const deleteEventFail = error => {
   return {
     type: DELETE_EVENT_FAIL,
-    payload: { errors }
+    payload: { error }
   };
 };

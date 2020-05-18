@@ -45,10 +45,10 @@ export const editEventSuccess = event => {
   };
 };
 
-export const editEventFail = errors => {
+export const editEventFail = error => {
   return {
     type: EDIT_EVENT_FAIL,
-    payload: { errors }
+    payload: { error }
   };
 };
 

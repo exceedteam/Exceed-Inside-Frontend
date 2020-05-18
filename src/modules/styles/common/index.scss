@@ -69,11 +69,13 @@ $font-family: Montserrat, sans-serif;
 .abc {
 	display: flex;
 	width: 100%;
+	max-width: 1300px;
 	height: 100%;
 	margin-top: 2rem;
+	margin: 0 auto;
 
 	.content {
 		display: flex;
-		margin-right: 15%;
+		margin-top: 2rem;
 	}
 }

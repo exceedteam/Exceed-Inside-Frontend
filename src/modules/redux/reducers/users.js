@@ -11,6 +11,8 @@ import {
   FETCH_ALL_USERS_FAIL
 } from "../actionTypes";
 
+import { isInvalidToken } from "../../../services/helpers";
+
 const initialState = {
   error: null,
   currentUser: {},
@@ -49,6 +51,7 @@ export default function(state = initialState, action) {
     case EDIT_USER_PROFILE_FAIL:
     case FETCH_USER_PROFILE_FAIL: {
       const { error } = action.payload;
+      isInvalidToken(error)
       return {
         ...state,
         error: error,

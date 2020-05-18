@@ -78,3 +78,11 @@ export const isAuthor = (itemId) => {
 		return false
 	}
 }
+
+// removing a token from the localStorage and routing to the login page when token is invalid
+export const isInvalidToken = (err) => {
+	if (err.response.data.Error === 'Token error') {
+		localStorage.removeItem("token");
+    document.location.reload(true);
+	}
+}

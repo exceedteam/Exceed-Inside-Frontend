@@ -26,6 +26,8 @@ import {
   CLEAR_MESSAGE
 } from "../actionTypes";
 
+import { isInvalidToken } from '../../../services/helpers';
+
 const initialState = {
   errors: null,
   events: [],
@@ -47,6 +49,7 @@ export default function(state = initialState, action) {
     case EDIT_EVENT_FAIL:
     case FETCH_ALL_EVENTS_FAIL: {
       const { errors } = action.payload;
+      isInvalidToken(errors)
       return {
         ...state,
         errors: errors,
