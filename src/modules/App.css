@@ -21,6 +21,11 @@ body {
   overflow: auto;
 }
 
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+
 .App {
   width: 100%;
   min-height: 100vh;

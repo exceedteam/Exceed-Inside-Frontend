@@ -1,0 +1,9 @@
+.Users {
+  width: 100%;
+  overflow: scroll;
+  padding: 50px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+}

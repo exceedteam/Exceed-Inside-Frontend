@@ -10,22 +10,22 @@ class LeftMenu extends React.Component {
     const { history } = this.props;
     return (
       <Menu pointing secondary vertical className='leftMenu'>
-        <Menu.Item 
+        <Menu.Item
           name='Main page'
           active={pathname === '/'}
           onClick={() => history.push("/")}
         />
-        <Menu.Item 
+        <Menu.Item
           name='New post'
           active={pathname === '/create'}
           onClick={() => history.push("/create")}
         />
-        <Menu.Item 
+        <Menu.Item
           name='Events'
           active={pathname === '/events'}
           onClick={() => history.push("/events")}
         />
-        <Menu.Item 
+        <Menu.Item
           name='GoogleCalendar'
           active={pathname === '/calendar'}
           onClick={() => history.push("/calendar")}

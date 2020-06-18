@@ -1,13 +1,10 @@
-import {
-  CREATE_POST_SUCCESS,
-  CREATE_POST_FAIL,
-} from '../../actionTypes';
-import axios from "axios";
+import axios from 'axios';
+import { CREATE_POST_SUCCESS, CREATE_POST_FAIL } from '../../actionTypes';
 
 const url = process.env.REACT_APP_API_URL;
 
 // server request to create a new post
-export const createPost = post => {
+export const createPost = (post) => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     return (

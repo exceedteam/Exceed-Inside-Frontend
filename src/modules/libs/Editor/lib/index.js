@@ -1,5 +1,4 @@
-import en from './lang/en/index.json'
-
+import en from './lang/en/index.json';
 
 export const CONFIG = {
   language: {
@@ -19,6 +18,6 @@ export const CONFIG = {
     undo: true,
     redo: true,
     save: true,
-    subfield: true
-  }
+    subfield: true,
+  },
 };

@@ -8,6 +8,15 @@
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
 
+  .comment__body {
+    &-content {
+      margin-top: 0!important;
+    }
+    &:first-child{
+      margin-top: 1rem;
+    }
+  }
+
   .displayComment {
     width: 20em;
     height: 2em;
@@ -46,7 +55,11 @@
   }
 
   .comment {
-    margin: 0 5em !important;
+    margin: 1rem 5em !important;
+    .ui.comments {
+      padding-top: 2.5rem!important;
+      padding-bottom: .5rem!important;
+    }
     .comment {
       margin: 0 !important;
     }

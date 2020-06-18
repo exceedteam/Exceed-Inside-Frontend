@@ -1,11 +1,13 @@
+@import "../../../styles/variables";
+
 .leftMenu {
-  width: 160px !important;
+  width: $left-menu-max-width !important;
   margin: 0 2% auto 0 !important;
   position: sticky;
   top: calc(60px + 2rem);
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: calc(100vw - #{$left-menu-max-width})) {
   .leftMenu {
     margin-left: 2rem !important;
   }

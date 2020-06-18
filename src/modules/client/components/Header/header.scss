@@ -1,4 +1,5 @@
 @import '../../../styles/common/index.scss';
+@import '../../../styles/variables';
 
 .mainHeader {
   width: 100%;
@@ -19,7 +20,7 @@
   .headerWrapper {
     margin: 0 2rem;
     width: 100%;
-    max-width: 1300px;
+    max-width: calc(100vw - #{$left-menu-max-width});
     display: flex;
     justify-content: space-between;
   }

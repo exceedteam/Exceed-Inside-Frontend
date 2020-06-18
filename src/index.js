@@ -1,15 +1,16 @@
 import React from 'react';
 import './index.css';
+import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './modules/App';
 import * as serviceWorker from './serviceWorker';
-import { render } from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css';
 
-render((
+render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>
-), document.getElementById('root'));
+  </BrowserRouter>,
+  document.getElementById('root'),
+);
 
 serviceWorker.unregister();

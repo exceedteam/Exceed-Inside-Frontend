@@ -1,10 +1,10 @@
-import React from "react";
-import { createID } from "../../../../services/helpers";
-import PostPreview from "../PostPreview";
-import { connect } from "react-redux";
-import { fetchPostsOfUser } from "../../../redux/actions/posts/fetch";
-import { clearPostsOfUser } from "../../../redux/actions/posts/edit";
-import Loader from "../Loader";
+import React from 'react';
+import { connect } from 'react-redux';
+import { createID } from '../../../../services/helpers';
+import PostPreview from '../PostPreview';
+import { fetchPostsOfUser } from '../../../redux/actions/posts/fetch';
+import { clearPostsOfUser } from '../../../redux/actions/posts/edit';
+import Loader from '../Loader';
 
 class PostsOfUser extends React.Component {
   constructor(props) {
@@ -13,8 +13,8 @@ class PostsOfUser extends React.Component {
     this.state = {
       params: {
         page: 0,
-        perPage: 3
-      }
+        perPage: 3,
+      },
     };
   }
 
@@ -36,10 +36,10 @@ class PostsOfUser extends React.Component {
       <div>
         {!loadingPostsOfUser && (
           <div>
-            {posts.map(item => {
+            {posts.map((postId) => {
               return (
                 <div key={createID()}>
-                  <PostPreview post={item} history={this.props.history} />
+                  <PostPreview postId={postId} />
                 </div>
               );
             })}
@@ -52,14 +52,12 @@ class PostsOfUser extends React.Component {
 }
 
 // connection with redux
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     error: state.posts.errorsPostsOfUser,
     posts: state.posts.postsOfUser,
-    loadingPostsOfUser: state.posts.loadingPostsOfUser
+    loadingPostsOfUser: state.posts.loadingPostsOfUser,
   };
 };
 
-export default connect(mapStateToProps, { fetchPostsOfUser, clearPostsOfUser })(
-  PostsOfUser
-);
+export default connect(mapStateToProps, { fetchPostsOfUser, clearPostsOfUser })(PostsOfUser);

@@ -5,15 +5,15 @@ import {
   REGISTER_PROCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  LOGOUT
-} from "../actionTypes";
+  LOGOUT,
+} from '../actionTypes';
 
 const initialState = {
-  token: "",
+  token: '',
   user: {},
   errorLogin: null,
   errorsRegistration: {},
-  loading: false
+  loading: false,
 };
 
 export default function (state = initialState, action) {
@@ -27,12 +27,12 @@ export default function (state = initialState, action) {
     }
     case LOGIN_SUCCESS: {
       const { token } = action.payload;
-      localStorage.setItem("token", token);
+      localStorage.setItem('token', token);
       return {
         ...state,
-        token: token,
+        token,
         errorLogin: null,
-        loading: false
+        loading: false,
       };
     }
     case LOGIN_FAIL: {
@@ -40,14 +40,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errorLogin: errors,
-        loading: false
+        loading: false,
       };
     }
     case REGISTER_SUCCESS: {
       return {
         ...state,
         errorsRegistration: {},
-        loading: false
+        loading: false,
       };
     }
     case REGISTER_FAIL: {
@@ -55,14 +55,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errorsRegistration: errors,
-        loading: false
+        loading: false,
       };
     }
     case LOGOUT: {
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       return {
         ...state,
-        token: "",
+        token: '',
       };
     }
     default:

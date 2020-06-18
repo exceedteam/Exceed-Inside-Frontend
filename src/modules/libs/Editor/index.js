@@ -220,9 +220,18 @@ class MdEditor extends React.Component {
 
 	toolBarRightClick = (type) => {
 		const toolbarRightPreviewClick = () => {
-			this.setState({
-				preview: !this.state.preview
-			});
+			const { preview, subfield } = this.state;
+			if (subfield) {
+				this.setState({
+					preview: !preview,
+					subfield: !subfield
+				});
+			} else {
+				this.setState({
+					preview: !preview,
+				});
+			}
+		
 		};
 		const toolbarRightExpandClick = () => {
 			this.setState({
@@ -291,9 +300,10 @@ class MdEditor extends React.Component {
 			'for-edit-preview': preview && !subfield
 		});
 		const previewClass = classNames({
+			// 'hide-preview': !preview,
 			'for-panel': true,
 			'for-editor-preview': true,
-			'for-active': preview && subfield
+			'for-active': preview && subfield,
 		});
 		const fullscreen = classNames({
 			'for-container': true,

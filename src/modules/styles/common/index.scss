@@ -1,6 +1,4 @@
-$semantic-blue: #2185d0;
-$exceed-blue: #004FEF;
-$font-family: Montserrat, sans-serif;
+@import "src/modules/styles/variables";
 
 @mixin linkToMentionUser {
 	font-weight: bold;
@@ -66,10 +64,10 @@ $font-family: Montserrat, sans-serif;
 }
 
 // client pages
-.abc {
+.client__container {
 	display: flex;
 	width: 100%;
-	max-width: 1300px;
+	max-width: calc(100vw - #{$left-menu-max-width});
 	height: 100%;
 	margin-top: 2rem;
 	margin: 0 auto;
