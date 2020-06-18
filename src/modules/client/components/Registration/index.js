@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register } from '../../../redux/actions/auth';
 import { Button } from 'semantic-ui-react';
-
 class Registration extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			email: '',
 			password: '',
-			password2: ''
+			password2: '',
+			firstName: '',
+			lastName: '',
 		};
 	}
-
 	// Writing data to the state and updating it when entering email, password and password2 in the input fields
 	updateForm = (event) => {
 		const newInput = this.state;
@@ -23,7 +23,6 @@ class Registration extends React.Component {
 			input: { ...newInput }
 		});
 	};
-
 	// Sending email, password, password2 to the server
 	submitUser = () => {
 		this.props
@@ -37,7 +36,6 @@ class Registration extends React.Component {
 				console.log('error', err);
 			});
 	};
-
 	// Error message appears when entering incorrect data
 	messsageError() {
 		const { errors } = this.state;
@@ -49,10 +47,9 @@ class Registration extends React.Component {
 			return arrOfErr.map((item) => <li key={createID()}>{item.err}</li>);
 		}
 	}
-
 	// render data entry form for registration
 	render() {
-		const { email, password, password2 } = this.state;
+		const { email, password, password2, firstName, lastName } = this.state;
 		const { errors } = this.props;
 		return (
 			<div className="container">
@@ -66,6 +63,22 @@ class Registration extends React.Component {
 						className={`input ${errors.email ? 'error' : ''}`}
 					/>
 					<span className="errorMessage">{errors.email}</span>
+					<input
+						id="firstName"
+						type='text'
+						value={firstName}
+						onChange={this.updateForm}
+						placeholder='First name'
+						className={`input ${errors.name ? 'error' : ''}`}
+					/>
+					<input
+						id='lastName'
+						type='text'
+						value={lastName} 
+						onChange={this.updateForm}
+						placeholder='Last name'
+						className={`input ${errors.name ? 'error' : ''}`}
+					/>
 					<input
 						id="password"
 						type="password"
@@ -84,26 +97,24 @@ class Registration extends React.Component {
 						className={`input ${errors.password2 ? 'error' : ''}`}
 						autoComplete="new-password"
 					/>
-					<Button onClick={() => this.submitUser()} primary>
+					<Button onClick={() => this.submitUser()} className='submitBtn' primary>
 						Sign Up
 					</Button>
-					<label className="footerText">
+					<div className="footerText">
 						<span> Already registered? </span>
 						<Link to="/login" className="link">
 							Login
 						</Link>
-					</label>
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
-
 const mapStateToProps = (state) => {
 	return {
 		errors: state.auth.errorsRegistration,
 		loading: state.auth.loading
 	};
 };
-
 export default connect(mapStateToProps, { register })(Registration);

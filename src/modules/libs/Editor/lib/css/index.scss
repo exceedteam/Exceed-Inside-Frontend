@@ -143,11 +143,17 @@
 				flex: 0 0 50%;
 			}
 
+			.hide-preview {
+				height: 0;
+			}
 			.for-preview {
 				min-height: 100%;
 				box-sizing: border-box;
 				padding: 10px 14px;
 				background: #ffffff;
+				&.for-active {
+					//height: 100%!important;
+				}
 			}
 		}
 
@@ -183,7 +189,7 @@
 				flex: 1;
 				position: relative;
 				height: 100%;
-				margin-left: 10px;
+				margin: 10px;
 
 				pre {
 					padding: 8px 0;

@@ -1,0 +1,16 @@
+.AdminProfile {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem 0;
+  padding: 1rem;
+  color: #ffffff;
+  .image {
+    width: 30%;
+    img {
+      border-radius: 15px;
+    }
+  }
+  .content {
+    width: fit-content;
+  }
+}

@@ -1,8 +1,8 @@
-$semantic-blue: #2185d0;
+@import "src/modules/styles/variables";
 
 @mixin linkToMentionUser {
 	font-weight: bold;
-	color: $semantic-blue;
+	color: $exceed-blue;
 	border-radius: 5px;
 	padding: 0 5px;
 	margin: 0 3px;
@@ -22,7 +22,7 @@ $semantic-blue: #2185d0;
 }
 
 .receive {
-	margin: 20px 5em !important;
+	margin: 20px 35% !important;
 }
 
 .miniPopup {
@@ -61,4 +61,19 @@ $semantic-blue: #2185d0;
 
 .size12 {
 	font-size: 13px !important;
+}
+
+// client pages
+.client__container {
+	display: flex;
+	width: 100%;
+	max-width: calc(100vw - #{$left-menu-max-width});
+	height: 100%;
+	margin-top: 2rem;
+	margin: 0 auto;
+
+	.content {
+		display: flex;
+		margin-top: 2rem;
+	}
 }

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   EDIT_SUBSCRIBE_TO_EVENT,
   EDIT_SUBSCRIBTION_TO_EVENT_PROCESS,
@@ -8,25 +9,23 @@ import {
   EDIT_EVENT_SUCCESS,
   EDIT_EVENT_FAIL,
   EDIT_EVENT_PROCESS,
-  CLEAR_MESSAGE
-} from "../../actionTypes";
-import axios from "axios";
+} from '../../actionTypes';
 
 const url = process.env.REACT_APP_API_URL;
 
 // Sending a request to the server to change the event
-export const editEvent = data => {
-  return dispatch => {
+export const editEvent = (data) => {
+  return (dispatch) => {
     dispatch(editEventProcess());
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return axios
       .put(`${url}/event/${data.id}`, data.event, {
-        headers: { authorization: token }
+        headers: { authorization: token },
       })
-      .then(response => {
+      .then((response) => {
         dispatch(editEventSuccess(response.data));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(editEventFail(error));
       });
   };
@@ -34,34 +33,34 @@ export const editEvent = data => {
 
 export const editEventProcess = () => {
   return {
-    type: EDIT_EVENT_PROCESS
+    type: EDIT_EVENT_PROCESS,
   };
 };
 
-export const editEventSuccess = event => {
+export const editEventSuccess = (event) => {
   return {
     type: EDIT_EVENT_SUCCESS,
-    payload: { event }
+    payload: { event },
   };
 };
 
-export const editEventFail = errors => {
+export const editEventFail = error => {
   return {
     type: EDIT_EVENT_FAIL,
-    payload: { errors }
+    payload: { error },
   };
 };
 
 // server request to subscribe to a specific event
-export const subToEvent = event => {
-  return dispatch => {
+export const subToEvent = (event) => {
+  return (dispatch) => {
     dispatch(changeSubscriptionStatus());
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return axios
       .put(`${url}/event/${event.id}/subscribe`, null, {
-        headers: { authorization: token }
+        headers: { authorization: token },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.success) {
           dispatch(subToEventSuccess());
         }
@@ -70,15 +69,15 @@ export const subToEvent = event => {
 };
 
 // server request to unsubscribe to a specific event
-export const unsubToEvent = event => {
-  return dispatch => {
+export const unsubToEvent = (event) => {
+  return (dispatch) => {
     dispatch(changeSubscriptionStatus());
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return axios
       .put(`${url}/event/${event.id}/unsubscribe`, null, {
-        headers: { authorization: token }
+        headers: { authorization: token },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.success) {
           dispatch(unsubToEventSuccess());
         }
@@ -88,32 +87,32 @@ export const unsubToEvent = event => {
 
 export const subToEventSuccess = () => {
   return {
-    type: EDIT_SUBSCRIBE_TO_EVENT
+    type: EDIT_SUBSCRIBE_TO_EVENT,
   };
 };
 
 export const unsubToEventSuccess = () => {
   return {
-    type: EDIT_UNSUBSCRIBE_TO_EVENT
+    type: EDIT_UNSUBSCRIBE_TO_EVENT,
   };
 };
 
 export const changeSubscriptionStatus = () => {
   return {
-    type: EDIT_SUBSCRIBTION_TO_EVENT_PROCESS
+    type: EDIT_SUBSCRIBTION_TO_EVENT_PROCESS,
   };
 };
 
 // server request to subscribe to all events
 export const subToAllEvents = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(changeAllSubscriptionStatus());
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return axios
       .put(`${url}/events/subscribe`, null, {
-        headers: { authorization: token }
+        headers: { authorization: token },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.success) {
           dispatch(subToAllEventsSuccess(response));
         }
@@ -123,14 +122,14 @@ export const subToAllEvents = () => {
 
 // server request to unsubscribe to all events
 export const unsubToAllEvents = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(changeAllSubscriptionStatus());
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return axios
       .put(`${url}/events/unsubscribe`, null, {
-        headers: { authorization: token }
+        headers: { authorization: token },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.success) {
           dispatch(unsubToAllEventsSuccess());
         }
@@ -140,25 +139,19 @@ export const unsubToAllEvents = () => {
 
 export const subToAllEventsSuccess = () => {
   return {
-    type: EDIT_SUBSCRIBE_TO_ALL_EVENTS
+    type: EDIT_SUBSCRIBE_TO_ALL_EVENTS,
   };
 };
 
 export const unsubToAllEventsSuccess = () => {
   return {
-    type: EDIT_UNSUBSCRIBE_TO_ALL_EVENTS
+    type: EDIT_UNSUBSCRIBE_TO_ALL_EVENTS,
   };
 };
 
 export const changeAllSubscriptionStatus = () => {
   return {
-    type: EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS
+    type: EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS,
   };
 };
 
-// remove message
-export const ClearMessage = () => {
-  return {
-    type: CLEAR_MESSAGE
-  };
-};

@@ -33,17 +33,17 @@ const KEY_CODE = {
   _THREE: 51,
   _FOUR: 52,
   _FIVE: 53,
-  _SIX: 54
-}
+  _SIX: 54,
+};
 
 export default ($vm, func) => {
-  $vm.addEventListener('keydown', e => {
-    if ( !( e.ctrlKey || e.metaKey ) && !e.altKey && !e.shiftKey) {
+  $vm.addEventListener('keydown', (e) => {
+    if (!(e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) {
       if (e.keyCode === KEY_CODE.TAB) {
         e.preventDefault();
-        func('tab')
+        func('tab');
       }
-    } else if (( e.ctrlKey || e.metaKey ) && !e.altKey && !e.shiftKey) {
+    } else if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) {
       // ctrl +
       // eslint-disable-next-line default-case
       switch (e.keyCode) {
@@ -51,21 +51,21 @@ export default ($vm, func) => {
           // Z
           e.preventDefault();
           func('undo');
-          break
+          break;
         }
         case KEY_CODE.Y: {
           // Y
           e.preventDefault();
           func('redo');
-          break
+          break;
         }
         case KEY_CODE.S: {
           // S
           e.preventDefault();
           func('save');
-          break
+          break;
         }
       }
     }
-  })
-}
+  });
+};

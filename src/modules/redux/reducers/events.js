@@ -23,23 +23,25 @@ import {
   EDIT_UNSUBSCRIBE_TO_ALL_EVENTS,
   EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS,
   // remove message from the store
-  CLEAR_MESSAGE
-} from "../actionTypes";
+  CLEAR_MESSAGE,
+} from '../actionTypes';
+
+import { isInvalidToken } from '../../../services/helpers';
 
 const initialState = {
   errors: null,
   events: [],
   loading: false,
   internalLoading: false,
-  message: ""
+  message: '',
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_ALL_EVENTS_PROCESS: {
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     }
     case DELETE_EVENT_FAIL:
@@ -47,17 +49,18 @@ export default function(state = initialState, action) {
     case EDIT_EVENT_FAIL:
     case FETCH_ALL_EVENTS_FAIL: {
       const { errors } = action.payload;
+      isInvalidToken(errors)
       return {
         ...state,
-        errors: errors,
+        errors,
         loading: false,
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case EDIT_EVENT_SUCCESS: {
       const { event } = action.payload;
       const { events } = state;
-      const updatedEvents = events.map(specificEvent => {
+      const updatedEvents = events.map((specificEvent) => {
         if (specificEvent.id === event.id) {
           specificEvent = event;
         }
@@ -66,7 +69,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         events: [...updatedEvents],
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case CREATE_EVENT_SUCCESS: {
@@ -74,7 +77,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         events: [event, ...state.events],
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case FETCH_ALL_EVENTS_SUCCESS: {
@@ -82,7 +85,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        events: [...state.events, ...events]
+        events: [...state.events, ...events],
       };
     }
     case DELETE_EVENT_SUCCESS: {
@@ -91,39 +94,39 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         events: [...events],
-        internalLoading: false
+        internalLoading: false,
       };
     }
-    case EDIT_SUBSCRIBE_TO_EVENT:{
+    case EDIT_SUBSCRIBE_TO_EVENT: {
       return {
         ...state,
-        message: "you subscribed from the event",
+        message: 'you subscribed from the event',
         loading: false,
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case EDIT_UNSUBSCRIBE_TO_EVENT: {
       return {
         ...state,
-        message: "you have unsubscribed from the event",
+        message: 'you have unsubscribed from the event',
         loading: false,
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case EDIT_SUBSCRIBE_TO_ALL_EVENTS: {
       return {
         ...state,
-        message: "you subscribed from the all events",
+        message: 'you subscribed from the all events',
         loading: false,
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case EDIT_UNSUBSCRIBE_TO_ALL_EVENTS: {
       return {
         ...state,
-        message: "you unsubscribed from the all events",
+        message: 'you unsubscribed from the all events',
         loading: false,
-        internalLoading: false
+        internalLoading: false,
       };
     }
     case DELETE_EVENT_PROCESS:
@@ -132,20 +135,20 @@ export default function(state = initialState, action) {
     case EDIT_SUBSCRIBTION_TO_ALL_EVENTS_PROCESS: {
       return {
         ...state,
-        internalLoading: true
+        internalLoading: true,
       };
     }
     case CREATE_EVENT_PROCESS: {
       return {
         ...state,
-        internalLoading: true
+        internalLoading: true,
       };
     }
-    case CLEAR_MESSAGE: {
+    case CLEAR_MESSAGE.events: {
       return {
         ...state,
-        message: ""
-      }
+        message: '',
+      };
     }
     default:
       return state;

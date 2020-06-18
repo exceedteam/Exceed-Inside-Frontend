@@ -1,0 +1,40 @@
+.pageWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .postsContent {
+    width: 730px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 2%;
+
+    .post {
+      width: 100%;
+    }
+  }
+  
+  .rightColumn {
+    width: 350px;
+    height: 600px;
+    position: sticky;
+    top: calc(60px + 2rem);
+
+    .react-calendar {
+      border-radius: 8px;
+      border: none;
+      background-color: #ffffff;
+      box-shadow: 0 10px 40px -14px rgba(0,0,0,.25);
+      padding: .5rem;
+    }
+  }
+
+  @media only screen and (max-width: 1300px) {
+    .rightColumn {
+      display: none;
+    }
+  }
+}

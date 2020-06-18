@@ -1,9 +1,12 @@
-@mixin header {
+@import '../../../styles/common/index.scss';
+@import '../../../styles/variables';
+
+.mainHeader {
   width: 100%;
   font-family: inherit;
   border-radius: 0.2em;
   display: flex;
-  align-items: center;
+  justify-content: center;
   position: sticky;
   z-index: 7;
   left: 0;
@@ -13,6 +16,14 @@
   box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
   height: 60px;
   align-items: center;
+
+  .headerWrapper {
+    margin: 0 2rem;
+    width: 100%;
+    max-width: calc(100vw - #{$left-menu-max-width});
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 @mixin nav {
@@ -23,28 +34,21 @@
   padding: 0 40px;
 }
 
-.headerLogged {
-  @include header;
-  justify-content: space-between;
-}
-
-.headerNotLogged {
-  @include header;
-  justify-content: flex-end;
-}
-
 .navLogged {
   @include nav;
   max-width: 500px;
 }
 
-.navLoggedRight {
-  @include nav;
-  max-width: 200px;
-}
-
 .navNotLogged {
   @include nav;
   max-width: 350px;
+  margin: 0 15% 0 auto;
 }
 
+.logoField {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: $font-family;
+  align-self: center;
+}

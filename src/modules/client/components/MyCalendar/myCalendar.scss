@@ -1,7 +1,31 @@
+@import '../../../styles/common/index.scss';
+
 .selectableDate {
   width: 800px;
   height: 500px;
   max-width: 900px;
   max-height: 600px;
   position: relative;
+
+  .rbc-event, .rbc-event-allday {
+    background-color: $semantic-blue;
+  }
+
+  .rbc-day-bg:nth-child(6n), .rbc-day-bg:nth-child(7n) {
+    background-color: rgba(224, 225, 226, 0.5);
+  }
+
+  .rbc-date-cell:nth-child(6n), .rbc-date-cell:nth-child(7n)  {
+    color: red;
+    font-weight: bold;
+  }
+
+  .rbc-off-range {
+    font-weight: bold;
+    color: rgb(153, 153, 153) !important;
+  }
+
+  .rbc-off-range-bg {
+    background-color: rgb(224, 225, 226) !important;
+  }
 }

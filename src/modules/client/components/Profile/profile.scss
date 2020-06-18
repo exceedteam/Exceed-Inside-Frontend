@@ -1,133 +1,132 @@
-@import '../../../styles/common/index.scss';
+@import "../../../styles/common/index.scss";
 
-.userProgileContainer {
-	display: flex;
-	flex-wrap: wrap;
-	flex: 1 0;
-	justify-content: center;
-	align-content: center;
-	padding: 6%;
-	margin: 0;
-	width: 100%;
+.userProfileContainer {
+  // display: flex;
+  // flex-wrap: wrap;
+  // flex: 1 0;
+  // justify-content: center;
+  // align-content: center;
+  // // padding: 6%;
+  // margin: 0;
+  // width: 100%;
+  background-color: #fff;
+  padding: 2em 2em 3em;
+  border-radius: 8px;
+  min-width: 500px;
+  max-width: 500px;
+  min-height: 450px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
 
-	.form {
-		background-color: #fff;
-		padding: 2em 2em 3em;
-		border-radius: 8px;
-		max-width: 500px;
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		flex-direction: column;
-		justify-content: space-around;
-		box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+  .avatar {
+    margin: 0px auto 10px auto !important;
+  }
 
-		.avatar {
-			margin: 0px auto 10px auto !important;
-		}
+  .header > .icon {
+    font-size: 0.4em;
+  }
 
-		.header>.icon {
-			font-size: 0.4em;
-		}
+  .button {
+    width: fit-content;
+  }
 
-		.button {
-			width: fit-content;
-		}
+  .header {
+    font-size: 35px;
+  }
 
-		.header {
-			font-size: 35px;
-		}
+  .team {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-		.team {
-			font-weight: bold;
-			text-transform: uppercase;
-		}
+  .about {
+    color: grey;
+    text-align: justify;
+    margin: 20px 0;
+    font-size: 15px;
+  }
 
-		.about {
-			color: grey;
-			text-align: justify;
-			margin: 20px 0;
-			font-size: 15px;
-		}
+  .contactInformation {
+    display: flex;
+    flex-direction: column;
 
-		.contactInformation {
-			display: flex;
-			flex-direction: column;
+    .birthday,
+    .mail,
+    .posts {
+      margin: 5px;
+      width: fit-content;
+      i {
+        margin: 0 10px 0 0 !important;
+      }
+    }
 
-			.birthday,
-			.mail,
-			.posts {
-				margin: 5px;
-				width: fit-content;
-				i {
-					margin: 0 10px 0 0 !important;
-				}
-			}
+    .posts {
+      cursor: pointer;
+      transition: color 0.2s;
+      span {
+        text-decoration: underline;
+      }
+    }
+    .posts:hover {
+      color: $semantic-blue;
+      span {
+        text-decoration: underline $semantic-blue;
+      }
+    }
+  }
 
-			.posts {
-				cursor: pointer;
-				transition: color 0.2s;
-				span {
-					text-decoration: underline;
-				}
-			}
-			.posts:hover {
-				color: $semantic-blue;
-				span {
-					text-decoration: underline $semantic-blue;
-				}
-			}
-		}
+  .navigation {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 -20px -20px 0;
+    .button {
+      @include button-without-background;
+    }
+  }
 
-		.navigation {
-			display: flex;
-			justify-content: flex-end;
-			margin: 0 -20px -20px 0;
-			.button {
-				@include button-without-background;
-			}
-		}
+  // for edit
+  .input {
+    padding: 0;
+  }
 
-		// for edit
-		.input {
-			padding: 0;
-		}
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .input {
+      width: 45%;
+    }
+  }
 
-		.row {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			.input {
-				width: 45%;
-			}
-		}
+  .withDescription {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    i {
+      margin-right: 15px;
+    }
+  }
 
-		.widthDescription {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			i {
-				margin-right: 15px;
-			}
-		}
+  .aboutInfo {
+    margin-top: 5px;
+    textarea {
+      width: 100% !important;
+      min-height: 6em;
+      height: fit-content;
+      outline: none;
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      border-radius: 0.3rem;
+      width: 100%;
+    }
+  }
 
-		.aboutInfo {
-			margin-top: 5px;
-			textarea {
-				width: 100% !important;
-				min-height: 6em;
-				height: fit-content;
-				outline: none;
-				border: 1px solid rgba(34, 36, 38, 0.15);
-				border-radius: .3rem;
-				width: 100%;
-			}
-		}
-
-		.calendarPicker {
-			padding: .7em 1em;
-			border: 1px solid rgba(34, 36, 38, .15);
-			border-radius: .3rem;
-		}
-	}
+  .calendarPicker {
+    padding: 0.7em 1em;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    border-radius: 0.3rem;
+  }
 }

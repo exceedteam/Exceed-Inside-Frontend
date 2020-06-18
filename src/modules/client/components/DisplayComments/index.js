@@ -1,202 +1,181 @@
 // display post comments
 import React from 'react';
-import { createID, typeOfTime, togglePropertyInSet } from '../../../../services/helpers';
+import { connect } from 'react-redux';
+import { Comment, Button } from 'semantic-ui-react';
+import {
+  createID,
+  togglePropertyInSet
+} from '../../../../services/helpers';
 import CreateComment from '../CreateComment';
 import Loader from '../Loader';
-import { connect } from 'react-redux';
-import { fetchComments } from '../../../redux/actions/comments/fetch';
-import { Comment, Popup, Button, Image } from 'semantic-ui-react';
-import moment from 'moment';
+import CommentElement from './CommentElement';
+import {
+  fetchComments,
+  subscribeComments,
+  unsubscribeComments
+} from '../../../redux/actions/comments/fetch';
+import {
+  getSubCommentsByCommentIdFromState,
+  getCommentById
+} from '../../../redux/reducers/comments';
 
 class DisplayComments extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isVisibleInput: false,
-			idsOfCommentsIsShown: new Set([]),
-			currentCommentId: '',
-			params: {
-				page: 1,
-				perPage: 10
-			}
-		};
-	}
-
-	// window display function for responding to a comment
-	handleVisible = (id) => {
-		this.setState({
-			isVisibleInput: !this.state.isVisibleInput,
-			currentCommentId: id
-		});
-	};
-
-	uploadAnsveredComments = ({ postId, commentId }) => {
-		const filteredComments = this.props.comments.filter((comment) => commentId === comment.parent);
-		if (!filteredComments.length) {
-			this.props.fetchComments({ id: postId, commentId: commentId });
-		}
-		let { idsOfCommentsIsShown } = this.state;
-
-		idsOfCommentsIsShown = togglePropertyInSet(idsOfCommentsIsShown, commentId);
-
-		this.setState({
-			idsOfCommentsIsShown,
-			currentCommentId: commentId
-		});
-	};
-
-	// display message with mentioned users
-	replaceId = (text) => {
-		const re = /@\[(.+?)\]\(\w+?\)/g;
-		const { users } = this.props;
-		return (
-			<div className="subcomment">
-				{text.split(re).map((partOfText) => {
-					const currentUserDisplayInPopUp = users.find((user) => user.display === partOfText);
-					if (currentUserDisplayInPopUp) {
-						return (
-							<Popup
-								key={createID()}
-								header={currentUserDisplayInPopUp.display}
-								content={moment(currentUserDisplayInPopUp.age).format('LL')}
-								trigger={<div className="mentionUser">@{partOfText} </div>}
-								className="miniPopup"
-								basic
-							/>
-						);
-					} else {
-						return <div key={createID()}>{partOfText + ' '}</div>;
-					}
-				})}
-			</div>
-		);
-	};
-
-	renderSubcomments = (currentCommentId) => {
-		const { comments, loading } = this.props;
-		const { currentCommentId: onClickComment } = this.state;
-		const subComments = comments.filter((comment) => comment.parent === currentCommentId);
-		return (
-			<React.Fragment>
-				<Comment.Group>
-					{subComments.map((comment) => {
-						return (
-							<Comment key={createID()}>
-								<Comment.Avatar as={Image} src={comment.author.avatar} size="tiny" circular />
-								<Comment.Content>
-									<Comment.Author
-										as="a"
-										onClick={() => {
-											this.props.history.push(`/user/${comment.authorId}`);
-										}}
-									>
-										{comment.author.name}
-									</Comment.Author>
-									<Comment.Metadata>
-										<div>{typeOfTime(comment.createdAt)}</div>
-									</Comment.Metadata>
-									<Comment.Text>{this.replaceId(comment.text)}</Comment.Text>
-								</Comment.Content>
-							</Comment>
-						);
-					})}
-				</Comment.Group>
-				{loading && onClickComment === currentCommentId && <Loader />}
-			</React.Fragment>
-		);
-	};
-
-	//pagination
-	changePage = () => {
-		const { params } = this.state;
-		this.setState({
-			params: {
-				...params,
-				page: params.page + 1
-			}
-		});
-		this.recieveComments();
-	};
-
-	recieveComments = () => {
-		const { fetchComments } = this.props;
-		fetchComments({ ...this.state.params, id: this.props.comments[0].postId });
-	};
-
-	render() {
-		const { comments } = this.props;
-		const { isVisibleInput, currentCommentId, idsOfCommentsIsShown } = this.state;
-		return (
-			<div className="commentsField">
-				<Comment.Group threaded>
-					{comments.filter((comment) => comment.parent === '').map((comment) => (
-						<React.Fragment key={createID()}>
-							<Comment>
-								<Comment.Avatar as={Image} src={comment.author.avatar} size="tiny" circular />
-								<Comment.Content>
-									<Comment.Author
-										as="a"
-										onClick={() => {
-											this.props.history.push(`/user/${comment.authorId}`);
-										}}
-									>
-										{comment.author.name}
-									</Comment.Author>
-									<Comment.Metadata>
-										<div>{typeOfTime(comment.createdAt)}</div>
-									</Comment.Metadata>
-									<Comment.Text>{comment.text}</Comment.Text>
-									<Comment.Actions>
-										<Comment.Action onClick={() => this.handleVisible(comment.id)}>
-											Reply
-										</Comment.Action>
-										{comment.answeredUser.length > 0 && (
-											<Comment.Action
-												onClick={() => {
-													this.uploadAnsveredComments({
-														postId: comment.postId,
-														commentId: comment.id
-													});
-												}}
-											>
-												{`${idsOfCommentsIsShown.has(comment.id)
-													? 'Hide'
-													: 'Show'} replied messages`}
-											</Comment.Action>
-										)}
-									</Comment.Actions>
-								</Comment.Content>
-								{idsOfCommentsIsShown.has(comment.id) && this.renderSubcomments(comment.id)}
-							</Comment>
-							{isVisibleInput &&
-							currentCommentId === comment.id && (
-								<CreateComment
-									id={comment.postId}
-									withoutParent={false}
-									parent={comment.id}
-									type={'Reply'}
-									mention={{
-										id: comment.authorId,
-										name: comment.author.name
-									}}
-								/>
-							)}
-						</React.Fragment>
-					))}
-					<Button className="receive" onClick={() => this.changePage()} primary>
-						Receive Comments
-					</Button>
-				</Comment.Group>
-			</div>
-		);
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      isVisibleInput: false,
+      idsOfCommentsIsShown: new Set([]),
+      currentCommentId: '',
+      editCommentId: '',
+      params: {
+        page: 0,
+        perPage: 15
+      }
+    };
+  }
+  
+  componentDidMount = () => {
+    const { subscribeComments } = this.props;
+    this.receiveComments();
+    subscribeComments();
+  };
+  
+  // window display function for responding to a comment
+  handleVisible = (id) => {
+    this.setState((state) => ( {
+      isVisibleInput: !state.isVisibleInput,
+      currentCommentId: id
+    } ));
+  };
+  
+  // upload answered comments to a specific comment
+  uploadAnsweredComments = ({ postId, commentId }) => {
+    const { answeredUser } = this.props.getComment(commentId);
+    const subComments = this.props.getSubComments(commentId);
+    const isNeedFetchSubComments = answeredUser?.length !== subComments?.length;
+    if (isNeedFetchSubComments) this.props.fetchComments({ id: postId, commentId });
+    
+    let { idsOfCommentsIsShown } = this.state;
+    idsOfCommentsIsShown = togglePropertyInSet(idsOfCommentsIsShown, commentId);
+    this.setState({
+      idsOfCommentsIsShown,
+      currentCommentId: commentId
+    });
+  };
+  
+  // display answered comments
+  renderSubComments = (currentCommentId) => {
+    const { loading } = this.props;
+    const { currentCommentId: onClickComment, editCommentId } = this.state;
+    const subComments = this.props.getSubComments(currentCommentId);
+    
+    return (
+      <>
+        <Comment.Group>
+          {subComments.map((commentId) => {
+            return (
+              <CommentElement
+                key={createID()}
+                isEdit={editCommentId === commentId}
+                commentId={commentId}
+                onEditComment={this.editComment}
+              />
+            );
+          })}
+        </Comment.Group>
+        {loading && onClickComment === currentCommentId && <Loader />}
+      </>
+    );
+  };
+  
+  // pagination
+  changePage = () => {
+    this.setState((state) => ( {
+      params: {
+        ...state.params,
+        page: state.params.page + 1
+      }
+    } ), this.receiveComments);
+  };
+  
+  // edit comment
+  editComment = (id) => {
+    this.setState(({ editCommentId }) => ( { editCommentId: editCommentId ? '' : id } ));
+  };
+  
+  receiveComments = () => {
+    const { fetchComments, postId } = this.props;
+    fetchComments({ ...this.state.params, id: postId });
+  };
+  
+  
+  componentWillUnmount = () => {
+    const { unsubscribeComments } = this.props;
+    unsubscribeComments();
+  };
+  
+  render() {
+    const { comments, postId } = this.props;
+    const {
+      isVisibleInput,
+      currentCommentId,
+      idsOfCommentsIsShown,
+      editCommentId
+    } = this.state;
+    return (
+      <div className='commentsField'>
+        <Comment.Group threaded>
+          {comments
+            .map((commentId) => (
+              <React.Fragment key={createID()}>
+                <CommentElement
+                  isEdit={editCommentId === commentId}
+                  commentId={commentId}
+                  onEditComment={this.editComment}
+                  isHasSubComments={idsOfCommentsIsShown.has(commentId)}
+                  subComments={this.renderSubComments(commentId)}
+                  handleVisible={this.handleVisible}
+                  onShowSubComments={this.uploadAnsweredComments}
+                />
+                {isVisibleInput && currentCommentId === commentId && (
+                  <CreateComment
+                    id={postId}
+                    withoutParent={false}
+                    parent={commentId}
+                    replyCallback={() => {
+                      idsOfCommentsIsShown.add(currentCommentId);
+                    }}
+                    type='Reply'
+                  />
+                )}
+              </React.Fragment>
+            ))}
+        </Comment.Group>
+        
+        {/* button to upload comments */}
+        <Button className='receive' onClick={() => this.changePage()} primary>
+          Receive Comments
+        </Button>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
-	return {
-		loading: state.comments.loading,
-		users: state.users.users
-	};
+  const getSubComments = (id) => getSubCommentsByCommentIdFromState(state.comments, id);
+  const getComment = (id) => getCommentById(state.comments, id);
+  
+  return {
+    getSubComments,
+    getComment,
+    errors: state.comments.errors,
+    comments: state.comments.displayComments,
+    loading: state.comments.loading
+  };
 };
 
-export default connect(mapStateToProps, { fetchComments })(DisplayComments);
+export default connect(mapStateToProps, {
+  fetchComments,
+  subscribeComments,
+  unsubscribeComments
+})(DisplayComments);

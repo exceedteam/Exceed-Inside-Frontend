@@ -1,0 +1,23 @@
+.admin {
+  min-height: 100vh;
+  background-color: #1B1C1D;
+
+  .admin-container {
+    width: calc(100vw - 350px);
+    min-height: 100vh;
+    display: flex;
+    padding: 3rem 0;
+
+    .admin-content {
+      background-color: #FFFFFF;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+      width: 95%;
+    }
+  }
+}
+
+

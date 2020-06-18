@@ -48,6 +48,7 @@
 		align-items: center;
 		justify-content: flex-end;
 		flex-direction: column;
+		cursor: pointer;
 	}
 
 	.seeTitle {
@@ -70,4 +71,8 @@
 			cursor: auto;
 		}
 	}
+}
+
+.postPreview:first-child {
+	margin-top: 0px;
 }

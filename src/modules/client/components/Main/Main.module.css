@@ -1,5 +1,5 @@
 .pageWrapper {
-  width: 680px;
+  /*width: 680px;*/
 }
 .btn {
   composes: btn from "../../../styles/common/index.css";

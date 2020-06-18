@@ -1,10 +1,8 @@
-import React from "react";
-import styles from "./Loader.module.css";
+import React from 'react';
+import './loader.scss';
 
 export default class Loader extends React.Component {
   render() {
-    return (
-      <div className={styles.ldsDualRing}></div>
-    );
+    return <div className="ldsDualRing" />;
   }
 }

@@ -66,12 +66,17 @@ class Profile extends React.Component {
 	// updating state if decoded.id === params.id
 	updateForm = (event) => {
 		const newState = this.state.profileData;
-		newState[event.target.id] = event.target.value;
+		if (event.target) {
+			newState[event.target.id] = event.target.value;
+		} else {
+			newState['age'] = event
+		}
+		
 		this.setState({
 			profileData: { ...newState }
 		});
 	};
-
+ 
 	// render of the profile edit button if the user is the owner of the account
 	editProfile() {
 		const { id, isEdit } = this.state;
@@ -102,16 +107,16 @@ class Profile extends React.Component {
 		const { id, isEdit, profileData } = this.state;
 		const { loading, profile } = this.props;
 		return (
-			<div className="userProgileContainer">
+			<div className="userProfileContainer">
 				{profile.email && (
-					<div className="form">
+					<React.Fragment>
 						{this.editProfile()}
 						{isEdit ? (
-							<EditProfile profileData={profileData} isEdit={isEdit}  updateForm={this.updateForm}/>
+							<EditProfile profileData={profileData} isEdit={isEdit}  updateForm={this.updateForm} />
 						) : (
 							<ViewProfile profileData={profile} isEdit={isEdit} id={id} history={this.props.history} />
 						)}
-					</div>
+					</React.Fragment>
 				)}
 				{loading && <Loader />}
 			</div>

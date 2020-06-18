@@ -40,7 +40,7 @@ class EditProfile extends React.Component {
 						id="lastName"
 						value={lastName || ''}
 						disabled={!isEdit}
-						onChange={this.updateForm}
+						onChange={this.props.updateForm}
 						placeholder="lastName"
 					/>
 				</div>
@@ -49,35 +49,36 @@ class EditProfile extends React.Component {
 						id="team"
 						value={team || ''}
 						disabled={!isEdit}
-						onChange={this.updateForm}
+						onChange={this.props.updateForm}
 						placeholder="Team"
 					/>
 					<Input
 						id="position"
 						value={position || ''}
 						disabled={!isEdit}
-						onChange={this.updateForm}
+						onChange={this.props.updateForm}
 						placeholder="Position"
 					/>
 				</div>
-				<div className="widthDescription">
+				<div className="withDescription">
 					<Icon color="blue" name="calendar alternate" />
 					<DatePicker
 						selected={new Date(age)}
-						onChange={this.updateForm}
+						onChange={this.props.updateForm}
 						showMonthDropdown
 						showYearDropdown
 						dropdownMode="select"
 						className="calendarPicker"
+						dateFormat='dd-MM-yyyy'
 					/>
 				</div>
-				<div className="widthDescription">
+				<div className="withDescription">
 					<Icon color="blue" name="mail" />
 					<Input
 						id="email"
 						value={email || ''}
 						disabled={!isEdit}
-						onChange={this.updateForm}
+						onChange={this.props.updateForm}
 						placeholder="e-mail"
 					/>
 				</div>
