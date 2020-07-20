@@ -7,6 +7,9 @@ import {
   REGISTER_PROCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CHANGE_PASSWORD_PROCESS,
+  CHANGE_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_FAIL,
 } from '../actionTypes';
 
 const url = process.env.REACT_APP_API_URL;
@@ -114,3 +117,48 @@ export function logout(data) {
     });
   };
 }
+
+export const editPasswordProcess = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CHANGE_PASSWORD_PROCESS,
+      payload: {},
+    });
+  };
+}
+
+export const editPasswordSuccess = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CHANGE_PASSWORD_SUCCESS,
+      payload: {},
+    });
+  };
+}
+
+export const editPasswordFail = (errors) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHANGE_PASSWORD_FAIL,
+      payload: {errors},
+    });
+  };
+}
+
+// server request to change profile password
+export const editPassword = (passwordInfo) => {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    dispatch(editPasswordProcess());
+    return axios
+      .put(`${url}/user/${passwordInfo.id}/password`, passwordInfo, {
+        headers: { authorization: token },
+      })
+      .then((response) => {
+         dispatch(editPasswordSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(editPasswordFail(error.response.data));
+      });
+  };
+};

@@ -1,0 +1,22 @@
+.user-profile_container {
+  .user-toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  .user-image_container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-bottom: 1rem ;
+    input[type=file] {
+      display: none;
+    }
+  }
+  div.disabled>label,
+  div.disabled {
+    opacity: 1 !important;
+  }
+}

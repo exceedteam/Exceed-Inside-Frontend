@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { getCurrentUserId } from '../../../../services/helpers';
 import './AdminProfile.scss';
 
-const AdminProfile = (props) => {
-    const [ profileData, setProfileData ] = useState({});
-    const { loading } = props;
-    
+const AdminProfile = ({ profile, fetchUserProfile, loading }) => {
+  
     useEffect(() => {
-      const { fetchUserProfile, profile } = props;
       if ( !profile.email)
-        fetchUserProfile(getCurrentUserId())
-          .then((response) => setProfileData(response));
-    }, [ props ]);
+        fetchUserProfile(getCurrentUserId());
+    }, [fetchUserProfile, profile]);
     
     
     if (loading) {
@@ -29,12 +25,12 @@ const AdminProfile = (props) => {
         <div className='image'>
           <Image
             size='tiny'
-            src={profileData.avatar}
+            src={profile.avatar}
           />
         </div>
         <div className='content'>
-          <h3>{`${profileData.firstName} ${profileData.lastName}`}</h3>
-          <p>{`${profileData.position}`}</p>
+          <h3>{`${profile.fullName}`}</h3>
+          <p>{`${profile.position}`}</p>
           {/* <span className="extra">Additional Details</span> */}
         </div>
       </div>
@@ -48,6 +44,7 @@ AdminProfile.propTypes = {
   profile: PropTypes.shape({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
+    fullName: PropTypes.string,
     email: PropTypes.string,
     position: PropTypes.string,
     team: PropTypes.string,

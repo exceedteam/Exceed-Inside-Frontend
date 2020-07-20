@@ -8,6 +8,7 @@ import EditProfile from './editProfile';
 import ViewProfile from './viewProfile';
 import './profile.scss';
 import { Button, Icon } from 'semantic-ui-react';
+import { getUserById } from '../../../redux/reducers/users';
 
 class Profile extends React.Component {
 	constructor(props) {
@@ -22,7 +23,7 @@ class Profile extends React.Component {
 	}
 
 	getData = (input) => {
-		let file = document.querySelector('input[type=file]').files[0];
+		const file = document.querySelector('input[type=file]').files[0];
 		const reader = new FileReader();
 
 		reader.onloadend = () => {
@@ -69,7 +70,7 @@ class Profile extends React.Component {
 		if (event.target) {
 			newState[event.target.id] = event.target.value;
 		} else {
-			newState['age'] = event
+			newState.age = event
 		}
 		
 		this.setState({
@@ -83,21 +84,21 @@ class Profile extends React.Component {
 		
 		if (this.decoded === id) {
 			return (
-				<div className="navigation">
-					<Button
-						className="button"
-						onClick={() => {
+  <div className='navigation'>
+    <Button
+      className='button'
+      onClick={() => {
 							this.setState({ isEdit: !isEdit });
 						}}
-					>
-						{isEdit ? <Icon color="blue" name="reply" /> : <Icon color="blue" name="edit" />}
-					</Button>
-					{isEdit && (
-						<Button className="button" onClick={this.submitEditProfile} disabled={!this.state.isEdit}>
-							<Icon color="blue" name="save" />
-						</Button>
+    >
+      {isEdit ? <Icon color='blue' name='reply' /> : <Icon color='blue' name='edit' />}
+    </Button>
+    {isEdit && (
+    <Button className='button' onClick={this.submitEditProfile} disabled={!this.state.isEdit}>
+      <Icon color='blue' name='save' />
+    </Button>
 					)}
-				</div>
+  </div>
 			);
 		}
 	}
@@ -107,19 +108,19 @@ class Profile extends React.Component {
 		const { id, isEdit, profileData } = this.state;
 		const { loading, profile } = this.props;
 		return (
-			<div className="userProfileContainer">
-				{profile.email && (
-					<React.Fragment>
-						{this.editProfile()}
-						{isEdit ? (
-							<EditProfile profileData={profileData} isEdit={isEdit}  updateForm={this.updateForm} />
+  <div className='userProfileContainer'>
+    {profile.email && (
+    <>
+      {this.editProfile()}
+      {isEdit ? (
+        <EditProfile profileData={profileData} isEdit={isEdit} updateForm={this.updateForm} />
 						) : (
-							<ViewProfile profileData={profile} isEdit={isEdit} id={id} history={this.props.history} />
+  <ViewProfile profileData={profile} isEdit={isEdit} id={id} history={this.props.history} />
 						)}
-					</React.Fragment>
+    </>
 				)}
-				{loading && <Loader />}
-			</div>
+    {loading && <Loader />}
+  </div>
 		);
 	}
 }
@@ -128,7 +129,7 @@ const mapStateToProps = (state) => {
 	return {
 		errors: state.users.errors,
 		loading: state.users.loading,
-		profile: state.users.currentUser
+		profile: getUserById(state.users, state.users.currentUser)
 	};
 };
 

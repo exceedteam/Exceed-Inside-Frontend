@@ -11,26 +11,46 @@ import {
   FETCH_ALL_USERS_PROCESS,
   FETCH_ALL_USERS_SUCCESS,
   FETCH_ALL_USERS_FAIL,
-  CLEAR_MESSAGE, REGISTER_SUCCESS
+  CLEAR_MESSAGE, REGISTER_SUCCESS,
+  ONCHANGE_SEARCH,
+  SELECT_PROFILE
 } from '../actionTypes';
 
-import { isInvalidToken, union } from '../../../services/helpers';
+import {
+  filterArrayOfObjectByKeys,
+  isInvalidToken,
+  union
+} from '../../../services/helpers';
 import { usersListSchema } from '../../../services/shemes/user.shema';
 
 const initialState = {
   error: null,
-  currentUser: {},
+  currentUser: '',
   displayUsers: [],
   pagination: {},
   loading: false,
   users: [],
   normalizedUsers: Immutable({}),
-  savingProfile: null,
-  message: null,
+  profile: '',
+  message: null
+};
+
+export const getAllIdsOfUsers = (state = initialState) => {
+  return Object.keys(state.normalizedUsers);
 };
 
 export const getUserById = (state = initialState, userId) => {
   return state.normalizedUsers[userId] || {};
+};
+
+export const getUserMainInfoById = (state = initialState, userId) => {
+  
+  const user = state.normalizedUsers[userId];
+  return {
+    id: userId,
+    email: user.email,
+    fullName: user.fullName
+  };
 };
 
 export default function(state = initialState, action) {
@@ -39,13 +59,12 @@ export default function(state = initialState, action) {
       const { profile } = action.payload;
       const immutableProfile = getUserById(state, profile.id);
       const updatedProfile = Immutable.merge(immutableProfile, profile);
-      const normalizedData = normalize([updatedProfile], usersListSchema);
+      const normalizedData = normalize([ updatedProfile ], usersListSchema);
       
       return {
         ...state,
         normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
-        savingProfile: immutableProfile,
-      }
+      };
     }
     case FETCH_ALL_USERS_PROCESS:
     case FETCH_USER_PROFILE_PROCESS: {
@@ -59,9 +78,7 @@ export default function(state = initialState, action) {
       const normalizedData = normalize([ profile ], usersListSchema);
       return {
         ...state,
-        currentUser: profile,
         normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
-        savingProfile: null,
         message: 'Successfully Updated'
       };
     }
@@ -70,19 +87,21 @@ export default function(state = initialState, action) {
       const normalizedData = normalize([ profile ], usersListSchema);
       return {
         ...state,
-        currentUser: profile,
+        currentUser: profile.id,
         normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
-        loading: false,
+        loading: false
       };
     }
     case FETCH_ALL_USERS_SUCCESS: {
       const { users, pagination } = action.payload;
       const normalizedData = normalize(users, usersListSchema);
+      const displayUsers =  union(state.displayUsers, normalizedData.result);
       return {
         ...state,
         normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
-        displayUsers: union(state.displayUsers, normalizedData.result),
-        users: [ ...state.users, ...users ],
+        displayUsers,
+        profile: displayUsers[0],
+        users: [ ...state.users, ...users ], // TODO check and remove
         pagination,
         loading: false
       };
@@ -119,7 +138,33 @@ export default function(state = initialState, action) {
         displayUsers: union(normalizedData.result, state.displayUsers)
       };
     }
-  
+    case ONCHANGE_SEARCH: {
+      const value = action.payload.trim();
+      const ids = getAllIdsOfUsers(state);
+      const users = ids.map(id => getUserMainInfoById(state, id));
+      if (value) {
+        
+        const filteredUsers = filterArrayOfObjectByKeys(value, users, [ 'email', 'fullName' ]);
+        
+        return {
+          ...state,
+          displayUsers: filteredUsers.map(u => u.id)
+        };
+      }
+      
+      return {
+        ...state,
+        displayUsers: ids
+      };
+      
+    }
+    case SELECT_PROFILE: {
+      const id = action.payload;
+      return {
+        ...state,
+        profile: id
+      };
+    }
     default:
       return state;
   }

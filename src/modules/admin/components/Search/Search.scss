@@ -1,0 +1,19 @@
+@import "../../../styles/variables";
+
+.search_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: $user-list-width;
+
+  h2 {
+    margin: 0;
+  }
+
+  .input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+}

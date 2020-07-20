@@ -8,7 +8,7 @@ import AdminProfile from '../AdminProfile';
 const CustomSidebar = ({ children }) => {
   const segmentRef = React.useRef();
   return (
-    <Sidebar.Pushable as="div">
+    <Sidebar.Pushable as='div'>
       <Sidebar
         as={Menu}
         animation='push'
