@@ -5,10 +5,11 @@ import React from "react";
 import { withRouter } from 'react-router'
 import jwtDecode from "jwt-decode";
 import { connect } from "react-redux";
+import { Button, Dropdown } from "semantic-ui-react";
 import { clearUserProfile } from "../../../redux/actions/users/edit";
 import { fetchUserProfile } from "../../../redux/actions/users/fetch";
-import { Button, Dropdown } from "semantic-ui-react";
 import "./header.scss";
+import { getUserById } from '../../../redux/reducers/users';
 
 class Header extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class Header extends React.Component {
     if (this.props.isLogged) {
       const { fetchUserProfile } = this.props;
       const id = this.getId();
-      fetchUserProfile(id).then((user) => this.setState({ user: user }));
+      fetchUserProfile(id).then((user) => this.setState({ user }));
     }
   }
 
@@ -38,7 +39,7 @@ class Header extends React.Component {
   // getting user id from token
   getId = () => {
     const token = localStorage.getItem("token");
-    let decodedToken = jwtDecode(token);
+    const decodedToken = jwtDecode(token);
     return decodedToken.id;
   };
 
@@ -55,7 +56,7 @@ class Header extends React.Component {
           user={user}
         />
       );
-    } else {
+    }
       return (
         <NotLogged
           login={this.login}
@@ -63,33 +64,33 @@ class Header extends React.Component {
           history={history}
         />
       );
-    }
+    
   }
 }
 
 // If the User logged in
 const Logged = ({ logout, history, id, user }) => {
   return (
-    <div className="mainHeader">
-      <div className="headerWrapper">
-        <div className="logoField">
-          <div className="logoText">Exceed-Team</div>
+    <div className='mainHeader'>
+      <div className='headerWrapper'>
+        <div className='logoField'>
+          <div className='logoText'>Exceed-Team</div>
         </div>
         <Dropdown
           text={user.firstName || 'user'}
           floating
           labeled
           button
-          icon="user"
-          className="icon"
+          icon='user'
+          className='icon'
         >
           <Dropdown.Menu>
             <Dropdown.Item
-              text="Profile"
-              icon="address card"
+              text='Profile'
+              icon='address card'
               onClick={() => history.push(`/user/${id}`)}
             />
-            <Dropdown.Item text="Logout" icon="log out" onClick={logout} />
+            <Dropdown.Item text='Logout' icon='log out' onClick={logout} />
           </Dropdown.Menu>
         </Dropdown>
       </div>
@@ -100,8 +101,8 @@ const Logged = ({ logout, history, id, user }) => {
 // If the User not logged
 const NotLogged = ({ history }) => {
   return (
-    <div className="mainHeader">
-      <div className="navNotLogged">
+    <div className='mainHeader'>
+      <div className='navNotLogged'>
         <Button onClick={() => history.push("/login")}>Sign in</Button>
         <Button onClick={() => history.push("/registration")}>Sign up</Button>
       </div>
@@ -111,7 +112,7 @@ const NotLogged = ({ history }) => {
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.users.currentUser,
+    profile: getUserById(state.users, state.users.currentUser),
   };
 };
 

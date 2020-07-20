@@ -1,0 +1,18 @@
+.list {
+  width: 100%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+}

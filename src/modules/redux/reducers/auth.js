@@ -6,18 +6,23 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT,
+  CHANGE_PASSWORD_PROCESS,
+  CHANGE_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_CANCEL,
+  CHANGE_PASSWORD_FAIL
 } from '../actionTypes';
 
 const initialState = {
   token: '',
-  user: {},
   errorLogin: null,
   errorsRegistration: {},
   loading: false,
+  changePasswordErrors: {},
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case CHANGE_PASSWORD_PROCESS:
     case REGISTER_PROCESS:
     case LOGIN_PROCESS: {
       return {
@@ -43,10 +48,13 @@ export default function (state = initialState, action) {
         loading: false,
       };
     }
+    case CHANGE_PASSWORD_CANCEL:
+    case CHANGE_PASSWORD_SUCCESS:
     case REGISTER_SUCCESS: {
       return {
         ...state,
         errorsRegistration: {},
+        changePasswordErrors: {},
         loading: false,
       };
     }
@@ -55,6 +63,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errorsRegistration: errors,
+        loading: false,
+      };
+    }
+    case CHANGE_PASSWORD_FAIL: {
+      const { errors } = action.payload;
+      return {
+        ...state,
+        changePasswordErrors: errors,
         loading: false,
       };
     }

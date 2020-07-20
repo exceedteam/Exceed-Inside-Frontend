@@ -6,8 +6,7 @@ export default class ViewProfile extends React.Component {
   render() {
     const {
       avatar,
-      firstName,
-      lastName,
+      fullName,
       email,
       age,
       position,
@@ -17,37 +16,34 @@ export default class ViewProfile extends React.Component {
     const { id } = this.props;
     return (
       <>
-        <Image size="small" rounded src={avatar} className="avatar" />
+        <Image size='small' rounded src={avatar} className='avatar' />
         <Header dividing>
-          {firstName} 
-          {' '}
-          {lastName}
-          {' '}
+          {fullName}
         </Header>
         {team && position && (
-          <div className="team">
+          <div className='team'>
             {team}
             :
             {position}
           </div>
         )}
-        <div className="about">{aboutInfo}</div>
-        <div className="contactInformation">
-          <div className="birthday">
-            <Icon color="blue" name="calendar alternate" />
+        <div className='about'>{aboutInfo}</div>
+        <div className='contactInformation'>
+          <div className='birthday'>
+            <Icon color='blue' name='calendar alternate' />
             <span>{moment(age).format('MMMM D, YYYY')}</span>
           </div>
-          <div className="mail">
-            <Icon color="blue" name="mail" />
+          <div className='mail'>
+            <Icon color='blue' name='mail' />
             <span>{email}</span>
           </div>
           <div
-            className="posts"
+            className='posts'
             onClick={() => {
               this.props.history.push(`/user/${id}/posts`);
             }}
           >
-            <Icon color="blue" name="paste" />
+            <Icon color='blue' name='paste' />
             <span>Posts of User</span>
           </div>
         </div>

@@ -6,6 +6,7 @@ import {
   FETCH_ALL_USERS_PROCESS,
   FETCH_ALL_USERS_SUCCESS,
   FETCH_ALL_USERS_FAIL,
+  ONCHANGE_SEARCH, SELECT_PROFILE
 } from '../../actionTypes';
 
 const url = process.env.REACT_APP_API_URL;
@@ -87,3 +88,17 @@ export const fetchAllUsersFail = (error) => {
     payload: { error },
   };
 };
+
+export const onChangeSearch = (value) => {
+  return {
+    type: ONCHANGE_SEARCH,
+    payload: value
+  }
+}
+
+export const onSelectProfile = (value) => {
+  return {
+    type: SELECT_PROFILE,
+    payload: value
+  }
+}

@@ -101,14 +101,28 @@ export const isInvalidToken = (err) => {
 };
 
 // combine two arrays without duplicates
-export const union =(arrA, arrB) => {
-  const setA  = new Set(arrA)
-  const setB  = new Set(arrB)
+export const union = (arrA, arrB) => {
+  const setA = new Set(arrA);
+  const setB = new Set(arrB);
   // eslint-disable-next-line no-underscore-dangle
-  const _union = new Set(setA)
+  const _union = new Set(setA);
   // eslint-disable-next-line no-restricted-syntax
   for (const elem of setB) {
-    _union.add(elem)
+    _union.add(elem);
   }
-  return Array.from(_union).filter(Boolean)
-}
+  return Array.from(_union).filter(Boolean);
+};
+
+export const filterArrayOfObjectByKeys = (value, array, keys) => array.filter(el => {
+    try {
+      let flag = false;
+      keys.forEach(key => {
+        if (el[key].toLowerCase().includes(value.toLowerCase())) flag = true;
+      });
+      return flag;
+    } catch (e) {
+      console.log('Error in filterArrayOfObjectByKeys function', e);
+      return false
+    }
+  }
+);
