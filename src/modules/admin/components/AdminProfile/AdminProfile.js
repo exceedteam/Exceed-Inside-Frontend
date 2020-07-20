@@ -7,9 +7,8 @@ import './AdminProfile.scss';
 const AdminProfile = ({ profile, fetchUserProfile, loading }) => {
   
     useEffect(() => {
-      if ( !profile.email)
-        fetchUserProfile(getCurrentUserId());
-    }, [fetchUserProfile, profile]);
+      if ( !profile.email) fetchUserProfile(getCurrentUserId());
+    }, []);
     
     
     if (loading) {

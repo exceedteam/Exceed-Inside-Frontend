@@ -19,10 +19,7 @@ const ChangePasswordFields = ({ disabled, userId }) => {
     setPasswordInfo((pwInfo) => ( { ...pwInfo, id: userId } ));
   }, [ userId ]);
   
-  const saveNewPassword = () => {
-    dispatch(editPassword(passwordInfo));
-  };
-  
+
   const [ showPassword, setShowPassword ] = useState(false);
   const handleClickShowPassword = () => setShowPassword( !showPassword);
   
@@ -43,8 +40,26 @@ const ChangePasswordFields = ({ disabled, userId }) => {
   
   const handleCancel = () => {
     dispatch({ type: CHANGE_PASSWORD_CANCEL});
+    setPasswordInfo({
+      oldPassword: '',
+      password: '',
+      password2: ''
+    })
     setIsChange(false)
   }
+  
+  const saveNewPassword = () => {
+    dispatch(editPassword(passwordInfo)).then(response => {
+      if (response === 'success') {
+        setPasswordInfo({
+          oldPassword: '',
+          password: '',
+          password2: ''
+        })
+        setIsChange(false)
+      }
+    })
+  };
   
   return (
     <Form.Group widths='equal' grouped>

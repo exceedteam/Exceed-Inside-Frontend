@@ -155,10 +155,12 @@ export const editPassword = (passwordInfo) => {
         headers: { authorization: token },
       })
       .then((response) => {
-         dispatch(editPasswordSuccess(response.data));
+        dispatch(editPasswordSuccess(response.data));
+          return response.data;
       })
       .catch((error) => {
         dispatch(editPasswordFail(error.response.data));
+        return error.response.data;
       });
   };
 };
