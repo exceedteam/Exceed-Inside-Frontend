@@ -1,10 +1,14 @@
 .user-profile_container {
+
   .user-toolbar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
+    padding: 1rem 3rem;
     margin-bottom: 1rem;
+    border-radius: 5px;
+    width: 100%;
   }
   .user-image_container {
     display: flex;
@@ -14,6 +18,9 @@
     input[type=file] {
       display: none;
     }
+  }
+  .user-profile-form {
+    padding: 0 3rem;
   }
   div.disabled>label,
   div.disabled {

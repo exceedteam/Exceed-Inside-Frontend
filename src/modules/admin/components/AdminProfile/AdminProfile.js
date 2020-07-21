@@ -8,7 +8,7 @@ const AdminProfile = ({ profile, fetchUserProfile, loading }) => {
   
     useEffect(() => {
       if ( !profile.email) fetchUserProfile(getCurrentUserId());
-    }, []);
+    }, [fetchUserProfile, profile.email]);
     
     
     if (loading) {
@@ -24,6 +24,7 @@ const AdminProfile = ({ profile, fetchUserProfile, loading }) => {
         <div className='image'>
           <Image
             size='tiny'
+            circular
             src={profile.avatar}
           />
         </div>

@@ -13,7 +13,7 @@ import {
   FETCH_ALL_USERS_FAIL,
   CLEAR_MESSAGE, REGISTER_SUCCESS,
   ONCHANGE_SEARCH,
-  SELECT_PROFILE
+  SELECT_PROFILE, EDIT_USER_PROFILE_CANCEL
 } from '../actionTypes';
 
 import {
@@ -24,7 +24,7 @@ import {
 import { usersListSchema } from '../../../services/shemes/user.shema';
 
 const initialState = {
-  error: null,
+  error: {},
   currentUser: '',
   displayUsers: [],
   pagination: {},
@@ -117,10 +117,17 @@ export default function(state = initialState, action) {
         loading: false
       };
     }
+    case EDIT_USER_PROFILE_CANCEL:{
+      return {
+        ...state,
+        error: {},
+      };
+    }
     case CLEAR_USER_PROFILE: {
       return {
         ...state,
-        currentUser: {}
+        currentUser: '',
+        error: {},
       };
     }
     case CLEAR_MESSAGE.users: {

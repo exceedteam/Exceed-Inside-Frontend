@@ -4,7 +4,7 @@ import {
   EDIT_USER_PROFILE_FAIL,
   EDIT_USER_PROFILE_PROCESS,
   EDIT_USER_PROFILE_SUCCESS,
-  CLEAR_USER_PROFILE,
+  CLEAR_USER_PROFILE
 } from '../../actionTypes';
 
 const url = process.env.REACT_APP_API_URL;
@@ -16,13 +16,15 @@ export const editUserProfile = (profile) => {
     const token = localStorage.getItem('token');
     return axios
       .put(`${url}/user/${profile.id}`, profile, {
-        headers: { authorization: token },
+        headers: { authorization: token }
       })
       .then((response) => {
         dispatch(editUserProfileSuccess(response.data));
+        return ( { success: true } );
       })
       .catch((error) => {
-        dispatch(editUserProfileFail(error));
+        dispatch(editUserProfileFail(error.response.data));
+        return ( { success: false } );
       });
   };
 };
@@ -30,27 +32,27 @@ export const editUserProfile = (profile) => {
 export const editUserProfileSuccess = (profile) => {
   return {
     type: EDIT_USER_PROFILE_SUCCESS,
-    payload: { profile },
+    payload: { profile }
   };
 };
 
 export const editUserProfileProcess = (profile) => {
   return {
     type: EDIT_USER_PROFILE_PROCESS,
-    payload: {profile},
+    payload: { profile }
   };
 };
 
 export const editUserProfileFail = (error) => {
   return {
     type: EDIT_USER_PROFILE_FAIL,
-    payload: { error },
+    payload: { error }
   };
 };
 
 // when logout the account, delete user data from the store
 export const clearUserProfile = () => {
   return {
-    type: CLEAR_USER_PROFILE,
+    type: CLEAR_USER_PROFILE
   };
 };

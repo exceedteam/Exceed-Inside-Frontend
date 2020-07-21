@@ -9,7 +9,8 @@ import {
   CHANGE_PASSWORD_PROCESS,
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_CANCEL,
-  CHANGE_PASSWORD_FAIL
+  CHANGE_PASSWORD_FAIL,
+  REGISTER_CANCEL
 } from '../actionTypes';
 
 const initialState = {
@@ -48,6 +49,7 @@ export default function (state = initialState, action) {
         loading: false,
       };
     }
+    case REGISTER_CANCEL:
     case CHANGE_PASSWORD_CANCEL:
     case CHANGE_PASSWORD_SUCCESS:
     case REGISTER_SUCCESS: {
