@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { fetchUserProfile } from '../../../redux/actions/users/fetch';
 import { editUserProfile, clearUserProfile } from '../../../redux/actions/users/edit';
-import Loader from '../Loader';
+import Loader from '../../../common/Loader';
 import EditProfile from './editProfile';
 import ViewProfile from './viewProfile';
 import './profile.scss';

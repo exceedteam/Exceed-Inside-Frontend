@@ -1,0 +1,25 @@
+@import "../../../styles/variables";
+
+.tab-switcher_container {
+  width: 100%;
+  .add_container {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .add-tools {
+      width: 100%;
+      height: 4rem;
+      border-radius: $card-border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      box-shadow: $card-shadow;
+      h2 {
+        margin: 0;
+      }
+    }
+  }
+}

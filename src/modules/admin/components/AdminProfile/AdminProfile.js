@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { getCurrentUserId } from '../../../../services/helpers';
 import './AdminProfile.scss';
 
-const AdminProfile = ({ profile, fetchUserProfile, loading }) => {
+const AdminProfile = ({ profile, fetchUserProfile }) => {
   
     useEffect(() => {
       if ( !profile.email) fetchUserProfile(getCurrentUserId());
     }, [fetchUserProfile, profile.email]);
     
     
-    if (loading) {
+    if (!profile.email) {
       return (
         <div className='AdminProfile'>
           <h1>Loading...</h1>

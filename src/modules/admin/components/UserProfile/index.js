@@ -7,6 +7,7 @@ import { getUserById } from '../../../redux/reducers/users';
 import { editUserProfile } from '../../../redux/actions/users/edit';
 import './UserProfile.scss';
 import { EDIT_USER_PROFILE_CANCEL, REGISTER_CANCEL } from '../../../redux/actionTypes';
+import Loader from '../../../common/Loader';
 
 const initialUser = {
   avatar: 'http://res.cloudinary.com/dx6ps2mwc/image/upload/v1594888577/avatars/5f10111504b47b52101eb6b3.png',
@@ -166,7 +167,7 @@ const AddUserDialogHoc = () => {
           isDisabled={isEdit}
           user={user}
         />
-      ) : <h1>Loading...</h1>}
+      ) : <Loader />}
     </div>
   );
 };

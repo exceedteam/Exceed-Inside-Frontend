@@ -53,6 +53,15 @@ export const getUserMainInfoById = (state = initialState, userId) => {
   };
 };
 
+export const getUserAccountsInfoById = (state = initialState, userId) => {
+  try {
+    const user = state.normalizedUsers[userId] || {};
+    return  user.accounts ||  [{title: 'slack', email: 'vladislav.exceed@gmail.com', password: 'ne pomnu'}];
+  } catch (e) {
+    return []
+  }
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case EDIT_USER_PROFILE_PROCESS: {

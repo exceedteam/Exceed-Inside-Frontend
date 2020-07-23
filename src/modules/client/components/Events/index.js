@@ -4,7 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import jwtDecode from "jwt-decode";
 import { connect } from "react-redux";
 import { fetchEvents } from "../../../redux/actions/events/fetch";
-import Loader from "../Loader";
+import Loader from "../../../common/Loader";
 import {
   subToAllEvents,
   unsubToAllEvents,
@@ -92,12 +92,12 @@ class Events extends React.Component {
     const { loading, events, internalLoading } = this.props;
     const { isEventsOfUser, eventsOfUser } = this.state;
     return (
-      <div className="eventContainer">
+      <div className='eventContainer'>
         {!loading && (
-          <React.Fragment>
-            <MyCalendar events={!!isEventsOfUser ? eventsOfUser : events} history={this.props.history} />
-            <div className="someButton">
-              <div className="subscribeContainer">
+          <>
+            <MyCalendar events={isEventsOfUser ? eventsOfUser : events} history={this.props.history} />
+            <div className='someButton'>
+              <div className='subscribeContainer'>
                 <Button onClick={this.subToAllEvents}>
                   {internalLoading ? "loading" : "Sub to all"}
                 </Button>
@@ -105,7 +105,7 @@ class Events extends React.Component {
                   {internalLoading ? "loading" : "Unsub to all"}
                 </Button>
               </div>
-              <div className="radioContainer">
+              <div className='radioContainer'>
                 <Button.Group>
                   <Button
                     primary={this.state.all}
@@ -127,7 +127,7 @@ class Events extends React.Component {
                 </Button.Group>
               </div>
             </div>
-          </React.Fragment>
+          </>
         )}
         {loading && <Loader />}
       </div>
@@ -135,7 +135,7 @@ class Events extends React.Component {
   }
 }
 
-//connection with redux
+// connection with redux
 const mapStateToProps = (state) => {
   return {
     errors: state.events.errors,

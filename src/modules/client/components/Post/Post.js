@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PostPreview from '../PostPreview';
 import CreateComment from '../CreateComment';
 import DisplayComments from '../DisplayComments';
-import Loader from '../Loader';
+import Loader from '../../../common/Loader';
 
 
 const Post = ({ postId, history, isPostPreview }) => {

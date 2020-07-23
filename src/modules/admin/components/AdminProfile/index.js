@@ -6,7 +6,6 @@ import { getUserById } from '../../../redux/reducers/users';
 const mapStateToProps = (state) => {
   return {
     errors: state.users.errors,
-    loading: state.users.loading,
     profile: getUserById(state.users, state.users.currentUser)
   };
 };

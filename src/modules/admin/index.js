@@ -7,7 +7,6 @@ import { createBrowserHistory } from 'history';
 import { getIsLogin, getIsAdmin } from '../../services/helpers';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
-import Users from './components/Users';
 import UserListPage from './containers/Users';
 import Header from './components/Header';
 import Comments from './components/Comments';
@@ -53,7 +52,6 @@ export default class Admin extends React.Component {
                     component={props => <Dashboard {...props} handleLogin={this.handleLogin} />}
                   />
                   <Route exact path='/admin/profile' component={Dashboard} />
-                  <Route exact path='/admin/users' component={Users} />
                   <Route exact path='/admin/list' component={UserListPage} />
                   <Route exact path='/admin/posts' component={Posts} />
                   <Route exact path='/admin/comments' component={Comments} />

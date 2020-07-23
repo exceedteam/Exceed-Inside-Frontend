@@ -7,6 +7,7 @@ import UserList from '../../components/UserList';
 import Search from '../../components/Search';
 import UserProfile from '../../components/UserProfile';
 import { onChangeSearch } from '../../../redux/actions/users/fetch';
+import TabSwitcher from '../../components/TabSwitcher/TabSwitcher';
 
 const Users = ({ users, updateData }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Users = ({ users, updateData }) => {
       <div className='user-profile'>
         <UserProfile />
       </div>
+      <TabSwitcher />
       <AlertMessage type='users' />
     </div>
   );

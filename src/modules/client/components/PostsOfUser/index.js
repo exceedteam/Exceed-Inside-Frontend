@@ -4,7 +4,7 @@ import { createID } from '../../../../services/helpers';
 import PostPreview from '../PostPreview';
 import { fetchPostsOfUser } from '../../../redux/actions/posts/fetch';
 import { clearPostsOfUser } from '../../../redux/actions/posts/edit';
-import Loader from '../Loader';
+import Loader from '../../../common/Loader';
 
 class PostsOfUser extends React.Component {
   constructor(props) {

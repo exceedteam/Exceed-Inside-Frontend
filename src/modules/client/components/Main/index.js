@@ -17,7 +17,7 @@ import {
   unsubscribeCommentCounter
 } from '../../../redux/actions/posts/fetch';
 import { likePost, dislikePost } from '../../../redux/actions/posts/edit';
-import Loader from '../Loader';
+import Loader from '../../../common/Loader';
 import './main.scss';
 import 'react-calendar/dist/Calendar.css';
 

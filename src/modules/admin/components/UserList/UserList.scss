@@ -1,31 +1,45 @@
 @import "../../../styles/variables";
 
 .list_container {
+  width: $user-list-width;
+  height: 85vh;
   overflow: scroll;
+  -ms-overflow-style: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
 
-  -ms-overflow-style: none;
-
-  height: 85vh;
-  .element {
+  ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0.3rem 0.5rem;
-    margin: 0.5rem 0;
-    background-color: rgba(118, 191, 217, 0.19);
-    width: $user-list-width;
-    transition: all 0.3s ease;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover,
-    &.active {
-      background-color: rgba(118, 191, 217, 0.36);
-    }
-    span {
-      margin: 0.2rem;
+    align-items: center;
+
+    li {
+      width: 95%;
+
+      .element {
+        padding: 0.3rem 0.5rem;
+        margin: 0.5rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        //background-color: rgba(118, 191, 217, 0.19);
+        transition: all 0.3s ease;
+        border-radius: $card-border-radius;
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          box-shadow: $card-shadow;
+          //background-color: rgba(206, 232, 241, 0.1);
+        }
+
+        span {
+          margin: 0.2rem;
+        }
+      }
     }
   }
 }

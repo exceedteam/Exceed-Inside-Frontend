@@ -7,7 +7,7 @@ import {
   togglePropertyInSet
 } from '../../../../services/helpers';
 import CreateComment from '../CreateComment';
-import Loader from '../Loader';
+import Loader from '../../../common/Loader';
 import CommentElement from './CommentElement';
 import {
   fetchComments,

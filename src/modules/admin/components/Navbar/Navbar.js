@@ -13,13 +13,9 @@ const Navbar = () => (
     {/*  Dashboard */}
     {/*  <Icon name='home' /> */}
     {/* </Menu.Item> */}
-    <Menu.Item as={Link} to='/admin/users'>
+    <Menu.Item as={Link} to='/admin/list'>
       <Icon name='users' />
       Users
-    </Menu.Item>
-    <Menu.Item as={Link} to='/admin/list'>
-      <Icon name='sticky note' />
-      Users (List)
     </Menu.Item>
     {/* <Menu.Item as={Link} to='/admin/posts'> */}
     {/*  <Icon name='sticky note' /> */}
