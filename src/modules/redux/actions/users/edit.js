@@ -58,7 +58,7 @@ export const addUserAccount = (id, account) => {
     dispatch(addUserAccountProcess(account));
     const token = localStorage.getItem('token');
     return axios
-      .post(`${url}/user/${id}/account`, account, {
+      .put(`${url}/user/${id}/account`, account, {
         headers: { authorization: token }
       })
       .then((response) => {
