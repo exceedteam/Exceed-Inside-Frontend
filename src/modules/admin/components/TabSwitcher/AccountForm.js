@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserAccount } from '../../../redux/actions/users/edit';
+import { updateUserAccount } from '../../../redux/actions/users/edit';
 import { createID } from '../../../../services/helpers';
 
 const AccountForm = ({ id, title, email, password, onCancel }) => {
@@ -16,7 +16,6 @@ const AccountForm = ({ id, title, email, password, onCancel }) => {
     password: ''
   });
   
-  
   useEffect(() => {
       if (id) setAccount({
         id,
@@ -24,19 +23,17 @@ const AccountForm = ({ id, title, email, password, onCancel }) => {
         email,
         password
       });
-    }, [ id, title, email, password ]
-  );
-  
-  useEffect(() => {
-    setAccount(acc => ( {
+    if(!id) setAccount(acc => ( {
       id: createID(),
       ...acc
     } ));
-  }, []);
+    }, [ id, title, email, password ]
+  );
   
   const handleChange = name => ({ target: { value } }) => {
     setAccount({ ...account, [name]: value });
   };
+  
   const [ showPassword, setShowPassword ] = useState(false);
   const handleClickShowPassword = () => setShowPassword( !showPassword);
   
@@ -52,13 +49,12 @@ const AccountForm = ({ id, title, email, password, onCancel }) => {
   }, [ account.title ]);
   
   const saveNewPassword = () => {
-    dispatch(addUserAccount(profile, account)).then(result => {
-      if (result.success) handleCancel();
+    dispatch(updateUserAccount(profile, account)).then(result => {
+      if (result.success) onCancel();
     });
   };
   
   return (
-    
     <Form className='add-account_card'>
       <Form.Input
         label='Title *'

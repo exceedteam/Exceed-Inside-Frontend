@@ -53,7 +53,7 @@ export const addUserAccountFail = (error) => {
 };
 
 // server request to change profile accounts
-export const addUserAccount = (id, account) => {
+export const updateUserAccount = (id, account) => {
   return (dispatch) => {
     dispatch(addUserAccountProcess(account));
     const token = localStorage.getItem('token');

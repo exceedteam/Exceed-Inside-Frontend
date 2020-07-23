@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Dropdown } from 'semantic-ui-react';
 import InputCopyToClipboard from '../InputCopyToClipboard';
 
-const AccountElement = ({ id, email, title, password }) => {
+const AccountElement = ({ id, email, title, password, handleEdit, handleDelete }) => {
   const [ showPassword, setShowPassword ] = useState(false);
-  const handleClickShowPassword = () => setShowPassword( !showPassword);
+  const handleClickShowPassword = useCallback(() => setShowPassword( !showPassword), [ showPassword ]);
   
   const visibility = <Button icon='eye' basic onClick={handleClickShowPassword} />;
   const notVisibility = <Button icon='eye slash' basic onClick={handleClickShowPassword} />;
@@ -20,8 +20,8 @@ const AccountElement = ({ id, email, title, password }) => {
           direction='left'
         >
           <Dropdown.Menu>
-            <Dropdown.Item>Edit</Dropdown.Item>
-            <Dropdown.Item>Delete</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleEdit(id)}>Edit</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleDelete(id)}>Delete</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
@@ -51,7 +51,9 @@ AccountElement.propTypes = {
   id: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired
+  password: PropTypes.string.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 };
 
 AccountElement.defaultProps = {};
