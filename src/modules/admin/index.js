@@ -52,7 +52,7 @@ export default class Admin extends React.Component {
                     component={props => <Dashboard {...props} handleLogin={this.handleLogin} />}
                   />
                   <Route exact path='/admin/profile' component={Dashboard} />
-                  <Route exact path='/admin/list' component={UserListPage} />
+                  <Route exact path='/admin/users' component={UserListPage} />
                   <Route exact path='/admin/posts' component={Posts} />
                   <Route exact path='/admin/comments' component={Comments} />
                   <Route exact path='/admin/events' component={Events} />
