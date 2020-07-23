@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Dropdown } from 'semantic-ui-react';
 import InputCopyToClipboard from '../InputCopyToClipboard';
 
-const AccountElement = ({ email, title, password }) => {
+const AccountElement = ({ id, email, title, password }) => {
   const [ showPassword, setShowPassword ] = useState(false);
   const handleClickShowPassword = () => setShowPassword( !showPassword);
   
@@ -14,6 +14,16 @@ const AccountElement = ({ email, title, password }) => {
     <div className='element'>
       <div className='title'>
         <h3>{title}</h3>
+        <Dropdown
+          icon='ellipsis vertical'
+          floating
+          direction='left'
+        >
+          <Dropdown.Menu>
+            <Dropdown.Item>Edit</Dropdown.Item>
+            <Dropdown.Item>Delete</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
       <div className='info'>
         <Form>
@@ -30,9 +40,7 @@ const AccountElement = ({ email, title, password }) => {
               {showPassword ? notVisibility : visibility}
             </InputCopyToClipboard>
           </Form.Field>
-        
         </Form>
-      
       </div>
     </div>
   );
@@ -40,6 +48,7 @@ const AccountElement = ({ email, title, password }) => {
 
 
 AccountElement.propTypes = {
+  id: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired

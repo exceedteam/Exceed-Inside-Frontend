@@ -86,7 +86,7 @@ const UserProfile = ({
         <Form.Group widths='equal'>
           <Form.Field>
             <Form.Input
-              label='First name'
+              label='First name *'
               placeholder='First name'
               name='firstName'
               value={firstName}
@@ -97,7 +97,7 @@ const UserProfile = ({
           </Form.Field>
           <Form.Field>
             <Form.Input
-              label='Last name'
+              label='Last name *'
               placeholder='Last name'
               name='lastName'
               value={lastName}
@@ -110,7 +110,7 @@ const UserProfile = ({
         <Form.Group widths='equal'>
           <Form.Field>
             <Form.Input
-              label='Email'
+              label='Email *'
               placeholder='Email'
               name='email'
               value={email}
@@ -135,7 +135,7 @@ const UserProfile = ({
                 <Form.Field>
                   <Form.Input
                     autoComplete='new-password'
-                    label='Password'
+                    label='Password *'
                     placeholder='Password'
                     name='password'
                     value={password}
@@ -150,9 +150,9 @@ const UserProfile = ({
                 <Form.Field>
                   <Form.Input
                     autoComplete='new-password'
-                    label='Repeat password'
+                    label='Repeat password *'
                     placeholder='Repeat password'
-                    name='password2'
+                    name='password'
                     value={password2}
                     onChange={handleChange('password2')}
                     type={showPassword ? 'text' : 'password'}

@@ -1,6 +1,7 @@
 @import "../../../styles/variables";
 
 .accounts_container {
+  max-height: 75vh;
   width: 100%;
   overflow: scroll;
   -ms-overflow-style: none;
@@ -29,6 +30,9 @@
           border-radius: $card-border-radius;
           box-shadow: $card-shadow;
           .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 0.2rem 0 1rem;
           }
         }

@@ -53,11 +53,12 @@ InputCopyToClipboard.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.node
-  ]).isRequired
+  ])
 }
 
 InputCopyToClipboard.defaultProps = {
-  value: ''
+  value: '',
+  children: null
 }
 
 

@@ -21,5 +21,16 @@
         margin: 0;
       }
     }
+    .add-component {
+      width: 100%;
+    }
+  }
+
+  .add-account_card {
+    margin-top: 1rem;
+    box-shadow: $card-shadow;
+    width: 100%;
+    border-radius: $card-border-radius;
+    padding: 1rem;
   }
 }

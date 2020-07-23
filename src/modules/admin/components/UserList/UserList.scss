@@ -2,7 +2,7 @@
 
 .list_container {
   width: $user-list-width;
-  height: 85vh;
+  max-height: 87vh;
   overflow: scroll;
   -ms-overflow-style: none;
 

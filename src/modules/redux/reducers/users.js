@@ -1,19 +1,15 @@
 import Immutable from 'seamless-immutable';
 import { normalize } from 'normalizr';
 import {
-  FETCH_USER_PROFILE_SUCCESS,
-  FETCH_USER_PROFILE_FAIL,
-  FETCH_USER_PROFILE_PROCESS,
-  EDIT_USER_PROFILE_FAIL,
-  EDIT_USER_PROFILE_PROCESS,
-  EDIT_USER_PROFILE_SUCCESS,
+  FETCH_USER_PROFILE_SUCCESS, FETCH_USER_PROFILE_FAIL, FETCH_USER_PROFILE_PROCESS,
+  EDIT_USER_PROFILE_FAIL, EDIT_USER_PROFILE_PROCESS, EDIT_USER_PROFILE_SUCCESS,
   CLEAR_USER_PROFILE,
-  FETCH_ALL_USERS_PROCESS,
-  FETCH_ALL_USERS_SUCCESS,
-  FETCH_ALL_USERS_FAIL,
+  FETCH_ALL_USERS_PROCESS, FETCH_ALL_USERS_SUCCESS, FETCH_ALL_USERS_FAIL,
   CLEAR_MESSAGE, REGISTER_SUCCESS,
   ONCHANGE_SEARCH,
-  SELECT_PROFILE, EDIT_USER_PROFILE_CANCEL
+  SELECT_PROFILE, EDIT_USER_PROFILE_CANCEL,
+  ADD_USER_ACCOUNT_SUCCESS,
+  ADD_USER_ACCOUNT_FAIL
 } from '../actionTypes';
 
 import {
@@ -56,9 +52,9 @@ export const getUserMainInfoById = (state = initialState, userId) => {
 export const getUserAccountsInfoById = (state = initialState, userId) => {
   try {
     const user = state.normalizedUsers[userId] || {};
-    return  user.accounts ||  [{title: 'slack', email: 'vladislav.exceed@gmail.com', password: 'ne pomnu'}];
+    return user.accounts || [];
   } catch (e) {
-    return []
+    return [];
   }
 };
 
@@ -72,7 +68,7 @@ export default function(state = initialState, action) {
       
       return {
         ...state,
-        normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
+        normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users)
       };
     }
     case FETCH_ALL_USERS_PROCESS:
@@ -104,7 +100,7 @@ export default function(state = initialState, action) {
     case FETCH_ALL_USERS_SUCCESS: {
       const { users, pagination } = action.payload;
       const normalizedData = normalize(users, usersListSchema);
-      const displayUsers =  union(state.displayUsers, normalizedData.result);
+      const displayUsers = union(state.displayUsers, normalizedData.result);
       return {
         ...state,
         normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
@@ -115,6 +111,7 @@ export default function(state = initialState, action) {
         loading: false
       };
     }
+    case ADD_USER_ACCOUNT_FAIL:
     case FETCH_ALL_USERS_FAIL:
     case EDIT_USER_PROFILE_FAIL:
     case FETCH_USER_PROFILE_FAIL: {
@@ -126,17 +123,27 @@ export default function(state = initialState, action) {
         loading: false
       };
     }
-    case EDIT_USER_PROFILE_CANCEL:{
+    case ADD_USER_ACCOUNT_SUCCESS: {
+      const  { id, accounts } = action.payload;
+      const user = getUserById(state, id);
+      const updatedUser = Immutable.set(user, 'accounts', accounts);
+      const normalizedUser = normalize([ updatedUser ], usersListSchema);
       return {
         ...state,
-        error: {},
+        normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedUser.entities.users)
+      };
+    }
+    case EDIT_USER_PROFILE_CANCEL: {
+      return {
+        ...state,
+        error: {}
       };
     }
     case CLEAR_USER_PROFILE: {
       return {
         ...state,
         currentUser: '',
-        error: {},
+        error: {}
       };
     }
     case CLEAR_MESSAGE.users: {
