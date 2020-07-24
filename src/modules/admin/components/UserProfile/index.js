@@ -8,9 +8,10 @@ import { editUserProfile } from '../../../redux/actions/users/edit';
 import './UserProfile.scss';
 import { EDIT_USER_PROFILE_CANCEL, REGISTER_CANCEL } from '../../../redux/actionTypes';
 import Loader from '../../../common/Loader';
+import { DEFAULT_AVATAR_URL } from '../../../../services/variables';
 
 const initialUser = {
-  avatar: 'http://res.cloudinary.com/dx6ps2mwc/image/upload/v1594888577/avatars/5f10111504b47b52101eb6b3.png',
+  avatar: DEFAULT_AVATAR_URL,
   firstName: '',
   lastName: '',
   email: '',
@@ -18,7 +19,7 @@ const initialUser = {
   password2: '',
   age: null,
   team: '',
-  role: '',
+  role: 'developer',
   position: '',
   admin: false,
   aboutInfo: '',
@@ -91,17 +92,22 @@ const AddUserDialogHoc = () => {
   
   const saveUpdatedData = () => {
     const updatedUser = {};
+    
     updatedFields.forEach(field => {
       updatedUser[field] = user[field];
     });
+    
     if ( !Object.keys(errorsUpdating))
       setIsEdit(false);
+    
     updateUserHandler(updatedUser).then(({ success }) => {
       if (success) setIsEdit(false);
     });
   };
   
   const registerProfile = () => {
+    if (user.avatar === DEFAULT_AVATAR_URL) user.avatar = '';
+    
     dispatch(register(user)).then(({ success }) => {
       if (success) {
         setIsNewUser(false);

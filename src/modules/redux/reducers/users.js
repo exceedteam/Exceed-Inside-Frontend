@@ -158,7 +158,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         normalizedUsers: Immutable.merge(state.normalizedUsers, normalizedData.entities.users),
-        displayUsers: union(normalizedData.result, state.displayUsers)
+        displayUsers: union(normalizedData.result, state.displayUsers),
+        profile: profile.id
       };
     }
     case ONCHANGE_SEARCH: {

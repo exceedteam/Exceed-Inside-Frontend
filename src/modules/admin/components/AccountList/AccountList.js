@@ -33,6 +33,7 @@ const AccountList = ({ list }) => {
             id={id}
             title={title}
             email={email}
+            profile={profile}
             password={password}
           />
         );

@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateUserAccount } from '../../../redux/actions/users/edit';
 import { createID } from '../../../../services/helpers';
 
-const AccountForm = ({ id, title, email, password, onCancel }) => {
+const AccountForm = ({ profile, id, title, email, password, onCancel }) => {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.users.profile);
   
   const [ account, setAccount ] = useState({
     id: createID(),
@@ -23,10 +22,10 @@ const AccountForm = ({ id, title, email, password, onCancel }) => {
         email,
         password
       });
-    if(!id) setAccount(acc => ( {
-      id: createID(),
-      ...acc
-    } ));
+      if (!id) setAccount(acc => ( {
+        id: createID(),
+        ...acc
+      } ));
     }, [ id, title, email, password ]
   );
   
@@ -96,6 +95,7 @@ const AccountForm = ({ id, title, email, password, onCancel }) => {
 };
 
 AccountForm.propTypes = {
+  profile: PropTypes.string.isRequired,
   title: PropTypes.string,
   id: PropTypes.string,
   email: PropTypes.string,

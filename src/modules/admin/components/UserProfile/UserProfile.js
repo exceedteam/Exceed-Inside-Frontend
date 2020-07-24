@@ -8,11 +8,11 @@ import ChangePasswordFields from './ChangePassword';
 
 const options = [
   { key: 'a', text: 'Admin', value: 'admin' },
-  { key: 'd', text: 'Developer', value: 'developer' },
-  { key: 'j', text: 'Junior', value: 'junior' },
-  { key: 's', text: 'Sales Manager', value: 'salesManager' },
-  { key: 't', text: 'Team Leader', value: 'teamLeader' },
-  { key: 'q', text: 'Tester', value: 'tester' }
+  { key: 'd', text: 'Developer', value: 'developer' }
+  /*  { key: 'j', text: 'Junior', value: 'junior' },
+    { key: 's', text: 'Sales Manager', value: 'salesManager' },
+    { key: 't', text: 'Team Leader', value: 'teamLeader' },
+    { key: 'q', text: 'Tester', value: 'tester' } */
 ];
 
 const UserProfile = ({
@@ -241,12 +241,12 @@ UserProfile.propTypes = {
   handleRoleAndDateChange: PropTypes.func.isRequired,
   handleChangeCheckbox: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleAvatarChange: PropTypes.func.isRequired,
+  handleAvatarChange: PropTypes.func.isRequired
 };
 
 UserProfile.defaultProps = {
   errors: {},
-  isDisabled: false,
+  isDisabled: false
 };
 
 export default UserProfile;
