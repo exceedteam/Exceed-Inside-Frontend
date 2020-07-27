@@ -6,7 +6,7 @@
   font-family: inherit;
   border-radius: 0.2em;
   display: flex;
-  justify-content: center;
+  //justify-content: center;
   position: sticky;
   z-index: 7;
   left: 0;
@@ -16,11 +16,12 @@
   box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
   height: 60px;
   align-items: center;
+  padding-left: $left-main-container-margin;
 
   .headerWrapper {
-    margin: 0 2rem;
+    margin: 0;
     width: 100%;
-    max-width: calc(100vw - #{$left-menu-max-width});
+    max-width: $main-container-max-width;
     display: flex;
     justify-content: space-between;
   }

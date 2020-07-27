@@ -12,8 +12,7 @@
   background-color: #fff;
   padding: 2em 2em 3em;
   border-radius: 8px;
-  min-width: 500px;
-  max-width: 500px;
+  max-width: 400px;
   min-height: 450px;
   width: 100%;
   display: flex;
@@ -59,6 +58,7 @@
     .posts {
       margin: 5px;
       width: fit-content;
+
       i {
         margin: 0 10px 0 0 !important;
       }
@@ -67,12 +67,15 @@
     .posts {
       cursor: pointer;
       transition: color 0.2s;
+
       span {
         text-decoration: underline;
       }
     }
+
     .posts:hover {
       color: $semantic-blue;
+
       span {
         text-decoration: underline $semantic-blue;
       }
@@ -83,6 +86,7 @@
     display: flex;
     justify-content: flex-end;
     margin: 0 -20px -20px 0;
+
     .button {
       @include button-without-background;
     }
@@ -97,6 +101,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
     .input {
       width: 45%;
     }
@@ -106,6 +111,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+
     i {
       margin-right: 15px;
     }
@@ -113,6 +119,7 @@
 
   .aboutInfo {
     margin-top: 5px;
+
     textarea {
       width: 100% !important;
       min-height: 6em;

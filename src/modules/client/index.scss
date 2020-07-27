@@ -1,0 +1,23 @@
+@import "./src/modules/styles/variables";
+// client pages
+.client {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  //align-items: center;
+  .client__container {
+    display: flex;
+    justify-content: space-between;
+    max-width: $main-container-max-width;
+    margin-left: $left-main-container-margin;
+    height: 100%;
+    margin-top: 2rem;
+    width: 100%;
+    .content {
+      margin-left: 2rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

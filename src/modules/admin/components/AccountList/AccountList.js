@@ -49,7 +49,7 @@ const AccountList = ({ list }) => {
           />
         );
       });
-    }, [ list, editedAccount, handleDelete ]);
+    }, [ list, editedAccount, handleDelete, profile ]);
     
     return (
       <div className='accounts_container'>

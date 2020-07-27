@@ -8,10 +8,11 @@
 
 .postCreator {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	width: 100%;
 
 	.leftSide {
+		margin: 0;
 		background-color: transparent;
 		.createTheNewPost {
 			width: 730px;

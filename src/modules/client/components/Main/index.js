@@ -1,7 +1,7 @@
 /*
   Component whith which the application Main page is rendered
 */
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import Calendar from 'react-calendar';
@@ -96,12 +96,11 @@ class Posts extends React.Component {
             <>
               {posts.map((item) => {
                 return (
-                  <div key={createID()} className='post'>
-                    <PostPreview
-                      postId={item}
-                      isMainPost
-                    />
-                  </div>
+                  <PostPreview
+                    key={createID()}
+                    postId={item}
+                    isMainPost
+                  />
                 );
               })}
               { !loading && (

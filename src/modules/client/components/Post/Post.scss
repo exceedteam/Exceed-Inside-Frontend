@@ -1,37 +1,31 @@
-.pageWrapper {
+.post-page {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
-  .postsContent {
-    width: 730px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    .post {
-      width: 100%;
+  .post-feed {
+    .comments-section {
+      margin-top: 1rem;
     }
   }
 
-  .rightColumn {
+  .calendar {
     width: 350px;
     height: 600px;
     position: sticky;
     top: calc(60px + 2rem);
-
+    margin-left: 1rem;
     .react-calendar {
       border-radius: 8px;
       border: none;
       background-color: #ffffff;
       box-shadow: 0 10px 40px -14px rgba(0,0,0,.25);
       padding: .5rem;
-    }
-  }
 
-  @media only screen and (max-width: 1300px) {
-    .rightColumn {
-      display: none;
+      .react-calendar__tile--now {
+        background-color: #edeef0;
+      }
     }
   }
 }

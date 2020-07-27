@@ -2,13 +2,12 @@
 
 .leftMenu {
   width: $left-menu-max-width !important;
-  margin: 0 2% auto 0 !important;
+  min-width: $left-menu-max-width;
+  height: fit-content;
   position: sticky;
+  position: -webkit-sticky;
   top: calc(60px + 2rem);
-}
-
-@media only screen and (max-width: calc(100vw - #{$left-menu-max-width})) {
-  .leftMenu {
-    margin-left: 2rem !important;
+  .item {
+    padding-left: 0 !important;
   }
 }

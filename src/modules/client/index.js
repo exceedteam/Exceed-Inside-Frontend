@@ -15,10 +15,10 @@ import PostsOfUser from './components/PostsOfUser';
 import ModalWindow from './components/Modal';
 import AlertMessage from '../common/AlertMessage';
 import LeftMenu from './components/LeftMenu';
-import GoogleCalendar from './components/GoogleCalendar';
 
 import { getIsLogin } from '../../services/helpers';
 import '../styles/index.scss';
+import './index.scss';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -68,7 +68,6 @@ export default class Main extends React.Component {
                   <Route exact path='/post/:id' component={Post} />
                   <Route exact path='/user/:id/posts' component={PostsOfUser} />
                   <Route exact path='/modal' component={ModalWindow} />
-                  <Route exact path='/calendar' component={GoogleCalendar} />
                 </div>
               </div>
             </WithToken>

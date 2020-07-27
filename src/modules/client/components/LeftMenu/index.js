@@ -25,11 +25,6 @@ class LeftMenu extends React.Component {
           active={pathname === '/events'}
           onClick={() => history.push("/events")}
         />
-        <Menu.Item
-          name='GoogleCalendar'
-          active={pathname === '/calendar'}
-          onClick={() => history.push("/calendar")}
-        />
       </Menu>
     );
   }
